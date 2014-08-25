@@ -5,4 +5,12 @@ angular.module('morphDemo', ['ngMorph'])
     trigger: 'click'
   };
 
+  $scope.loginForm = '<div class="login">' +
+                      '<form>' +
+                        '<p><label>Email</label><input type="text" /></p>' +
+                        '<p><label>Password</label><input type="password" /></p>' +
+                        '<p><button>Login</button></p>' +
+                      '</form>' +
+                    '</div>';
+
 }]);
