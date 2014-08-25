@@ -15,14 +15,21 @@
         cursor: pointer;
         border: none;
       }
+      .container {
+        width: 1000px;
+        margin: 75px auto;
+        text-align: center;
+      }
     </style>
   </head>
   <body ng-controller="AppCtrl">
 
-    <button morphable="config"> Sign in
-      <morph-into template="loginForm" />
-    </button>  
-    
+    <div class="container">
+      <button morphable="config"> Sign in
+        <morph-into template="loginForm" />
+      </button>      
+    </div>
+
     <script src="../bower_components/angular/angular.js"></script>
     <script src="app.js"></script>
     <script src="ngMorph.js"></script>
