@@ -1,20 +1,4 @@
 angular.module('ngMorph', [])
-// .controller('MorphCtrl', ['$scope', function ($scope, element, attrs) {
-//   var ctrl = this;
-
-//   ctrl.getOriginElementDimensions = function () {
-//     return $scope.settings.originDimensions;
-//   };
-
-//   ctrl.triggerStateChange = function () {
-//     // $scope.state;
-//   };
-
-//   ctrl.getState = function () {
-//     return $scope.state;
-//   };
-
-// }])
 .directive('morphable', ['$compile', function ($compile) {
   var NormalStateStyles = {
     'opacity': 1,
@@ -78,24 +62,44 @@ angular.module('ngMorph', [])
   };
 }])
 .directive('morphInto', ['$compile', function ($compile) {
-  var NormalStateStyles = {
-    'position': 'fixed',
-    'z-index': '900',
-    'opacity': 0,
-    'pointer-events': 'none',
-    '-webkit-transition': 'opacity 0.1s',
-    'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
-    'transition-timing-function': 'cubic-bezier(0.7,0,0.3,1)'
-    // 'pointer-events': 'none'
+
+  var ContentWrapperStyles = {
+    NormalState: {
+      'background': '#e85657',
+      'position': 'fixed',
+      'z-index': '900',
+      'opacity': 0,
+      'pointer-events': 'none',
+      '-webkit-transition': 'opacity 0.1s',
+      'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+      'transition-timing-function': 'cubic-bezier(0.7,0,0.3,1)',
+      '-webkit-transition-timing-function': 'cubic-bezier(0.7,0,0.3,1)'
+      // 'pointer-events': 'none'
+    },
+    MorphedState: {
+      'opacity': 1,
+      'z-index': 1900,
+      'top': '50% !important',
+      'left': '50% !important',
+      'pointer-events': 'auto',
+      'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+    }
   };
 
-  var MorphedStateStyles = {
-    'opacity': 1,
-    'z-index': 1900,
-    'top': '50% !important',
-    'left': '50% !important',
-    'pointer-events': 'auto',
-    'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+  var TemplateStyles = {
+    NormalState: {
+      'visibility': 'hidden',
+      'opacity': '0',
+      '-webkit-transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s',
+      'transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s'
+    },
+    MorphedState: {
+      '-webkit-transition': 'opacity 0.3s 0.3s',
+      'transition': 'opacity 0.3s 0.3s',
+      'visibility': 'visible',
+      'height': 'auto',
+      'opacity': '1',
+    }
   };
 
   return {
@@ -106,31 +110,38 @@ angular.module('ngMorph', [])
     //   template: '='
     // },
     scope: true,
-    replace: true,
-    template: '<div></div>',
+    // replace: true,
+    // template: '<div></div>',
     link: function (scope, element, attrs, ctrl) {
-
       var parent = scope.$parent;
 
       var template = $compile(parent.settings.morphInto)(scope); //compile incase more directives are a part of the template
-        
+      var OriginalTemplateStyles = template[0].getBoundingClientRect();
+
       var styles = angular.extend({ 
         width: parent.settings.originDimensions.width + 'px', 
-        height: parent.settings.originDimensions.height + 'px'
-      }, NormalStateStyles);
-
+        height: parent.settings.originDimensions.height + 'px',
+      }, ContentWrapperStyles.NormalState );
       
       element.css(styles);
+
       element.append(template);
 
-      window.t = template;
+      var templateStyles = angular.extend({
+        height: '0px',
+        width: parent.settings.originDimensions.width + 'px'
+      }, TemplateStyles.NormalState);
+
+      template.css(templateStyles);
 
       scope.$watch('state.isMorphed', function (isMorphed, oldVal) {
         if ( isMorphed !== oldVal ) {
           if ( isMorphed ) {
-            element.css(MorphedStateStyles);
+            element.css(ContentWrapperStyles.MorphedState);
+            template.css(TemplateStyles.MorphedState);
           } else {
-            element.css(NormalStateStyles);
+            element.css(ContentWrapperStyles.NormalState);
+            template.css(TemplateStyles.NormalState);
           }
         }
       });
@@ -147,12 +158,8 @@ angular.module('ngMorph', [])
       settings: '='
     },
     link: function (scope, element, attrs) {
-      // wrap the elements required for morphing effect
-      // track state (morphed / normal)
-      
       // set height/width and normal-state styling
       element.css(scope.settings);
-
     }
   };
 }]);
