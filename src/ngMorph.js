@@ -6,6 +6,14 @@ angular.module('ngMorph', [])
     return $scope.settings.originDimensions;
   };
 
+  ctrl.triggerStateChange = function () {
+    // $scope.state;
+  };
+
+  ctrl.getState = function () {
+    return $scope.state;
+  };
+
 }])
 .directive('morphable', ['$compile', function ($compile) {
   var NormalStateStyles = {
@@ -30,9 +38,9 @@ angular.module('ngMorph', [])
       settings: '=morphable'
     },
     link: {
-      pre: function (scope, element, attrs) {
+      pre: function (scope, element, attrs, ctrl) {
         // initialize state
-        var state = scope.state = { isMorphed: false };
+        scope.state = { isMorphed: false };
         var settings = scope.settings;
 
         settings.originDimensions = element[0].getBoundingClientRect();
@@ -56,8 +64,10 @@ angular.module('ngMorph', [])
 
         // intialize event listener (get from config obj)
         element.on(scope.settings.trigger, function () {
-          state.isMorphed ? element.css(NormalStateStyles) : element.css(MorphedStateStyles);
-          state.isMorphed = !state.isMorphed;
+          scope.state.isMorphed ? element.css(NormalStateStyles) : element.css(MorphedStateStyles);
+          scope.state.isMorphed = !scope.state.isMorphed;
+          // scope.$digest()
+          // ctrl.triggerStateChange();
         });
       }
     }
@@ -86,14 +96,16 @@ angular.module('ngMorph', [])
 
   return {
     restrict: 'E',
-    require: '^morphable', // share same instance of ctrl
+    require: '^morphable', 
+    // controller: 'MorphCtrl', // share same instance of ctrl
     scope: {
       template: '='
     },
     replace: true,
     template: '<div></div>',
     link: function (scope, element, attrs, ctrl) {
-      console.log($scope, element, attrs)
+      scope.state = ctrl.getState();
+
       var template = $compile(scope.template)(scope); //compile incase more directives are a part of the template
       var originDimensions = ctrl.getOriginElementDimensions();
 
@@ -105,9 +117,17 @@ angular.module('ngMorph', [])
       
       element.css(styles);
 
-      scope.$watch(scope.state, function (oldv, newv) {
-        console.log('ismorphed changed', oldv, newv);
-      }, true);
+      
+      
+
+      scope.$watch(function () { return ctrl.getState(); }, function (old , n) {
+        console.log('state change', old, n) 
+      });
+
+      window.s = scope
+
+      // setTimeout( function () {  scope.state.isMorphed = true; console.log(scope.state)}, 2000)
+
       // element.append(template);
       // var dimensions = ctrl.getOriginElementDimensions();      
     }
@@ -125,6 +145,7 @@ angular.module('ngMorph', [])
       
       // set height/width and normal-state styling
       element.css(scope.settings);
+
     }
   };
 }]);
