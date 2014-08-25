@@ -4,6 +4,7 @@
     <title></title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
     <style>
       button {
         width: 250px;
@@ -31,7 +32,9 @@
   <body ng-controller="AppCtrl">
 
     <div class="container">
-      <button morphable="morphSettings"> Sign in </button>      
+      <button morphable="morphSettings"> Sign in 
+        <morph-content template="morphSettings.morphInto" />
+      </button>      
     </div>
 
     <script src="../bower_components/angular/angular.js"></script>

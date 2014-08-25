@@ -1,165 +1,158 @@
 angular.module('ngMorph', [])
-.directive('morphable', ['$compile', function ($compile) {
-  var NormalStateStyles = {
-    'opacity': 1,
-    'z-index': 1000,
-    '-webkit-transition': 'opacity 0.1s 0.5s',
-    'transition': 'opacity 0.1s 0.5s',
-  };
-
-  var MorphedStateStyles = {
-    'z-index': 2000,
-    'opacity': 0,
-    '-webkit-transition': 'opacity 0.1s',
-    'transition': 'opacity 0.1s',
-    // 'pointer-events': 'none'
-  };
-
-  return {
-    restrict: 'A',
-    // controller: 'MorphCtrl',
-    scope: {
-      settings: '=morphable'
+.factory('MorphEngine', [function () {
+  var transEndEventNames = {
+      'WebkitTransition': 'webkitTransitionEnd',
+      'MozTransition': 'transitionend',
+      'OTransition': 'oTransitionEnd',
+      'msTransition': 'MSTransitionEnd',
+      'transition': 'transitionend'
     },
-    transclude: true,
-    template: '<div ng-transclude></div><morph-into template="{{settings.morphInto}}" />',
-    link: {
-      pre: function (scope, element, attrs, ctrl) {
-        var settings = scope.settings;
-        var wrapper;
+    transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ],
+    support = { transitions : Modernizr.csstransitions };
 
-        // initialize state
-        scope.state = { isMorphed: false };
-        
-        settings.originDimensions = element[0].getBoundingClientRect();
+  function UIMorphingButton(wrapper, morphable, morphInto, options) {
+    this.el = wrapper[0];
+    this.element = morphable[0];
+    this.contentEl = morphInto[0];
+    this.options = angular.extend( {}, this.options );
+    angular.extend( this.options, options );
+    this._init();
+  }
 
-        // get morphable height/width to pass to morph-wrapper directive
-        scope.wrapperCfg = {
-          height: settings.originDimensions.height + 'px',
-          width: settings.originDimensions.width + 'px',
-          display: 'inline-block'
-        };
+  UIMorphingButton.prototype.options = {
+    closeEl : '',
+    onBeforeOpen : function() { return false; },
+    onAfterOpen : function() { return false; },
+    onBeforeClose : function() { return false; },
+    onAfterClose : function() { return false; }
+  };
 
-        // compile wrapper directive, pass settings obj
-        wrapper = $compile('<morph-wrapper settings="wrapperCfg"/>')(scope);
-        
-        // wrap morphable with morphWrapper
-        element.wrap(wrapper);
+  UIMorphingButton.prototype._init = function() {
+    // the element
+    // this.element = this.el.querySelector( 'button' );
+    // state
+    this.expanded = false;
+    // content el
+    this.contentEl = document.querySelector( '.morph-content' );
+    console.log(this.contentEl);
+    // init events
+    this._initEvents();
+  };
 
-        // set normal state styles
-        element.css(NormalStateStyles);
-
-
-        // intialize event listener (get from config obj)
-        element.on(scope.settings.trigger, function () {
-          scope.state.isMorphed ? element.css(NormalStateStyles) : element.css(MorphedStateStyles);
-          scope.state.isMorphed = !scope.state.isMorphed;
-          scope.$digest(); // requried to trigger $watch in morphInto
-          
-        });
+  UIMorphingButton.prototype._initEvents = function() {
+    var self = this;
+    // open
+    this.button.addEventListener( 'click', function() { self.toggle(); } );
+    // close
+    if( this.options.closeEl !== '' ) {
+      var closeEl = this.el.querySelector( this.options.closeEl );
+      if( closeEl ) {
+        closeEl.addEventListener( 'click', function() { self.toggle(); } );
       }
     }
   };
-}])
-.directive('morphInto', ['$compile', function ($compile) {
 
-  var ContentWrapperStyles = {
-    NormalState: {
-      'background': '#e85657',
-      'position': 'fixed',
-      'z-index': '900',
-      'opacity': 0,
-      'pointer-events': 'none',
-      '-webkit-transition': 'opacity 0.1s',
-      'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
-      'transition-timing-function': 'cubic-bezier(0.7,0,0.3,1)',
-      '-webkit-transition-timing-function': 'cubic-bezier(0.7,0,0.3,1)'
-      // 'pointer-events': 'none'
-    },
-    MorphedState: {
-      'opacity': 1,
-      'z-index': 1900,
-      'top': '50% !important',
-      'left': '50% !important',
-      'pointer-events': 'auto',
-      'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+  UIMorphingButton.prototype.toggle = function() {
+    if( this.isAnimating ) return false;
+
+    // callback
+    if( this.expanded ) {
+      this.options.onBeforeClose();
     }
-  };
-
-  var TemplateStyles = {
-    NormalState: {
-      'visibility': 'hidden',
-      'opacity': '0',
-      '-webkit-transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s',
-      'transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s'
-    },
-    MorphedState: {
-      '-webkit-transition': 'opacity 0.3s 0.3s',
-      'transition': 'opacity 0.3s 0.3s',
-      'visibility': 'visible',
-      'height': 'auto',
-      'opacity': '1',
+    else {
+      // add class active (solves z-index problem when more than one button is in the page)
+      // classie.addClass( this.el, 'active' ); // replace with jquery
+      $(this.el).addClass('active');
+      this.options.onBeforeOpen();
     }
-  };
 
-  return {
-    restrict: 'E',
-    // require: '^morphable', 
-    // controller: 'MorphCtrl', // share same instance of ctrl
-    // scope: {
-    //   template: '='
-    // },
-    scope: true,
-    // replace: true,
-    // template: '<div></div>',
-    link: function (scope, element, attrs, ctrl) {
-      var parent = scope.$parent;
+    this.isAnimating = true;
 
-      var template = $compile(parent.settings.morphInto)(scope); //compile incase more directives are a part of the template
-      var OriginalTemplateStyles = template[0].getBoundingClientRect();
+    var self = this,
+      onEndTransitionFn = function( ev ) {
+        if( ev.target !== this ) return false;
 
-      var styles = angular.extend({ 
-        width: parent.settings.originDimensions.width + 'px', 
-        height: parent.settings.originDimensions.height + 'px',
-      }, ContentWrapperStyles.NormalState );
-      
-      element.css(styles);
-
-      element.append(template);
-
-      var templateStyles = angular.extend({
-        height: '0px',
-        width: parent.settings.originDimensions.width + 'px'
-      }, TemplateStyles.NormalState);
-
-      template.css(templateStyles);
-
-      scope.$watch('state.isMorphed', function (isMorphed, oldVal) {
-        if ( isMorphed !== oldVal ) {
-          if ( isMorphed ) {
-            element.css(ContentWrapperStyles.MorphedState);
-            template.css(TemplateStyles.MorphedState);
-          } else {
-            element.css(ContentWrapperStyles.NormalState);
-            template.css(TemplateStyles.NormalState);
+        if( support.transitions ) {
+          // open: first opacity then width/height/left/top
+          // close: first width/height/left/top then opacity
+          if( self.expanded && ev.propertyName !== 'opacity' || !self.expanded && ev.propertyName !== 'width' && ev.propertyName !== 'height' && ev.propertyName !== 'left' && ev.propertyName !== 'top' ) {
+            return false;
           }
+          this.removeEventListener( transEndEventName, onEndTransitionFn );
         }
-      });
+        self.isAnimating = false;
+        
+        // callback
+        if( self.expanded ) {
+          // remove class active (after closing)
+          // classie.removeClass( self.el, 'active' );
+          $(self.el).removeClass('active');
+          self.options.onAfterClose();
+        }
+        else {
+          self.options.onAfterOpen();
+        }
 
-      // setTimeout( function () {  scope.state.isMorphed = true; console.log(scope.state)}, 2000)      
-      // var dimensions = ctrl.getOriginElementDimensions();      
+        self.expanded = !self.expanded;
+      };
+
+    if( support.transitions ) {
+      this.contentEl.addEventListener( transEndEventName, onEndTransitionFn );
     }
+    else {
+      onEndTransitionFn();
+    }
+      
+    // set the left and top values of the contentEl (same like the button)
+    var buttonPos = this.button.getBoundingClientRect();
+    // need to reset
+    // classie.addClass( this.contentEl, 'no-transition' );
+    $(this.contentEl).addClass('no-transition');
+    this.contentEl.style.left = 'auto';
+    this.contentEl.style.top = 'auto';
+    
+    // add/remove class "open" to the button wraper
+    setTimeout( function() { 
+      self.contentEl.style.left = buttonPos.left + 'px';
+      self.contentEl.style.top = buttonPos.top + 'px';
+      
+      if( self.expanded ) {
+        // classie.removeClass( self.contentEl, 'no-transition' );
+        // classie.removeClass( self.el, 'open' );
+        $(self.contentEl).removeClass('no-transition');
+        $(self.el).removeClass('open');
+      }
+      else {
+        setTimeout( function() {
+          $(self.contentEl).removeClass('no-transition');
+          $(self.el).addClass('open');
+          // classie.removeClass( self.contentEl, 'no-transition' );
+          // classie.addClass( self.el, 'open' ); 
+
+          $(self.contentEl).removeClass('no-transition');
+          $(self.el).addClass('open');
+        }, 25 );
+      }
+    }, 25 );
   };
-}])
-.directive('morphWrapper', [function () {
+
   return {
-    restrict: 'E',
-    scope: {
-      settings: '='
-    },
-    link: function (scope, element, attrs) {
-      // set height/width and normal-state styling
-      element.css(scope.settings);
+    init: function (morphWrapper, morphable, morphContent, options) {
+      return new UIMorphingButton(morphWrapper, morphable, morphContent, options);
     }
   };
+
+}])
+.directive('morphable', ['$compile', function ($compile) {
+ return {
+  link: function () {
+    
+  }
+ };
+}])
+.directive('morphContent', ['$compile', function ($compile) {
+ 
+}])
+.directive('morphWrapper', ['MorphEngine', function (MorphEngine) {
+
 }]);
