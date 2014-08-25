@@ -1,0 +1,30 @@
+<!doctype html>
+<html ng-app="morphDemo">
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <style>
+      button {
+        width: 250px;
+        height: 50px;
+        background: #e85657;
+        color: #fcfcfc;
+        font-weight: bold;
+        text-transform: uppercase;
+        outline: none;
+        cursor: pointer;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <button morphable="config"> Sign in
+      <morph-into template="loginForm" />
+    </button>  
+    
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="app.js"></script>
+    <script src="ngMorph.js"></script>
+  </body>
+</html>
