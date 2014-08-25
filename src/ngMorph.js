@@ -1,20 +1,20 @@
 angular.module('ngMorph', [])
-.controller('MorphCtrl', ['$scope', function ($scope, element, attrs) {
-  var ctrl = this;
+// .controller('MorphCtrl', ['$scope', function ($scope, element, attrs) {
+//   var ctrl = this;
 
-  ctrl.getOriginElementDimensions = function () {
-    return $scope.settings.originDimensions;
-  };
+//   ctrl.getOriginElementDimensions = function () {
+//     return $scope.settings.originDimensions;
+//   };
 
-  ctrl.triggerStateChange = function () {
-    // $scope.state;
-  };
+//   ctrl.triggerStateChange = function () {
+//     // $scope.state;
+//   };
 
-  ctrl.getState = function () {
-    return $scope.state;
-  };
+//   ctrl.getState = function () {
+//     return $scope.state;
+//   };
 
-}])
+// }])
 .directive('morphable', ['$compile', function ($compile) {
   var NormalStateStyles = {
     'opacity': 1,
@@ -33,16 +33,20 @@ angular.module('ngMorph', [])
 
   return {
     restrict: 'A',
-    controller: 'MorphCtrl',
+    // controller: 'MorphCtrl',
     scope: {
       settings: '=morphable'
     },
+    transclude: true,
+    template: '<div ng-transclude></div><morph-into template="{{settings.morphInto}}" />',
     link: {
       pre: function (scope, element, attrs, ctrl) {
+        var settings = scope.settings;
+        var wrapper;
+
         // initialize state
         scope.state = { isMorphed: false };
-        var settings = scope.settings;
-
+        
         settings.originDimensions = element[0].getBoundingClientRect();
 
         // get morphable height/width to pass to morph-wrapper directive
@@ -53,7 +57,7 @@ angular.module('ngMorph', [])
         };
 
         // compile wrapper directive, pass settings obj
-        var wrapper = $compile('<morph-wrapper settings="wrapperCfg"/>')(scope);
+        wrapper = $compile('<morph-wrapper settings="wrapperCfg"/>')(scope);
         
         // wrap morphable with morphWrapper
         element.wrap(wrapper);
@@ -66,8 +70,8 @@ angular.module('ngMorph', [])
         element.on(scope.settings.trigger, function () {
           scope.state.isMorphed ? element.css(NormalStateStyles) : element.css(MorphedStateStyles);
           scope.state.isMorphed = !scope.state.isMorphed;
-          // scope.$digest()
-          // ctrl.triggerStateChange();
+          scope.$digest(); // requried to trigger $watch in morphInto
+          
         });
       }
     }
@@ -96,39 +100,42 @@ angular.module('ngMorph', [])
 
   return {
     restrict: 'E',
-    require: '^morphable', 
+    // require: '^morphable', 
     // controller: 'MorphCtrl', // share same instance of ctrl
-    scope: {
-      template: '='
-    },
+    // scope: {
+    //   template: '='
+    // },
+    scope: true,
     replace: true,
     template: '<div></div>',
     link: function (scope, element, attrs, ctrl) {
-      scope.state = ctrl.getState();
 
-      var template = $compile(scope.template)(scope); //compile incase more directives are a part of the template
-      var originDimensions = ctrl.getOriginElementDimensions();
+      var parent = scope.$parent;
 
+      var template = $compile(parent.settings.morphInto)(scope); //compile incase more directives are a part of the template
+        
       var styles = angular.extend({ 
-        width: originDimensions.width + 'px', 
-        height: originDimensions.height + 'px'
+        width: parent.settings.originDimensions.width + 'px', 
+        height: parent.settings.originDimensions.height + 'px'
       }, NormalStateStyles);
 
       
       element.css(styles);
+      element.append(template);
 
-      
-      
+      window.t = template;
 
-      scope.$watch(function () { return ctrl.getState(); }, function (old , n) {
-        console.log('state change', old, n) 
+      scope.$watch('state.isMorphed', function (isMorphed, oldVal) {
+        if ( isMorphed !== oldVal ) {
+          if ( isMorphed ) {
+            element.css(MorphedStateStyles);
+          } else {
+            element.css(NormalStateStyles);
+          }
+        }
       });
 
-      window.s = scope
-
-      // setTimeout( function () {  scope.state.isMorphed = true; console.log(scope.state)}, 2000)
-
-      // element.append(template);
+      // setTimeout( function () {  scope.state.isMorphed = true; console.log(scope.state)}, 2000)      
       // var dimensions = ctrl.getOriginElementDimensions();      
     }
   };
