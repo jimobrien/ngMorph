@@ -1,3 +1,19 @@
+body {
+  font-family: 'Open Sans';
+  background: #fcfcfc;
+}
+button {
+  width: 250px;
+  height: 50px;
+  background: #e85657;
+  color: #fcfcfc;
+  /*font-weight: bold;*/
+  text-transform: uppercase;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  margin: 100px 0;
+}
 
 form {
   position: relative;
@@ -55,128 +71,45 @@ form button {
   font-weight: 800;
   font-size: 1.25em;
 }
-.morph-button-fixed > button {
-  z-index: 1000; /* required to keep origin element toggleable */
-  width: 100%;
-  height: 100%;
-  outline: none;
-  -webkit-transition: opacity 0.1s 0.5s;
-  transition: opacity 0.1s 0.5s;
+.container {
+  width: 1000px;
+  margin: 0 auto;
+  text-align: center;
 }
-
-/* RF: Need for wrapper. This hides the origin element when the triggering event occurs; */
-.morph-button-fixed.open > button {
-  opacity: 0;
-  -webkit-transition: opacity 0.1s;
-  transition: opacity 0.1s;
-}
-
-/* RF: Need for morph-into. */
-.ng-morph-content {
-  position: fixed; /* need */
-  z-index: 900; /* need */
-  opacity: 0; /* need */
-
-  -webkit-transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
-  transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s; /* possible unneccesary */
-}
-
-/* RF: Need for wrapper. */
-.morph-button-fixed.open .ng-morph-content {
-  opacity: 1;
-}
-
-/* RF: Need for morph-into. */
-.morph-button-fixed .ng-morph-content > div {
-  visibility: hidden;
-  height: 0;
-  opacity: 0;
-  -webkit-transition: opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s;
-  transition: opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s;
-}
-
-/* RF: Need for morph-into. */
-.morph-button-fixed.open .ng-morph-content > div {
-  visibility: visible;
-  height: auto;
-  opacity: 1;
-  -webkit-transition: opacity 0.3s 0.5s;
-  transition: opacity 0.3s 0.5s;
-}
-
-/* RF: do not  need.. makes button clickable when morphed el is open*/
-.morph-button-fixed.active > button {
-  z-index: 2000;
-}
-
-/* RF: maybe need.. makes morphed el layerd above grey screen */
-.morph-button-fixed.active .ng-morph-content {
-  z-index: 1900;
-}
-
-/* morphed-button modal */
-.morph-button-modal::before {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 800;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  content: '';
-  opacity: 0;
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-  pointer-events: none;
-}
-
-.morph-button-modal.open::before {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.morph-button-modal.active::before {
-  z-index: 1800;
-}
-
-.morph-button-modal .ng-morph-content {
-  pointer-events: none;
-  /*overflow: hidden;*/
-
-  -webkit-transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
-  transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
-}
-
-/* RF: required for morph-into container */
-/* sets morph-into size and position. this will be determined in the compile fn */
-.morph-button-modal.open .ng-morph-content {
-  pointer-events: auto;
-  top: 50% !important; /* affects morph-into container position */
-  left: 50% !important; /* affects morph-into container position */
-  margin: -200px 0 0 -200px;
+.login {
+  background: #e85657;
   width: 400px;
   height: 400px;
-
-  /* animate transition to morph-into element */
-  -webkit-transition: width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
-  transition: width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
-}
-
-/* RF: not requried. styling only */
-.morph-button-modal-2 > button,
-.morph-button-modal-2 .ng-morph-content {
-  background-color: #e75854;
   color: #fcfcfc;
+  font-weight: bold;
 }
-
-/* RF: affects morph-into position and size */;
-.morph-button-modal-2.open .ng-morph-content {
-  margin: -210px 0 0 -170px;
-  width: 400px;
-  height: 400px;
+.close-x {
+  cursor: pointer;
+  margin-left:95%;
+  color: #fcfcfc;
+  font-weight: bold;
 }
-
-.morph-button-modal-2.open .ng-morph-content > div {
-  -webkit-transition: opacity 0.3s 0.3s;
-  transition: opacity 0.3s 0.3s;
+.about {
+  width: 200px;
+  height: 25px;
+  margin: 0 auto;
+  background: #e85657;
+  color: #fcfcfc;
+  padding: 50px;
+}
+.about-container: {
+  width: 100%;
+  height: 800px;
+  background: #f9f6e5;
+}
+.person-container {
+  margin-top: 50px;
+}
+.person-container img {
+  width: 60%;
+  border-radius: 999px;
+}
+.person {
+  color: #fcfcfc;
+  text-align: left;
 }
