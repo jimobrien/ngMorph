@@ -3,54 +3,21 @@
   <head>
     <title></title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
-    <style>
-      body {
-        font-family: 'Open Sans'
-      }
-      button {
-        width: 250px;
-        height: 50px;
-        background: #e85657;
-        color: #fcfcfc;
-        font-weight: bold;
-        text-transform: uppercase;
-        outline: none;
-        cursor: pointer;
-        border: none;
-      }
-      .container {
-        width: 1000px;
-        margin: 75px auto;
-        text-align: center;
-      }
-      .login {
-        background: #e85657;
-        width: 400px;
-        height: 400px;
-      }
-      .close {
-        cursor: pointer;
-        
-        margin-right: -90%;
-        font-size: 20px;
-        font-weight: bold;
-      }
-      .terms {
-        with: 800px;
-        height: 800px;
-      }
-    </style>
   </head>
   <body ng-controller="AppCtrl">
 
     <div class="container">
-      <button morphable="morphSettings" morph-into="loginForm"> Sign in </button>
+      <button morphable="example1"> Sign In</button>      
+    </div>
+    
+    <div class="container">
+      <button morphable="example2"> About</button>
     </div>
 
     <script src="../bower_components/angular/angular.js"></script>
-    <script src="app.js"></script>
     <script src="ngMorph.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
