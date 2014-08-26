@@ -10,7 +10,6 @@ angular.module('ngMorph', [])
     var isMorphed = false;
     var Morphable = element;
     var MorphableBoundingBox = element[0].getBoundingClientRect();
-    var MorphWrapper;
     var MorphContentWrapper;
     var MorphContent;
     var ClosingEl;
@@ -25,31 +24,23 @@ angular.module('ngMorph', [])
       '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
       'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
     };
-
-    var WrapperStyle = { 
-      height: MorphableBoundingBox.height + 'px',
-      width: MorphableBoundingBox.width + 'px',  
-      display: 'inline-block'
-    };
-
-    MorphWrapper = $compile('<morph-wrapper />')(scope);
+    
     MorphContentWrapper = $compile('<morph-content template="{{template}}">')(scope);
     MorphContent = angular.element(MorphContentWrapper[0].children[0]);
     window.mc = MorphContent[0];
 
-    MorphWrapper.css(WrapperStyle);
+    
     MorphContentWrapper.css(ContentStyle);
 
     Morphable.css({
       'z-index': '1000',
-      'width': '100%',
-      'height': '100%',
+      // 'width': '100%',
+      // 'height': '100%',
       'outline': 'none',
       '-webkit-transition': 'opacity 0.1s 0.5s',
       'transition': 'opacity 0.1s 0.5s'
     });
 
-    Morphable.wrap(MorphWrapper);
     Morphable.after(MorphContentWrapper);
 
 
@@ -97,7 +88,6 @@ angular.module('ngMorph', [])
 
       } else {
         setTimeout( function () {
-          MorphWrapper.css(WrapperStyle);
           MorphContentWrapper.css({
             margin: 0,
             top: MorphableBoundingBox.top + 'px',
@@ -152,15 +142,3 @@ angular.module('ngMorph', [])
     }
   }; 
 }])
-.directive('morphWrapper', [function () {
-  return {
-    restrict: 'E',
-    // template: '<div class="morph-button morph-button-modal morph-button-modal-2 morph-button-fixed"></div>',
-    // replace: true,
-    link: function (scope, element, attrs) {
-
-      element.addClass('');
-      
-    }
-  };
-}]);
