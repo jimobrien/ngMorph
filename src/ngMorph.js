@@ -203,7 +203,18 @@ angular.module('ngMorph', [])
         
 
       } else {
-
+        setTimeout( function () {
+          MorphWrapper.css(WrapperStyle);
+          MorphContentWrapper.css(ContentStyle);
+          Morphable.css({
+            'z-index': '1000',
+            'width': '100%',
+            'height': '100%',
+            'outline': 'none',
+            '-webkit-transition': 'opacity 0.1s 0.5s',
+            'transition': 'opacity 0.1s 0.5s'
+          });
+        }, 25);
       }
 
       isMorphed = !isMorphed;
