@@ -13,6 +13,7 @@ angular.module('ngMorph', [])
     var MorphWrapper;
     var MorphContentWrapper;
     var MorphContent;
+    var ClosingEl;
 
     var ContentStyle = {
       'position': 'fixed',
@@ -34,6 +35,7 @@ angular.module('ngMorph', [])
     MorphWrapper = $compile('<morph-wrapper />')(scope);
     MorphContentWrapper = $compile('<morph-content template="{{template}}">')(scope);
     MorphContent = angular.element(MorphContentWrapper[0].children[0]);
+    window.mc = MorphContent[0];
 
     MorphWrapper.css(WrapperStyle);
     MorphContentWrapper.css(ContentStyle);
@@ -50,22 +52,24 @@ angular.module('ngMorph', [])
     Morphable.wrap(MorphWrapper);
     Morphable.after(MorphContentWrapper);
 
+
+
     Morphable.bind('click', function () {
       if ( !isMorphed ) {
         setTimeout( function() {
           MorphContentWrapper[0].style.left = MorphableBoundingBox.left + 'px';
           MorphContentWrapper[0].style.top = MorphableBoundingBox.top + 'px';
 
-          Morphable.css({
-            'z-index': 2000,
-            'opacity': 0,
-            '-webkit-transition': 'opacity 0.1s',
-            'transition': 'opacity 0.1s',
-          });
-
           setTimeout( function() {
             MorphContentWrapper[0].style.width = 400 + 'px';
             MorphContentWrapper[0].style.height = 400 + 'px';
+
+            Morphable.css({
+              'z-index': 2000,
+              'opacity': 0,
+              '-webkit-transition': 'opacity 0.1s',
+              'transition': 'opacity 0.1s',
+            });
 
             MorphContentWrapper.css({
               'z-index': 1900,
@@ -102,6 +106,7 @@ angular.module('ngMorph', [])
           MorphContentWrapper.css(ContentStyle);
           MorphContent.css({
             'transition': 'opacity 0.3s 0.3s',
+            '-webkit-transition': 'opacity 0.1s 0.5s',
             'visibility': 'hidden',
             'height': '0',
             'opacity': '0'
@@ -117,6 +122,10 @@ angular.module('ngMorph', [])
 
       isMorphed = !isMorphed;
     });
+
+    if ( scope.settings.closingEl ) {
+      // set up closing bind
+    }
 
   }
  };
