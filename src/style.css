@@ -15,7 +15,7 @@
 }
 
 /* RF: Need for morph-into. */
-.morph-content {
+.ng-morph-content {
   position: fixed; /* need */
   z-index: 900; /* need */
   opacity: 0; /* need */
@@ -25,12 +25,12 @@
 }
 
 /* RF: Need for wrapper. */
-.morph-button-fixed.open .morph-content {
+.morph-button-fixed.open .ng-morph-content {
   opacity: 1;
 }
 
 /* RF: Need for morph-into. */
-.morph-button-fixed .morph-content > div {
+.morph-button-fixed .ng-morph-content > div {
   visibility: hidden;
   height: 0;
   opacity: 0;
@@ -39,7 +39,7 @@
 }
 
 /* RF: Need for morph-into. */
-.morph-button-fixed.open .morph-content > div {
+.morph-button-fixed.open .ng-morph-content > div {
   visibility: visible;
   height: auto;
   opacity: 1;
@@ -53,7 +53,7 @@
 }
 
 /* RF: maybe need.. makes morphed el layerd above grey screen */
-.morph-button-fixed.active .morph-content {
+.morph-button-fixed.active .ng-morph-content {
   z-index: 1900;
 }
 
@@ -82,7 +82,7 @@
   z-index: 1800;
 }
 
-.morph-button-modal .morph-content {
+.morph-button-modal .ng-morph-content {
   pointer-events: none;
   /*overflow: hidden;*/
 
@@ -92,7 +92,7 @@
 
 /* RF: required for morph-into container */
 /* sets morph-into size and position. this will be determined in the compile fn */
-.morph-button-modal.open .morph-content {
+.morph-button-modal.open .ng-morph-content {
   pointer-events: auto;
   top: 50% !important; /* affects morph-into container position */
   left: 50% !important; /* affects morph-into container position */
@@ -107,19 +107,19 @@
 
 /* RF: not requried. styling only */
 .morph-button-modal-2 > button,
-.morph-button-modal-2 .morph-content {
+.morph-button-modal-2 .ng-morph-content {
   background-color: #e75854;
   color: #fcfcfc;
 }
 
 /* RF: affects morph-into position and size */;
-.morph-button-modal-2.open .morph-content {
+.morph-button-modal-2.open .ng-morph-content {
   margin: -210px 0 0 -170px;
   width: 400px;
   height: 400px;
 }
 
-.morph-button-modal-2.open .morph-content > div {
+.morph-button-modal-2.open .ng-morph-content > div {
   -webkit-transition: opacity 0.3s 0.3s;
   transition: opacity 0.3s 0.3s;
 }

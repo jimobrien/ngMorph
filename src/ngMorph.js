@@ -97,7 +97,6 @@ angular.module('ngMorph', [])
       } else {
         setTimeout( function() {
           angular.element(self.morphWrapper).addClass('open');
-          angular.element(self.morphWrapper).addClass('open');
           self.morphContent.style.width = 400 + 'px';
           self.morphContent.style.height = 400 + 'px';
         }, 25 );
@@ -124,10 +123,17 @@ angular.module('ngMorph', [])
     var boundingBox = element[0].getBoundingClientRect();
     var morphWrapper;
     var morphContent;
+    var isMorphed = false;
 
     var ContentStyle = {
+      'position': 'fixed',
+      'z-index': '900',
+      'opacity': '0',
       height: boundingBox.height + 'px',
-      width: boundingBox.width + 'px',      
+      width: boundingBox.width + 'px', 
+      'pointer-events': 'none',
+      '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+      'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
     };
 
     var WrapperStyle = { 
@@ -142,11 +148,70 @@ angular.module('ngMorph', [])
     morphWrapper.css(WrapperStyle);
     morphContent.css(ContentStyle);
 
+    element.css({
+      'z-index': '1000',
+      'width': '100%',
+      'height': '100%',
+      'outline': 'none',
+      '-webkit-transition': 'opacity 0.1s 0.5s',
+      'transition': 'opacity 0.1s 0.5s'
+    });
+
     element.wrap(morphWrapper);
     element.after(morphContent);
 
     // initialize morph engine
-    var me = MorphEngine.init(morphWrapper, element, morphContent, scope.settings);
+    // var me = MorphEngine.init(morphWrapper, element, morphContent, scope.settings);
+
+    element.bind('click', function () {
+      if ( !isMorphed ) {
+        setTimeout( function() {
+          morphContent[0].style.left = element[0].getBoundingClientRect().left + 'px';
+          morphContent[0].style.top = element[0].getBoundingClientRect().top + 'px';
+
+          console.log()
+
+          element.css({
+            'z-index': 2000,
+            'opacity': 0,
+            '-webkit-transition': 'opacity 0.1s',
+            'transition': 'opacity 0.1s',
+          })
+
+          setTimeout( function() {
+            morphContent[0].style.width = 400 + 'px';
+            morphContent[0].style.height = 400 + 'px';
+            morphContent.css({
+              'z-index': 1900,
+              'opacity': 1,
+              'background': '#e75854',
+              'pointer-events': 'auto',
+              top: '50%',
+              left: '50%',
+              // margin: '-200px 0 0-200px',
+              '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+              'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
+            });
+
+            var content = angular.element(morphContent[0].children[0]);
+            content.css({
+              'transition': 'opacity 0.3s 0.3s',
+              'visibility': 'visible',
+              'height': 'auto',
+              'opacity': '1'
+            });
+
+          }, 25);
+
+        }, 25);
+        
+
+      } else {
+
+      }
+
+      isMorphed = !isMorphed;
+    });
 
   }
  };
@@ -157,17 +222,18 @@ angular.module('ngMorph', [])
     template: '<div></div>',
     replace: true,
     link: function (scope, element, attrs) {
-      
-      element.addClass('morph-content');
     
-        var innerContent = $compile(attrs.template)(scope);
-        // element.css({
-        //   height: scope.originDimensions.height + 'px',
-        //   width: scope.originDimensions.width + 'px'
-        // });
-        
-        element.append(innerContent);
-        attrs.$set('template');
+      var content = $compile(attrs.template)(scope);
+
+      content.css({
+        'visibility': 'hidden',
+        'height': '0',
+        'opacity': '0',
+        '-webkit-transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s',
+        'transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s'
+      });
+
+      element.append(content);
 
     }
   }; 
@@ -175,9 +241,11 @@ angular.module('ngMorph', [])
 .directive('morphWrapper', [function () {
   return {
     restrict: 'E',
+    // template: '<div class="morph-button morph-button-modal morph-button-modal-2 morph-button-fixed"></div>',
+    // replace: true,
     link: function (scope, element, attrs) {
 
-      element.addClass('morph-button morph-button-modal morph-button-modal-2 morph-button-fixed');
+      element.addClass('');
       
     }
   };
