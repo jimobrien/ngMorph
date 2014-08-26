@@ -3,8 +3,6 @@
   <head>
     <title></title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="style.css">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
     <style>
       button {
         width: 250px;
@@ -16,6 +14,63 @@
         outline: none;
         cursor: pointer;
         border: none;
+      }
+      
+      form {
+        position: relative;
+        text-align: left;
+        padding: 10px 30px;
+
+      }
+
+      form h2 {
+        margin: 0;
+        text-align: center;
+        font-weight: 300;
+        font-size: 3.5em;
+      }
+
+      form p {
+        margin: 0 0 5px 0;
+        font-size: 0.7em;
+      }
+
+      form label {
+        display: block;
+        padding: 10px 0 0;
+        color: #d5bba4;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: bold;
+      }
+
+      form input[type="text"],
+      form input[type="password"] {
+        padding: 10px;
+        width: 95%;
+        border: 2px solid #ebd3bd;
+        background: transparent;
+        color: #fcfcfc;
+        font-weight: 300;
+        font-size: 2.2em;
+      }
+
+      form input:focus {
+        outline: 0;
+      }
+
+      form button {
+        display: block;
+        margin-top: 2.5em;
+        padding: 1em;
+        width: 100%;
+        border: none;
+        background: #f9f6e5;
+        color: #e75854;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 800;
+        font-size: 1.25em;
       }
       .container {
         width: 1000px;
