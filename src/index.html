@@ -32,9 +32,8 @@
   <body ng-controller="AppCtrl">
 
     <div class="container">
-      <button morphable="morphSettings"> Sign in 
-        <morph-content template="morphSettings.morphInto" />
-      </button>      
+      <button morphable="morphSettings" template="loginForm"> Sign in </button>
+      <!-- <morph-content template="{{loginForm}}"/> -->
     </div>
 
     <script src="../bower_components/angular/angular.js"></script>

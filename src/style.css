@@ -15,11 +15,7 @@
 sets origin wrapper size. This will be set based on the origin
 width/height in the compile fn.
  */
-.morph-button-fixed,
-.morph-button-fixed .morph-content {
-  width: 200px;
-  height: 50px;
-}
+
 
 /* RF: sets origin size. This will be known from within the directive
 through el.width/height accessors.

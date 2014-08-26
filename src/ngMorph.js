@@ -33,8 +33,8 @@ angular.module('ngMorph', [])
     // state
     this.expanded = false;
     // content el
-    this.contentEl = document.querySelector( '.morph-content' );
-    console.log(this.contentEl);
+    // this.contentEl = document.querySelector( '.morph-content' );
+
     // init events
     this._initEvents();
   };
@@ -42,7 +42,7 @@ angular.module('ngMorph', [])
   UIMorphingButton.prototype._initEvents = function() {
     var self = this;
     // open
-    this.button.addEventListener( 'click', function() { self.toggle(); } );
+    this.element.addEventListener( 'click', function() { self.toggle(); } );
     // close
     if( this.options.closeEl !== '' ) {
       var closeEl = this.el.querySelector( this.options.closeEl );
@@ -58,18 +58,17 @@ angular.module('ngMorph', [])
     // callback
     if( this.expanded ) {
       this.options.onBeforeClose();
-    }
-    else {
+    } else {
       // add class active (solves z-index problem when more than one button is in the page)
       // classie.addClass( this.el, 'active' ); // replace with jquery
-      $(this.el).addClass('active');
+      angular.element(this.el).addClass('active');
       this.options.onBeforeOpen();
     }
 
     this.isAnimating = true;
 
-    var self = this,
-      onEndTransitionFn = function( ev ) {
+    var self = this;
+    var onEndTransitionFn = function( ev ) {
         if( ev.target !== this ) return false;
 
         if( support.transitions ) {
@@ -86,7 +85,7 @@ angular.module('ngMorph', [])
         if( self.expanded ) {
           // remove class active (after closing)
           // classie.removeClass( self.el, 'active' );
-          $(self.el).removeClass('active');
+          angular.element(self.el).removeClass('active');
           self.options.onAfterClose();
         }
         else {
@@ -94,7 +93,7 @@ angular.module('ngMorph', [])
         }
 
         self.expanded = !self.expanded;
-      };
+    };
 
     if( support.transitions ) {
       this.contentEl.addEventListener( transEndEventName, onEndTransitionFn );
@@ -104,33 +103,30 @@ angular.module('ngMorph', [])
     }
       
     // set the left and top values of the contentEl (same like the button)
-    var buttonPos = this.button.getBoundingClientRect();
+    var elementPos = this.element.getBoundingClientRect();
     // need to reset
-    // classie.addClass( this.contentEl, 'no-transition' );
-    $(this.contentEl).addClass('no-transition');
+    // angular.element(this.contentEl).addClass('no-transition');
+    
     this.contentEl.style.left = 'auto';
     this.contentEl.style.top = 'auto';
     
     // add/remove class "open" to the button wraper
     setTimeout( function() { 
-      self.contentEl.style.left = buttonPos.left + 'px';
-      self.contentEl.style.top = buttonPos.top + 'px';
+
+      self.contentEl.style.left = elementPos.left + 'px';
+      self.contentEl.style.top = elementPos.top + 'px';
       
       if( self.expanded ) {
-        // classie.removeClass( self.contentEl, 'no-transition' );
-        // classie.removeClass( self.el, 'open' );
-        $(self.contentEl).removeClass('no-transition');
-        $(self.el).removeClass('open');
-      }
-      else {
+        angular.element(self.contentEl).removeClass('no-transition');
+        angular.element(self.el).removeClass('open');
+      } else {
         setTimeout( function() {
-          $(self.contentEl).removeClass('no-transition');
-          $(self.el).addClass('open');
-          // classie.removeClass( self.contentEl, 'no-transition' );
-          // classie.addClass( self.el, 'open' ); 
+          angular.element(self.contentEl).removeClass('no-transition');
+          angular.element(self.el).addClass('open');
 
-          $(self.contentEl).removeClass('no-transition');
-          $(self.el).addClass('open');
+
+          angular.element(self.contentEl).removeClass('no-transition');
+          angular.element(self.el).addClass('open');
         }, 25 );
       }
     }, 25 );
@@ -143,16 +139,77 @@ angular.module('ngMorph', [])
   };
 
 }])
-.directive('morphable', ['$compile', function ($compile) {
+.directive('morphable', ['$compile', 'MorphEngine', function ($compile, MorphEngine) {
  return {
-  link: function () {
+  restrict: 'A',
+  // template: '<div ng-transclude><morph-content template="{{template}}"/></div>',
+  scope: {
+    template: '='
+  },
+  link: function (scope, element, attrs) {
+
+    var settings = scope.settings;
+    var morphWrapper;
+    var morphContent;
     
+    scope.originDimensions = element[0].getBoundingClientRect();
+
+    scope.contentStyle = {
+      height: scope.originDimensions.height + 'px',
+      width: scope.originDimensions.width + 'px',      
+    };
+
+    scope.wrapperCfg = { 
+      height: scope.originDimensions.height + 'px',
+      width: scope.originDimensions.width + 'px',  
+      display: 'inline-block'
+    };
+
+    morphWrapper = $compile('<morph-wrapper />')(scope);
+    morphContent = $compile('<morph-content template="{{template}}">')(scope);
+    morphContent.css(scope.contentStyle);
+
+    element.wrap(morphWrapper);
+    element.after(morphContent);
+
+    var me = MorphEngine.init(morphWrapper, element, morphContent);
+
+
   }
  };
 }])
 .directive('morphContent', ['$compile', function ($compile) {
- 
-}])
-.directive('morphWrapper', ['MorphEngine', function (MorphEngine) {
+  return {
+    restrict: 'E',
+    template: '<div></div>',
+    replace: true,
+    link: function (scope, element, attrs) {
+      
+      element.addClass('morph-content');
+    
+        var innerContent = $compile(attrs.template)(scope);
+        // element.css({
+        //   height: scope.originDimensions.height + 'px',
+        //   width: scope.originDimensions.width + 'px'
+        // });
+        
+        element.append(innerContent);
 
+    }
+  }; 
+}])
+.directive('morphWrapper', [function () {
+  return {
+    restrict: 'E',
+    link: function (scope, element, attrs) {
+      element.css({
+        width: scope.originDimensions.width + 'px',
+        height: scope.originDimensions.height + 'px',
+        display: 'inline-block'
+      });
+
+      element.addClass('morph-button morph-button-modal morph-button-modal-2 morph-button-fixed');
+      
+    }
+  };
 }]);
