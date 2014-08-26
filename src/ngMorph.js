@@ -7,7 +7,7 @@ angular.module('ngMorph', [])
       'msTransition': 'MSTransitionEnd',
       'transition': 'transitionend'
     };
-    
+
   var transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
 
   function Morphable (morphWrapper, morphable, morphContent, options) {
@@ -116,7 +116,7 @@ angular.module('ngMorph', [])
  return {
   restrict: 'A',
   scope: {
-    template: '=',
+    template: '=morphInto',
     settings: '=morphable'
   },
   link: function (scope, element, attrs) {
@@ -146,8 +146,7 @@ angular.module('ngMorph', [])
     element.after(morphContent);
 
     // initialize morph engine
-    var me = MorphEngine.init(morphWrapper, element, morphContent, scope.settings);
-
+    MorphEngine.init(morphWrapper, element, morphContent, scope.settings);
   }
  };
 }])
@@ -159,15 +158,8 @@ angular.module('ngMorph', [])
     link: function (scope, element, attrs) {
       
       element.addClass('morph-content');
-    
-        var innerContent = $compile(attrs.template)(scope);
-        // element.css({
-        //   height: scope.originDimensions.height + 'px',
-        //   width: scope.originDimensions.width + 'px'
-        // });
-        
-        element.append(innerContent);
-        attrs.$set('template');
+      var innerContent = $compile(attrs.template)(scope);
+      element.append(innerContent);
 
     }
   }; 
