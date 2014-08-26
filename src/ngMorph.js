@@ -124,6 +124,7 @@ angular.module('ngMorph', [])
     var MorphableBoundingBox = element[0].getBoundingClientRect();
     var MorphWrapper;
     var MorphContentWrapper;
+    var MorphContent;
 
     var ContentStyle = {
       'position': 'fixed',
@@ -144,6 +145,7 @@ angular.module('ngMorph', [])
 
     MorphWrapper = $compile('<morph-wrapper />')(scope);
     MorphContentWrapper = $compile('<morph-content template="{{template}}">')(scope);
+    MorphContent = angular.element(MorphContentWrapper[0].children[0]);
 
     MorphWrapper.css(WrapperStyle);
     MorphContentWrapper.css(ContentStyle);
@@ -189,7 +191,6 @@ angular.module('ngMorph', [])
               'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
             });
 
-            var MorphContent = angular.element(MorphContentWrapper[0].children[0]);
             MorphContent.css({
               'transition': 'opacity 0.3s 0.3s',
               'visibility': 'visible',
@@ -205,12 +206,21 @@ angular.module('ngMorph', [])
       } else {
         setTimeout( function () {
           MorphWrapper.css(WrapperStyle);
+          MorphContentWrapper.css({
+            margin: 0,
+            top: MorphableBoundingBox.top + 'px',
+            left: MorphableBoundingBox.left + 'px'
+          });
           MorphContentWrapper.css(ContentStyle);
+          MorphContent.css({
+            'transition': 'opacity 0.3s 0.3s',
+            'visibility': 'hidden',
+            'height': '0',
+            'opacity': '0'
+          });
           Morphable.css({
             'z-index': '1000',
-            'width': '100%',
-            'height': '100%',
-            'outline': 'none',
+            'opacity': 1,
             '-webkit-transition': 'opacity 0.1s 0.5s',
             'transition': 'opacity 0.1s 0.5s'
           });
