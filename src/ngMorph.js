@@ -119,36 +119,36 @@ angular.module('ngMorph', [])
     settings: '=morphable'
   },
   link: function (scope, element, attrs) {
-
-    var boundingBox = element[0].getBoundingClientRect();
-    var morphWrapper;
-    var morphContent;
     var isMorphed = false;
+    var Morphable = element;
+    var MorphableBoundingBox = element[0].getBoundingClientRect();
+    var MorphWrapper;
+    var MorphContentWrapper;
 
     var ContentStyle = {
       'position': 'fixed',
       'z-index': '900',
       'opacity': '0',
-      height: boundingBox.height + 'px',
-      width: boundingBox.width + 'px', 
+      height: MorphableBoundingBox.height + 'px',
+      width: MorphableBoundingBox.width + 'px', 
       'pointer-events': 'none',
       '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
       'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
     };
 
     var WrapperStyle = { 
-      height: boundingBox.height + 'px',
-      width: boundingBox.width + 'px',  
+      height: MorphableBoundingBox.height + 'px',
+      width: MorphableBoundingBox.width + 'px',  
       display: 'inline-block'
     };
 
-    morphWrapper = $compile('<morph-wrapper />')(scope);
-    morphContent = $compile('<morph-content template="{{template}}">')(scope);
+    MorphWrapper = $compile('<morph-wrapper />')(scope);
+    MorphContentWrapper = $compile('<morph-content template="{{template}}">')(scope);
 
-    morphWrapper.css(WrapperStyle);
-    morphContent.css(ContentStyle);
+    MorphWrapper.css(WrapperStyle);
+    MorphContentWrapper.css(ContentStyle);
 
-    element.css({
+    Morphable.css({
       'z-index': '1000',
       'width': '100%',
       'height': '100%',
@@ -157,44 +157,40 @@ angular.module('ngMorph', [])
       'transition': 'opacity 0.1s 0.5s'
     });
 
-    element.wrap(morphWrapper);
-    element.after(morphContent);
+    Morphable.wrap(MorphWrapper);
+    Morphable.after(MorphContentWrapper);
 
-    // initialize morph engine
-    // var me = MorphEngine.init(morphWrapper, element, morphContent, scope.settings);
-
-    element.bind('click', function () {
+    Morphable.bind('click', function () {
       if ( !isMorphed ) {
         setTimeout( function() {
-          morphContent[0].style.left = element[0].getBoundingClientRect().left + 'px';
-          morphContent[0].style.top = element[0].getBoundingClientRect().top + 'px';
+          MorphContentWrapper[0].style.left = MorphableBoundingBox.left + 'px';
+          MorphContentWrapper[0].style.top = MorphableBoundingBox.top + 'px';
 
-          console.log()
-
-          element.css({
+          Morphable.css({
             'z-index': 2000,
             'opacity': 0,
             '-webkit-transition': 'opacity 0.1s',
             'transition': 'opacity 0.1s',
-          })
+          });
 
           setTimeout( function() {
-            morphContent[0].style.width = 400 + 'px';
-            morphContent[0].style.height = 400 + 'px';
-            morphContent.css({
+            MorphContentWrapper[0].style.width = 400 + 'px';
+            MorphContentWrapper[0].style.height = 400 + 'px';
+
+            MorphContentWrapper.css({
               'z-index': 1900,
               'opacity': 1,
               'background': '#e75854',
               'pointer-events': 'auto',
               top: '50%',
               left: '50%',
-              // margin: '-200px 0 0-200px',
+              margin: '-200px 0 0-200px',
               '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
               'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
             });
 
-            var content = angular.element(morphContent[0].children[0]);
-            content.css({
+            var MorphContent = angular.element(MorphContentWrapper[0].children[0]);
+            MorphContent.css({
               'transition': 'opacity 0.3s 0.3s',
               'visibility': 'visible',
               'height': 'auto',
