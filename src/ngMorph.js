@@ -1,4 +1,13 @@
-angular.module('ngMorph', [])
+angular.module('ngMorph', ['ngAnimate'])
+.animation('.ng-morphable', [function () {
+  
+}])
+.animation('.ng-morph-wrapper', [function () {
+  
+}])
+.animation('.ng-morph-content', [function () {
+  
+}])
 .directive('morphable', ['$compile', function ($compile) {
  return {
   restrict: 'A',
@@ -12,12 +21,16 @@ angular.module('ngMorph', [])
     var MorphableBoundingBox = element[0].getBoundingClientRect();
     var MorphContentWrapper;
     var MorphContent;
+    var MorphContentBoundingBox;
     var ClosingEl;
 
     var ContentStyle = {
       'position': 'fixed',
       'z-index': '900',
       'opacity': '0',
+      margin: 0,
+      top: MorphableBoundingBox.top + 'px',
+      left: MorphableBoundingBox.left + 'px',
       height: MorphableBoundingBox.height + 'px',
       width: MorphableBoundingBox.width + 'px', 
       'pointer-events': 'none',
@@ -27,10 +40,9 @@ angular.module('ngMorph', [])
     
     MorphContentWrapper = $compile('<morph-content template="{{template}}">')(scope);
     MorphContent = angular.element(MorphContentWrapper[0].children[0]);
-    window.mc = MorphContent[0];
 
-    
-    MorphContentWrapper.css(ContentStyle);
+    Morphable.after(MorphContentWrapper);
+    MorphContentBoundingBox = MorphContent[0].getBoundingClientRect();
 
     Morphable.css({
       'z-index': '1000',
@@ -41,73 +53,68 @@ angular.module('ngMorph', [])
       'transition': 'opacity 0.1s 0.5s'
     });
 
-    Morphable.after(MorphContentWrapper);
-
-
+    MorphContentWrapper.css(ContentStyle);
 
     Morphable.bind('click', function () {
       if ( !isMorphed ) {
+        MorphContentWrapper[0].style.left = MorphableBoundingBox.left + 'px';
+        MorphContentWrapper[0].style.top = MorphableBoundingBox.top + 'px';
+
         setTimeout( function() {
-          MorphContentWrapper[0].style.left = MorphableBoundingBox.left + 'px';
-          MorphContentWrapper[0].style.top = MorphableBoundingBox.top + 'px';
+          MorphContentWrapper[0].style.width = MorphContentBoundingBox.width + 'px';
+          MorphContentWrapper[0].style.height = MorphContentBoundingBox.height + 'px';
 
-          setTimeout( function() {
-            MorphContentWrapper[0].style.width = 400 + 'px';
-            MorphContentWrapper[0].style.height = 400 + 'px';
+          Morphable.css({
+            'z-index': 2000,
+            'opacity': 0,
+            '-webkit-transition': 'opacity 0.1s',
+            'transition': 'opacity 0.1s',
+          });
 
-            Morphable.css({
-              'z-index': 2000,
-              'opacity': 0,
-              '-webkit-transition': 'opacity 0.1s',
-              'transition': 'opacity 0.1s',
-            });
+          MorphContentWrapper.css({
+            'z-index': 1900,
+            'opacity': 1,
+            'background': '#e75854',
+            'pointer-events': 'auto',
+            top: '50%',
+            left: '50%',
+            'margin': '-' + ( MorphContentBoundingBox.height / 2 ) + 'px 0 0 -' + ( MorphContentBoundingBox.width / 2 ) + 'px',
+            '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+            'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
+          });
+          console.log('-' + ( MorphContentBoundingBox.height / 2 ) + 'px 0 0 -' + ( MorphContentBoundingBox.width / 2 ) + 'px');
 
-            MorphContentWrapper.css({
-              'z-index': 1900,
-              'opacity': 1,
-              'background': '#e75854',
-              'pointer-events': 'auto',
-              top: '50%',
-              left: '50%',
-              margin: '-200px 0 0-200px',
-              '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
-              'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
-            });
-
-            MorphContent.css({
-              'transition': 'opacity 0.3s 0.3s',
-              'visibility': 'visible',
-              'height': 'auto',
-              'opacity': '1'
-            });
-
-          }, 25);
+          MorphContent.css({
+            'transition': 'opacity 0.3s 0.4s ease',
+            'visibility': 'visible',
+            'height': 'auto',
+            'opacity': '1'
+          });
 
         }, 25);
-        
 
       } else {
-        setTimeout( function () {
-          MorphContentWrapper.css({
-            margin: 0,
-            top: MorphableBoundingBox.top + 'px',
-            left: MorphableBoundingBox.left + 'px'
-          });
+
           MorphContentWrapper.css(ContentStyle);
+
           MorphContent.css({
-            'transition': 'opacity 0.3s 0.3s',
-            '-webkit-transition': 'opacity 0.1s 0.5s',
-            'visibility': 'hidden',
+            'transition': 'opacity 0.3s 0.3s ease',
+            '-webkit-transition': 'opacity 0.3s 0.3s ease',
             'height': '0',
-            'opacity': '0'
+            'opacity': '0',
           });
+
+          // setting visibility hidden in the above css() call results in the content being hidden too soon
+          setTimeout( function () {
+            MorphContent.css('visibility', 'hidden');
+          }, 100);
+
           Morphable.css({
             'z-index': '1000',
             'opacity': 1,
             '-webkit-transition': 'opacity 0.1s 0.5s',
             'transition': 'opacity 0.1s 0.5s'
           });
-        }, 25);
       }
 
       isMorphed = !isMorphed;
@@ -131,7 +138,6 @@ angular.module('ngMorph', [])
 
       content.css({
         'visibility': 'hidden',
-        'height': '0',
         'opacity': '0',
         '-webkit-transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s',
         'transition': 'opacity 0.1s, visibility 0s 0.1s, height 0s 0.1s'
@@ -141,4 +147,4 @@ angular.module('ngMorph', [])
 
     }
   }; 
-}])
+}]);
