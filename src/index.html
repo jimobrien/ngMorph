@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <style>
       body {
-        font-family: 'Open Sans' 
+        font-family: 'Open Sans';
+        background: #f9f6e5;
       }
       button {
         width: 250px;
@@ -82,8 +83,8 @@
       }
       .login {
         background: #e85657;
-        width: 500px;
-        height: 500px;
+        width: 400px;
+        height: 400px;
         color: #fcfcfc;
         font-weight: bold;
       }
@@ -91,15 +92,26 @@
         cursor: pointer;
         margin-left:95%;
       }
+      .welcome {
+        width: 2000px;
+        height: 2000px;
+        background: #f9f6e5;
+        left: 0;
+        top: 0;
+      }
     </style>
   </head>
   <body ng-controller="AppCtrl">
 
-    <div class="container">
+    <!-- <div class="container"> -->
       <button morphable="morphSettings" template="loginForm"> Sign in </button>
-    </div>
+    <!-- </div> -->
+    <!-- <div class="container">
+      <button morphable="morphSettings" template="loginForm"> Sign in </button>
+    </div> -->
 
     <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
     <script src="app.js"></script>
     <script src="ngMorph.js"></script>
   </body>
