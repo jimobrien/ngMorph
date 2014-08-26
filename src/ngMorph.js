@@ -7,15 +7,14 @@ angular.module('ngMorph', [])
       'msTransition': 'MSTransitionEnd',
       'transition': 'transitionend'
     },
-    transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ],
-    support = { transitions : Modernizr.csstransitions };
+    transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
 
-  function UIMorphingButton(wrapper, morphable, morphInto, options) {
-    this.el = wrapper[0];
-    this.element = morphable[0];
-    this.contentEl = morphInto[0];
-    this.options = angular.extend( {}, this.options );
-    angular.extend( this.options, options );
+  function UIMorphingButton(morphWrapper, morphable, morphContent, options) {
+    this.morphWrapper = morphWrapper[0];
+    this.morphContent = morphContent[0];
+    this.morphable    = morphable[0];
+    this.options      = angular.extend( this.options, options );
+
     this._init();
   }
 
@@ -28,105 +27,81 @@ angular.module('ngMorph', [])
   };
 
   UIMorphingButton.prototype._init = function() {
-    // the element
-    // this.element = this.el.querySelector( 'button' );
-    // state
     this.expanded = false;
-    // content el
-    // this.contentEl = document.querySelector( '.morph-content' );
-
-    // init events
     this._initEvents();
   };
 
   UIMorphingButton.prototype._initEvents = function() {
     var self = this;
+    
     // open
-    this.element.addEventListener( 'click', function() { self.toggle(); } );
+    this.morphable.addEventListener( this.options.trigger, function() { self.toggle(); } );
+
     // close
     if( this.options.closeEl !== '' ) {
-      var closeEl = this.el.querySelector( this.options.closeEl );
+      var closeEl = this.morphWrapper.querySelector( this.options.closeEl );
+
       if( closeEl ) {
-        closeEl.addEventListener( 'click', function() { self.toggle(); } );
+        closeEl.addEventListener( this.options.trigger, function() { self.toggle(); } );
       }
     }
   };
 
   UIMorphingButton.prototype.toggle = function() {
-    if( this.isAnimating ) return false;
+    var self = this;
+    var elementPos = this.morphable.getBoundingClientRect();
 
-    // callback
-    if( this.expanded ) {
-      this.options.onBeforeClose();
-    } else {
-      // add class active (solves z-index problem when more than one button is in the page)
-      // classie.addClass( this.el, 'active' ); // replace with jquery
-      angular.element(this.el).addClass('active');
-      this.options.onBeforeOpen();
+    var onEndTransitionFn = function (event) {
+      if ( event.target !== this ) {
+        return false;
+      }
+
+      if ( self.expanded && event.propertyName !== 'opacity' || !self.expanded && event.propertyName !== 'width' && event.propertyName !== 'height' && event.propertyName !== 'left' && event.propertyName !== 'top' ) {
+        return false;
+      }
+        // this.removeEventListener( transEndEventName, onEndTransitionFn );
+
+      self.isAnimating = false;
+      
+      
+      if ( self.expanded ) {
+        angular.element(self.morphWrapper).removeClass('active');
+      }
+
+      self.expanded = !self.expanded;
+    };
+
+    if ( this.isAnimating ) {
+      return false;
+    }
+
+    if ( !this.expanded ) {
+      angular.element(this.morphWrapper).addClass('active');
     }
 
     this.isAnimating = true;
 
-    var self = this;
-    var onEndTransitionFn = function( ev ) {
-        if( ev.target !== this ) return false;
-
-        if( support.transitions ) {
-          // open: first opacity then width/height/left/top
-          // close: first width/height/left/top then opacity
-          if( self.expanded && ev.propertyName !== 'opacity' || !self.expanded && ev.propertyName !== 'width' && ev.propertyName !== 'height' && ev.propertyName !== 'left' && ev.propertyName !== 'top' ) {
-            return false;
-          }
-          this.removeEventListener( transEndEventName, onEndTransitionFn );
-        }
-        self.isAnimating = false;
-        
-        // callback
-        if( self.expanded ) {
-          // remove class active (after closing)
-          // classie.removeClass( self.el, 'active' );
-          angular.element(self.el).removeClass('active');
-          self.options.onAfterClose();
-        }
-        else {
-          self.options.onAfterOpen();
-        }
-
-        self.expanded = !self.expanded;
-    };
-
-    if( support.transitions ) {
-      this.contentEl.addEventListener( transEndEventName, onEndTransitionFn );
-    }
-    else {
-      onEndTransitionFn();
-    }
-      
-    // set the left and top values of the contentEl (same like the button)
-    var elementPos = this.element.getBoundingClientRect();
-    // need to reset
-    // angular.element(this.contentEl).addClass('no-transition');
+    // add evt listeners
+    this.morphContent.addEventListener( transEndEventName, onEndTransitionFn );
     
-    this.contentEl.style.left = 'auto';
-    this.contentEl.style.top = 'auto';
+    // this.morphContent.style.left = 'auto';
+    // this.morphContent.style.top = 'auto';
     
     // add/remove class "open" to the button wraper
     setTimeout( function() { 
-
-      self.contentEl.style.left = elementPos.left + 'px';
-      self.contentEl.style.top = elementPos.top + 'px';
+      self.morphContent.style.left = elementPos.left + 'px';
+      self.morphContent.style.top = elementPos.top + 'px';
       
       if( self.expanded ) {
-        angular.element(self.contentEl).removeClass('no-transition');
-        angular.element(self.el).removeClass('open');
+        angular.element(self.morphWrapper).removeClass('open');
+        self.morphContent.style.width = self.morphable.offsetWidth + 'px';
+        self.morphContent.style.height = self.morphable.offsetHeight + 'px';
       } else {
         setTimeout( function() {
-          angular.element(self.contentEl).removeClass('no-transition');
-          angular.element(self.el).addClass('open');
-
-
-          angular.element(self.contentEl).removeClass('no-transition');
-          angular.element(self.el).addClass('open');
+          angular.element(self.morphWrapper).addClass('open');
+          angular.element(self.morphWrapper).addClass('open');
+          self.morphContent.style.width = 400 + 'px';
+          self.morphContent.style.height = 400 + 'px';
         }, 25 );
       }
     }, 25 );
@@ -142,38 +117,38 @@ angular.module('ngMorph', [])
 .directive('morphable', ['$compile', 'MorphEngine', function ($compile, MorphEngine) {
  return {
   restrict: 'A',
-  // template: '<div ng-transclude><morph-content template="{{template}}"/></div>',
   scope: {
-    template: '='
+    template: '=',
+    settings: '=morphable'
   },
   link: function (scope, element, attrs) {
 
-    var settings = scope.settings;
+    var boundingBox = element[0].getBoundingClientRect();
     var morphWrapper;
     var morphContent;
-    
-    scope.originDimensions = element[0].getBoundingClientRect();
 
-    scope.contentStyle = {
-      height: scope.originDimensions.height + 'px',
-      width: scope.originDimensions.width + 'px',      
+    var ContentStyle = {
+      height: boundingBox.height + 'px',
+      width: boundingBox.width + 'px',      
     };
 
-    scope.wrapperCfg = { 
-      height: scope.originDimensions.height + 'px',
-      width: scope.originDimensions.width + 'px',  
+    var WrapperStyle = { 
+      height: boundingBox.height + 'px',
+      width: boundingBox.width + 'px',  
       display: 'inline-block'
     };
 
     morphWrapper = $compile('<morph-wrapper />')(scope);
     morphContent = $compile('<morph-content template="{{template}}">')(scope);
-    morphContent.css(scope.contentStyle);
+
+    morphWrapper.css(WrapperStyle);
+    morphContent.css(ContentStyle);
 
     element.wrap(morphWrapper);
     element.after(morphContent);
 
-    var me = MorphEngine.init(morphWrapper, element, morphContent);
-
+    // initialize morph engine
+    var me = MorphEngine.init(morphWrapper, element, morphContent, scope.settings);
 
   }
  };
@@ -194,6 +169,7 @@ angular.module('ngMorph', [])
         // });
         
         element.append(innerContent);
+        attrs.$set('template');
 
     }
   }; 
@@ -202,11 +178,6 @@ angular.module('ngMorph', [])
   return {
     restrict: 'E',
     link: function (scope, element, attrs) {
-      element.css({
-        width: scope.originDimensions.width + 'px',
-        height: scope.originDimensions.height + 'px',
-        display: 'inline-block'
-      });
 
       element.addClass('morph-button morph-button-modal morph-button-modal-2 morph-button-fixed');
       

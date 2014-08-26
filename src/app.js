@@ -2,6 +2,7 @@ angular.module('morphDemo', ['ngMorph'])
 .controller('AppCtrl', ['$scope', function ($scope) {
 
   $scope.loginForm = '<div class="login">' +
+                      '<span class="close"> X </span>' +
                       '<form>' +
                         '<p><label>Email</label><input type="text" /></p>' +
                         '<p><label>Password</label><input type="password" /></p>' +
@@ -11,6 +12,7 @@ angular.module('morphDemo', ['ngMorph'])
 
   $scope.morphSettings = {
     trigger: 'click',
+    closeEl: '.close'
   };
 
 }]);
