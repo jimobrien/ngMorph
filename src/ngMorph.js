@@ -17,12 +17,15 @@ angular.module('ngMorph', ['ngAnimate'])
   },
   link: function (scope, element, attrs) {
     var isMorphed = false;
-    var Morphable = element;
-    var MorphableBoundingBox = Morphable[0].getBoundingClientRect();
-    var MorphContentWrapper;
-    var MorphContent;
-    var MorphContentBoundingBox;
+    var $Morphable = element;
+    var $MorphContent;
+    var $MorphContentWrapper;
     var ClosingEl;
+    var Morphable = $Morphable[0];
+    var MorphContent;
+    var MorphContentWrapper;
+    var MorphableBoundingBox = $Morphable[0].getBoundingClientRect();
+    var MorphContentBoundingBox;
 
     var ContentStyle = {
       'position': 'fixed',
@@ -38,38 +41,43 @@ angular.module('ngMorph', ['ngAnimate'])
       'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
     };
 
-    MorphContentWrapper = $compile('<morph-content template="{{template}}">')(scope);
-    MorphContent = angular.element(MorphContentWrapper[0].children[0]);
+    $MorphContentWrapper = $compile('<morph-content template="{{template}}">')(scope);
+    MorphContentWrapper  = $MorphContentWrapper[0];
 
-    Morphable.after(MorphContentWrapper);
-    MorphContentBoundingBox = MorphContent[0].getBoundingClientRect();
+    $MorphContent = angular.element(MorphContentWrapper.children[0]);
+    MorphContent  = $MorphContent[0];
 
-    Morphable.css({
+    
+
+    $Morphable.after($MorphContentWrapper);
+    MorphContentBoundingBox = MorphContent.getBoundingClientRect();
+
+    $Morphable.css({
       'z-index': '1000',
       'outline': 'none',
       '-webkit-transition': 'opacity 0.1s 0.5s',
       'transition': 'opacity 0.1s 0.5s'
     });
 
-    MorphContentWrapper.css(ContentStyle);
+    $MorphContentWrapper.css(ContentStyle);
 
-    Morphable.bind('click', function () {
+    $Morphable.bind('click', function () {
       if ( !isMorphed ) {
-        MorphContentWrapper[0].style.left = MorphableBoundingBox.left + 'px';
-        MorphContentWrapper[0].style.top = MorphableBoundingBox.top + 'px';
+        MorphContentWrapper.style.left = MorphableBoundingBox.left + 'px';
+        MorphContentWrapper.style.top = MorphableBoundingBox.top + 'px';
 
         setTimeout( function() {
-          MorphContentWrapper[0].style.width = MorphContentBoundingBox.width + 'px';
-          MorphContentWrapper[0].style.height = MorphContentBoundingBox.height + 'px';
+          MorphContentWrapper.style.width = MorphContentBoundingBox.width + 'px';
+          MorphContentWrapper.style.height = MorphContentBoundingBox.height + 'px';
 
-          Morphable.css({
+          $Morphable.css({
             'z-index': 2000,
             'opacity': 0,
             '-webkit-transition': 'opacity 0.1s',
             'transition': 'opacity 0.1s',
           });
 
-          MorphContentWrapper.css({
+          $MorphContentWrapper.css({
             'z-index': 1900,
             'opacity': 1,
             'background': '#e75854',
@@ -82,7 +90,7 @@ angular.module('ngMorph', ['ngAnimate'])
           });
           console.log('-' + ( MorphContentBoundingBox.height / 2 ) + 'px 0 0 -' + ( MorphContentBoundingBox.width / 2 ) + 'px');
 
-          MorphContent.css({
+          $MorphContent.css({
             'transition': 'opacity 0.3s 0.4s ease',
             'visibility': 'visible',
             'opacity': '1'
@@ -92,9 +100,9 @@ angular.module('ngMorph', ['ngAnimate'])
 
       } else {
 
-          MorphContentWrapper.css(ContentStyle);
+          $MorphContentWrapper.css(ContentStyle);
 
-          MorphContent.css({
+          $MorphContent.css({
             'transition': 'opacity 0.3s 0.3s ease',
             '-webkit-transition': 'opacity 0.3s 0.3s ease',
             'height': '0',
@@ -103,10 +111,10 @@ angular.module('ngMorph', ['ngAnimate'])
 
           // setting visibility hidden in the above css() call results in the content being hidden too soon
           setTimeout( function () {
-            MorphContent.css('visibility', 'hidden');
+            $MorphContent.css('visibility', 'hidden');
           }, 100);
 
-          Morphable.css({
+          $Morphable.css({
             'z-index': '1000',
             'opacity': 1,
             '-webkit-transition': 'opacity 0.1s 0.5s',
@@ -118,14 +126,14 @@ angular.module('ngMorph', ['ngAnimate'])
     });
 
     if ( scope.settings.closingEl ) {
-      var ClosingElement = MorphContentWrapper[0].querySelector(scope.settings.closingEl);
+      var ClosingElement = MorphContentWrapper.querySelector(scope.settings.closingEl);
       var $ClosingElement = angular.element(ClosingElement);
 
       $ClosingElement.bind('click', function () {
         if ( isMorphed ) {
-          MorphContentWrapper.css(ContentStyle);
+          $MorphContentWrapper.css(ContentStyle);
 
-          MorphContent.css({
+          $MorphContent.css({
             'transition': 'opacity 0.3s 0.3s ease',
             '-webkit-transition': 'opacity 0.3s 0.3s ease',
             'height': '0',
@@ -134,15 +142,17 @@ angular.module('ngMorph', ['ngAnimate'])
 
           // setting visibility hidden in the above css() call results in the content being hidden too soon
           setTimeout( function () {
-            MorphContent.css('visibility', 'hidden');
+            $MorphContent.css('visibility', 'hidden');
           }, 100);
 
-          Morphable.css({
+          $Morphable.css({
             'z-index': '1000',
             'opacity': 1,
             '-webkit-transition': 'opacity 0.1s 0.5s',
             'transition': 'opacity 0.1s 0.5s'
           });
+          
+          isMorphed = !isMorphed;
         } else {
           return;
         }
