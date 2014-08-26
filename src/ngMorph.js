@@ -6,10 +6,11 @@ angular.module('ngMorph', [])
       'OTransition': 'oTransitionEnd',
       'msTransition': 'MSTransitionEnd',
       'transition': 'transitionend'
-    },
-    transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
+    };
+    
+  var transEndEventName = transEndEventNames[ Modernizr.prefixed( 'transition' ) ];
 
-  function UIMorphingButton(morphWrapper, morphable, morphContent, options) {
+  function Morphable (morphWrapper, morphable, morphContent, options) {
     this.morphWrapper = morphWrapper[0];
     this.morphContent = morphContent[0];
     this.morphable    = morphable[0];
@@ -18,7 +19,7 @@ angular.module('ngMorph', [])
     this._init();
   }
 
-  UIMorphingButton.prototype.options = {
+  Morphable.prototype.options = {
     closeEl : '',
     onBeforeOpen : function() { return false; },
     onAfterOpen : function() { return false; },
@@ -26,12 +27,12 @@ angular.module('ngMorph', [])
     onAfterClose : function() { return false; }
   };
 
-  UIMorphingButton.prototype._init = function() {
+  Morphable.prototype._init = function() {
     this.expanded = false;
     this._initEvents();
   };
 
-  UIMorphingButton.prototype._initEvents = function() {
+  Morphable.prototype._initEvents = function() {
     var self = this;
     
     // open
@@ -47,7 +48,7 @@ angular.module('ngMorph', [])
     }
   };
 
-  UIMorphingButton.prototype.toggle = function() {
+  Morphable.prototype.toggle = function() {
     var self = this;
     var elementPos = this.morphable.getBoundingClientRect();
 
@@ -59,10 +60,10 @@ angular.module('ngMorph', [])
       if ( self.expanded && event.propertyName !== 'opacity' || !self.expanded && event.propertyName !== 'width' && event.propertyName !== 'height' && event.propertyName !== 'left' && event.propertyName !== 'top' ) {
         return false;
       }
-        // this.removeEventListener( transEndEventName, onEndTransitionFn );
+
+      this.removeEventListener( transEndEventName, onEndTransitionFn );
 
       self.isAnimating = false;
-      
       
       if ( self.expanded ) {
         angular.element(self.morphWrapper).removeClass('active');
@@ -84,15 +85,12 @@ angular.module('ngMorph', [])
     // add evt listeners
     this.morphContent.addEventListener( transEndEventName, onEndTransitionFn );
     
-    // this.morphContent.style.left = 'auto';
-    // this.morphContent.style.top = 'auto';
-    
     // add/remove class "open" to the button wraper
-    setTimeout( function() { 
+    setTimeout( function() {
       self.morphContent.style.left = elementPos.left + 'px';
       self.morphContent.style.top = elementPos.top + 'px';
       
-      if( self.expanded ) {
+      if ( self.expanded ) {
         angular.element(self.morphWrapper).removeClass('open');
         self.morphContent.style.width = self.morphable.offsetWidth + 'px';
         self.morphContent.style.height = self.morphable.offsetHeight + 'px';
@@ -109,7 +107,7 @@ angular.module('ngMorph', [])
 
   return {
     init: function (morphWrapper, morphable, morphContent, options) {
-      return new UIMorphingButton(morphWrapper, morphable, morphContent, options);
+      return new Morphable(morphWrapper, morphable, morphContent, options);
     }
   };
 

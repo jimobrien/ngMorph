@@ -1,26 +1,3 @@
-
-/* RF: can remove */
-.morph-button {
-  /*position: relative;
-  display: block;
-  margin: 0 auto;
-  -webkit-transition-timing-function: cubic-bezier(0.7,0,0.3,1);
-  transition-timing-function: cubic-bezier(0.7,0,0.3,1);*/
-}
-
-
-
-/* morphed-button fixed */
-/* RF:  Not requried.
-sets origin wrapper size. This will be set based on the origin
-width/height in the compile fn.
- */
-
-
-/* RF: sets origin size. This will be known from within the directive
-through el.width/height accessors.
-*/
-
 .morph-button-fixed > button {
   z-index: 1000; /* required to keep origin element toggleable */
   width: 100%;
@@ -105,17 +82,18 @@ through el.width/height accessors.
   z-index: 1800;
 }
 
-
 .morph-button-modal .morph-content {
+  pointer-events: none;
   /*overflow: hidden;*/
 
-  /*-webkit-transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;*/
-  /*transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;*/
+  -webkit-transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
+  transition: opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
 }
 
 /* RF: required for morph-into container */
 /* sets morph-into size and position. this will be determined in the compile fn */
 .morph-button-modal.open .morph-content {
+  pointer-events: auto;
   top: 50% !important; /* affects morph-into container position */
   left: 50% !important; /* affects morph-into container position */
   margin: -200px 0 0 -200px;
@@ -125,12 +103,6 @@ through el.width/height accessors.
   /* animate transition to morph-into element */
   -webkit-transition: width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
   transition: width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s;
-}
-
-/* RF:  not requried */
-.morph-button.morph-button-modal-2 {
-  /*display: block;*/
-  /*margin: 10px 15px;*/
 }
 
 /* RF: not requried. styling only */
