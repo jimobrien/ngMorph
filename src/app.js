@@ -29,13 +29,13 @@ angular.module('morphDemo', ['ngAnimate'])
       element.css({
         'z-index': 2000,
       });
-      TweenMax.to({ opacity: 0}, 0.1 );
+      TweenMax.to(element, 0.1, { opacity: 0 });
     },
     removeClass: function (element, className) {
       element.css({
-        'z-index': 2000,
+        'z-index': 1000,
       });
-      TweenMax.to({ opacity: 1}, 0.1 );
+      TweenMax.to(element, 0.1, { opacity: 1 });
     }
   };
 })
@@ -98,6 +98,8 @@ angular.module('morphDemo', ['ngAnimate'])
 
 .factory('Morph', ['$animate', 'NormalStateStyles', function ($animate, NormalStateStyles) {
 
+  var isMorphed = false;
+
   function initialize (morphable, content, settings) {
     var MorphableBoundingRect;
     var ContentBoundingRect;
@@ -127,10 +129,20 @@ angular.module('morphDemo', ['ngAnimate'])
     wrapper.css(NormalStateStyles.wrapper);
     content.css(NormalStateStyles.content);
 
-    // init event handlers for morphable 
+    // init event handlers for morphable
+    _initEvents(morphable, content);
   }
 
-  function initEvents () {
+  function _initEvents (morphable, content) {
+
+    morphable.bind('click', function () {
+      if ( isMorphed ) 
+        $animate.removeClass(morphable, '.ng-morphed-morphable');
+      else
+        $animate.addClass(morphable, '.ng-morphed-morphable');
+      
+      isMorphed = !isMorphed;
+    });
     // on click
     // on window resize, recalc wrapper position
   }
