@@ -22,7 +22,38 @@ angular.module('morphDemo', ['ngAnimate'])
   
 }])
 
-.animation('.ng-morphable-origin', function () {
+
+.animation('.ng-morphed-morphable', function () {
+  return {
+    addClass: function (element, className) {
+      element.css({
+        'z-index': 2000,
+      });
+      TweenMax.to({ opacity: 0}, 0.1 );
+    },
+    removeClass: function (element, className) {
+      element.css({
+        'z-index': 2000,
+      });
+      TweenMax.to({ opacity: 1}, 0.1 );
+    }
+  };
+})
+
+
+.animation('.ng-morphed-wrapper', function () {
+  return {
+    addClass: function (element, className) {
+
+    },
+    removeClass: function (element, className) {
+
+    }
+  };
+})
+
+
+.animation('.ng-morphed-content', function () {
   return {
     addClass: function (element, className) {
 
@@ -35,43 +66,37 @@ angular.module('morphDemo', ['ngAnimate'])
 
 
 
+
 .factory('NormalStateStyles', [function () {
   return { 
     wrapper: {
-      'visibility': 'hidden',
       'position': 'fixed',
       'z-index': '900',
       'opacity': '0',
       'margin': '0',
+      'pointer-events': 'none'
+      // move to $animate
+      // '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+      // 'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
     },
     content: {
-      'visibility': 'hidden'
+      // 'transition': 'opacity 0.3s 0.3s ease',
+      // '-webkit-transition': 'opacity 0.3s 0.3s ease',
+      'height': '0',
+      'opacity': '0',
     },
     morphable: {
       'z-index': '1000',
       'outline': 'none',
-      '-webkit-transition': 'opacity 0.1s 0.5s',
-      'transition': 'opacity 0.1s 0.5s'
-    }
-  };
-}])
-
-
-.factory('MorphedStateStyles', [function () {
-
-  return { 
-    Wrapper: {
-      'visibility': 'hidden'
-    },
-    Content: {
-      'visibility': 'hidden'
+      // '-webkit-transition': 'opacity 0.1s 0.5s',
+      // 'transition': 'opacity 0.1s 0.5s'
     }
   };
 }])
 
 
 
-.factory('Morph', ['$animate', 'NormalStateStyles', 'MorphedStateStyles', function ($animate, NormalStateStyles, MorphedStateStyles) {
+.factory('Morph', ['$animate', 'NormalStateStyles', function ($animate, NormalStateStyles) {
 
   function initialize (morphable, content, settings) {
     var MorphableBoundingRect;
@@ -106,7 +131,8 @@ angular.module('morphDemo', ['ngAnimate'])
   }
 
   function initEvents () {
-
+    // on click
+    // on window resize, recalc wrapper position
   }
 
   return {

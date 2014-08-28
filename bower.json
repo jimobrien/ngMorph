@@ -19,6 +19,7 @@
   "dependencies": {
     "angular": "~1.2.23",
     "angular-animate": "~1.2.23",
-    "bootstrap": "~3.2.0"
+    "bootstrap": "~3.2.0",
+    "gsap": "~1.13.2"
   }
 }
