@@ -30,15 +30,20 @@ angular.module('morphDemo', ['ngAnimate'])
       'background': '#e85657',
       'margin': '0',
       'pointer-events': 'none',
-      'visibility': 'hidden'
+      '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+      'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
     },
     content: {
+      'transition': 'opacity 0.3s 0.3s ease',
+      '-webkit-transition': 'opacity 0.3s 0.3s ease',
       'height': '0',
       'opacity': '0',
     },
     morphable: {
       'z-index': '1000',
       'outline': 'none',
+      '-webkit-transition': 'all 0.1s 0.5s',
+      'transition': 'all 0.1s 0.5s'
     }
   };
 
@@ -66,26 +71,50 @@ angular.module('morphDemo', ['ngAnimate'])
         var ContentBoundingRect = settings.ContentBoundingRect;
 
         element.css({
-          'visibility': 'visible',
-          'pointer-events': 'auto'
-        });
-
-        TweenMax.to(element, 0.30, { 
-          delay: 0.2,
-          top: '50%', 
+          'z-index': 1900,
+          'opacity': 1,
+          'background': '#e75854',
+          visibility: 'visible',
+          'pointer-events': 'auto',
+          top: '50%',
           left: '50%',
-          width: ContentBoundingRect.width,
-          height: ContentBoundingRect.height, 
-          margin: '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px'
+          width: ContentBoundingRect.width + 'px',
+          height: ContentBoundingRect.height + 'px', 
+          margin: '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px',
+          '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+          'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
         });
 
-        TweenMax.to(element, 0.30, { opacity: 1 }); 
+        // TweenMax.to(element, 0.02, { opacity: 1 }); 
+
+        // TweenMax.to(element, 0.955, { 
+        //   // delay: 0.3,
+        //   top: '50%', 
+        //   left: '50%',
+        //   width: ContentBoundingRect.width,
+        //   height: ContentBoundingRect.height, 
+        //   margin: '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px',
+        //   ease: Expo.easeOut
+        // });
+
+        
       },
       content: function (element, settings) {
-        TweenMax.to(element, 0.3, { opacity: 1, delay: 0.4 });
+        element.css({
+          'transition': 'opacity 0.3s 0.4s ease',
+          'visibility': 'visible',
+          'opacity': '1'
+        });
+        // TweenMax.to(element, 0.3, { opacity: 1, delay: 0.2 });
       },
       morphable: function (element, settings) {
-          TweenMax.to(element, 0.03, { opacity: 0, delay: 0.2 });
+        element.css({
+          'z-index': 2000,
+          'opacity': 0,
+          '-webkit-transition': 'opacity 0.1s',
+          'transition': 'opacity 0.1s',
+        });
+          // TweenMax.to(element, 0.03, { opacity: 0, delay: 0 });
       },
     },
 
