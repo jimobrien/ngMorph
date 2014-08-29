@@ -1,7 +1,6 @@
 angular.module('morph.transitions')
 .factory('ModalTransition', ['ModalAssist', function (ModalAssist) {
   return function (elements, settings) {
-    console.log(elements, settings)
     var MorphableBoundingRect = settings.MorphableBoundingRect;
     var ContentBoundingRect = settings.ContentBoundingRect;
 
