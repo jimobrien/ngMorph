@@ -7,11 +7,18 @@ This directive is an attempt at packaging necessary transitions and properties t
 ## How to Get Started ##
 
   1. Include the module in your project: 
-    ```
+  
+      ```
         angular.module('yourApp', ['ngMorph']);
-    ```
+      ```
   2. Start morphin'
-    ```js
+  
+
+      ```html
+        <button ng-morph-modal="settings"> Log In </button>
+      ```
+      
+      ```js
         app.controller('AppCtrl', function ($scope) {
           $scope.settings = {
             closeEl: '.close',
@@ -20,10 +27,7 @@ This directive is an attempt at packaging necessary transitions and properties t
             }
           }
         });
-    ```
-    ```html
-      <button ng-morph-modal="settings"> Log In </button>
-    ```
+      ```
 
 ## Roadmap ##
 
