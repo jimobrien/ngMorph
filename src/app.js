@@ -19,14 +19,28 @@ angular.module('morphDemo', ['ngAnimate'])
       height: '800px'
     }
   };
-  
+    
+  var toggle = false;
+
+  $scope.transform = function (ev) {
+    var el = angular.element(ev.target);
+    if ( !toggle ) {
+      TweenMax.to(el, 0.70, { width: 400, height: 400, delay: 0.1, ease: Expo.easeInOut });
+      TweenMax.to(el, 0.40, { opacity: 1, delay: 0.3 });
+    } else {
+      TweenMax.to(el, 0.70, { width: 200, height: 50, delay: 0.1, ease: Expo.easeInOut });
+      TweenMax.to(el, 0.3, { opacity: 0, delay: 0.5, ease: Expo.easeOut });
+    }
+
+    toggle = !toggle;
+  };
+
 }])
 
 
 .animation('.ng-morphed-morphable', function () {
   return {
     addClass: function (element, className) {
-      console.log('morphable animate')
       element.css({
         'z-index': 2000,
       });
@@ -45,9 +59,6 @@ angular.module('morphDemo', ['ngAnimate'])
 .animation('.ng-morphed-wrapper', function () {
   return {
     addClass: function (element, className) {
-      TweenMax.set(element, { 
-        transition: 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s' 
-      });
 
       TweenMax.to(element, 0.1, { opacity: 1 });
     },
@@ -81,12 +92,10 @@ angular.module('morphDemo', ['ngAnimate'])
       'position': 'fixed',
       'z-index': '900',
       'opacity': '0',
+      'background': '#e85657',
       'margin': '0',
       'pointer-events': 'none',
       'visibility': 'hidden'
-      // move to $animate
-      // '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
-      // 'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
     },
     content: {
       // 'transition': 'opacity 0.3s 0.3s ease',
@@ -116,30 +125,16 @@ angular.module('morphDemo', ['ngAnimate'])
 
   var addClassHandler = {
     wrapper: function (element, settings) {
-      // set position
-      element.css({
-        'left': settings.ContentBoundingRect.left + 'px',
-        'top': settings.ContentBoundingRect.top + 'px'
-      });
-
-      $timeout( function () {
         element.css({
-          'height': settings.ContentBoundingRect.height + 'px',
-          'width': settings.ContentBoundingRect.width + 'px',
           'visibility': 'visible',
-          'top': '50%',
-          'left': '50%',
           'margin': '-' + ( settings.ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( settings.ContentBoundingRect.width / 2 ) + 'px',
         });
-
-        $animate.addClass(element, '.ng-morphed-wrapper');
-      }, 25);
     },
     content: function (element, settings) {
       element.css({
         height: settings.ContentBoundingRect.height + 'px'
       });
-      $animate.addClass(element, '.ng-morphed-content');
+      // $animate.addClass(element, '.ng-morphed-content');
     }
   };
 
@@ -163,8 +158,8 @@ angular.module('morphDemo', ['ngAnimate'])
     addClass: function (element, elementName, settings) {
       if ( addClassHandler[elementName] )
         addClassHandler[elementName](element, settings);
-      else
-        $animate.addClass(element, '.ng-morphed-' + elementName);
+      // else
+        // $animate.addClass(element, '.ng-morphed-' + elementName);
 
     },
 
@@ -252,8 +247,25 @@ angular.module('morphDemo', ['ngAnimate'])
           });
 
         } else {
+
+          wrapper.css({
+            top: MorphableBoundingRect.top ,
+            left: MorphableBoundingRect.left,
+          });
+
+          wrapper.css({
+            'visibility': 'visible',
+          });
+
+          TweenMax.to(wrapper, 0.60, { top: '50%', left: '50%', delay: 0.2, ease: Linear.easNone });
+          TweenMax.to(wrapper, 0.6, { width: 400, height: 400, delay: 0.2 });
+          TweenMax.to(wrapper, 0.6, { margin: '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px', delay: 0.2 });
+          TweenMax.to(wrapper, 0.20, { opacity: 1, delay: 0.15 });
+          TweenMax.to(element, 0.1, { opacity: 0, delay: 0.15 });
+          TweenMax.to(content, 0.4, { opacity: 1, delay: 0.6 });
+
           angular.forEach(elements, function (element, elementName) {
-            Morph.addClass(element, elementName, scope.settings);
+            // Morph.addClass(element, elementName, scope.settings);
           });
 
         }

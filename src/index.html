@@ -5,10 +5,30 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+      .tester {
+        display: block;
+        background: black;
+        width: 250px;
+        height: 50px;
+        margin: 0 auto;
+        opacity: 0;
+      }
+      .two {
+        margin-top: 0;
+        visibility: none;
+      }
+    </style>
   </head>
   <body ng-controller="AppCtrl">
 
-    <button ng-morphable="example1" > btn </button>  
+    <div class="container">
+      <button ng-morphable="example1" > btn </button>    
+    </div>
+    
+
+    <div class="tester" ng-click="transform($event)"></div>
+    <div class="tester two" ng-click="transform($event)"></div>
     
 
     <script src="../bower_components/gsap/src/uncompressed/TweenMax.js"></script>
