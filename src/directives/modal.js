@@ -51,7 +51,7 @@ angular.module('morph.directives')
         if ( isMorphed ) {
           
           angular.forEach(elements, function (element, elementName) {
-            Morph.removeClass(element, elementName, scope.settings);
+            modal.removeClass(element, elementName, scope.settings);
           });
 
           isMorphed = !isMorphed;
