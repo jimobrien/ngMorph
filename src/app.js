@@ -122,28 +122,57 @@ angular.module('morphDemo', ['ngAnimate'])
       wrapper: function (element, settings) {
         var MorphableBoundingRect = settings.MorphableBoundingRect;
 
-        TweenMax.to(element, 0.30, { 
-          margin: 0, 
-          delay: 0.2,
-          top: MorphableBoundingRect.top, 
-          left: MorphableBoundingRect.left,
-          width: MorphableBoundingRect.width,
-          height: MorphableBoundingRect.height,
-          onComplete: function () {
-            element.css({
-              'visibility': 'hidden',
-              'pointer-events': 'none'
-            });
-          } 
+        // TweenMax.to(element, 0.30, { 
+        //   margin: 0, 
+        //   delay: 0.2,
+        //   top: MorphableBoundingRect.top, 
+        //   left: MorphableBoundingRect.left,
+        //   width: MorphableBoundingRect.width,
+        //   height: MorphableBoundingRect.height,
+        //   onComplete: function () {
+        //     element.css({
+        //       'visibility': 'hidden',
+        //       'pointer-events': 'none'
+        //     });
+        //   } 
+        // });
+        
+        element.css({
+          'position': 'fixed',
+          'z-index': '900',
+          'opacity': '0',
+          margin: 0,
+          top: MorphableBoundingRect.top + 'px',
+          left: MorphableBoundingRect.left + 'px',
+          width: MorphableBoundingRect.width + 'px', 
+          height: MorphableBoundingRect.height + 'px',
+          'pointer-events': 'none',
+          '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+          'transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
         });
       },
       content: function (element, settings) {
-        TweenMax.to(element, 0.3, { opacity: 0 });
+        // TweenMax.to(element, 0.3, { opacity: 0 });
+        // setTimeout( function () {
+          element.css({
+            'transition': 'opacity 0.3s 0.4s ease',
+            'visibility': 'hidden',
+            'height': '0',
+            'opacity': '0'
+          });
+        // }, 100);
+
       },
       morphable: function (element, settings) {
-        TweenMax.to(element, 0.03, { 
-          opacity: 1, 
-          delay: 0.42, 
+        // TweenMax.to(element, 0.03, { 
+        //   opacity: 1, 
+        //   delay: 0.42, 
+        // });
+        element.css({
+          'z-index': 900,
+          'opacity': 1,
+          '-webkit-transition': 'opacity 0.1s 0.4s',
+          'transition': 'opacity 0.1s 0.4s',
         });
       },
     }
