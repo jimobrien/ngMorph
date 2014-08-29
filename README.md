@@ -40,5 +40,6 @@ This directive is an attempt at packaging necessary transitions and properties t
 This files in their current state are the results of a 48hr hackathon. Needless to say, there is a lot of work to do before this is ready for an alpha release. Following is a list of todo's to get this repo in shape:
 
   1. Abstract functionality from the post-linking function of the `morphable` directive.
-  2. Refactor using ngAnimate and GSAP
-  3. Add support for nested morphables (morphables within view templates)
+  ~~2. Refactor using ngAnimate and GSAP~~ (sticking with CSS transitions)
+  2. Add support for nested morphables (morphables within view templates)
+  3. Add different transitions (modal, screen overlay, expand (left, right, down, up))
