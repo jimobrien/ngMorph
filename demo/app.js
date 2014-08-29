@@ -12,7 +12,7 @@ angular.module('morphDemo', ['ngMorph'])
     trigger: 'click',
     closeEl: '.close-x',
     template: {
-      url: 'views/loginform.html',
+      url: 'views/about.html',
     }
   };
 
