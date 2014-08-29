@@ -1,42 +1,4 @@
-angular.module('morphDemo', ['ngAnimate'])
-
-.controller('AppCtrl', ['$scope', function ($scope) {
-  $scope.example1 = {
-    trigger: 'click',
-    closeEl: '.close-x',
-    template: {
-      url: 'views/loginform.html',
-    }
-  };
-
-  $scope.example2 = {
-    trigger: 'click',
-    closeEl: '.close-x',
-    template: {
-      url: 'views/loginform.html',
-    }
-  };
-
-  $scope.example3 = {
-    trigger: 'click',
-    closeEl: '.close-x',
-    template: {
-      url: 'views/loginform.html',
-    }
-  };
-
-  // $scope.example2 = {
-  //   trigger: 'click',
-  //   closeEl: '.close-x',
-  //   template: {
-  //     url: 'views/about.html',
-  //     width: '1000px',
-  //     height: '800px'
-  //   }
-  // };
-
-}])
-
+angular.module('ngMorph', ['morph.transitions'])
 .factory('MorphAssist', ['$animate', '$timeout', function ($animate, $timeout) {
   var defaultStyles = {
     wrapper: {
@@ -160,15 +122,7 @@ angular.module('morphDemo', ['ngAnimate'])
     }
   };
 }])
-.factory('ModalTransition', [ function () {
 
-}])
-.factory('OverlayTransition', [ function () {
-
-}])
-.factory('ExpandTransition', [ function () {
-
-}])
 .factory('Morph', ['MorphAssist', function (MorphAssist) {
   return {
     initialize: function (elements, settings) {
