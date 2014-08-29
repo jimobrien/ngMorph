@@ -1,1 +1,1 @@
-angular.module('morph.transitions', []);
+angular.module('morph.transitions', ['morph.assist']);
