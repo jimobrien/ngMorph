@@ -37,18 +37,19 @@ angular.module('morph.directives')
         scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
         
         // bootstrap the modal
-        var modal = Morph.modal(elements, scope.settings);
+        // var modal = Morph.modal(elements, scope.settings);
+        var modal = new Morph('Modal', elements, scope.settings);
         
         // attach event listeners
         element.bind('click', function () {
           scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-          isMorphed = modal.toggle(elements, scope.settings, isMorphed);
+          isMorphed = modal.toggle(isMorphed);
         });
 
         if ( closeEl ) {
           closeEl.bind('click', function (event) {
             scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-            isMorphed = modal.toggle(elements, scope.settings, isMorphed);
+            isMorphed = modal.toggle(isMorphed);
           });
         }
 

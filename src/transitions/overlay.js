@@ -1,3 +1,3 @@
 angular.module('morph.transitions')
-.factory('OverlayTransition', [ function () {
+.factory('Overlay', [ function () {
 }]);

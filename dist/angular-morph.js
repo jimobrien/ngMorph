@@ -1,21 +1,91 @@
-angular.module('morph.transitions', ['morph.assist']);
+angular.module('morph.transitions', ['morph.assist'])
+.factory('Transitions', ['Modal', function (Modal) {
+  return {
+    Modal: Modal 
+  };
+}]);
 angular.module('morph.transitions')
-.factory('ModalTransition', ['ModalAssist', function (ModalAssist) {
+.factory('Modal', [ function () {
   return function (elements, settings) {
-    var MorphableBoundingRect = settings.MorphableBoundingRect;
-    var ContentBoundingRect = settings.ContentBoundingRect;
+    var addClass = {
+      wrapper: function (element, settings) {
+        var ContentBoundingRect = settings.ContentBoundingRect;
 
-    // set wrapper bounding rectangle
-    ModalAssist.setBoundingRect(elements.wrapper, MorphableBoundingRect);
-    
-    // apply normal-state styles
-    angular.forEach(elements, function (element, elementName) {
-      ModalAssist.applyDefaultStyles(element, elementName);
-    });
+        element.css({
+          'z-index': 1900,
+          'opacity': 1,
+          visibility: 'visible',
+          'pointer-events': 'auto',
+          top: '50%',
+          left: '50%',
+          width: ContentBoundingRect.width + 'px',
+          height: ContentBoundingRect.height + 'px', 
+          margin: '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px',
+          '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+          'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
+        });
+        
+      },
+      content: function (element, settings) {
+        element.css({
+          'transition': 'opacity 0.3s 0.4s ease',
+          'visibility': 'visible',
+          'opacity': '1'
+        });
+      },
+      morphable: function (element, settings) {
+        element.css({
+          'z-index': 2000,
+          'opacity': 0,
+          '-webkit-transition': 'opacity 0.1s',
+          'transition': 'opacity 0.1s',
+        });
+      },
+    };
+
+    var removeClass = {
+      wrapper: function (element, settings) {
+        var MorphableBoundingRect = settings.MorphableBoundingRect;
+        
+        element.css({
+          'position': 'fixed',
+          'z-index': '900',
+          'opacity': '0',
+          margin: 0,
+          top: MorphableBoundingRect.top + 'px',
+          left: MorphableBoundingRect.left + 'px',
+          width: MorphableBoundingRect.width + 'px', 
+          height: MorphableBoundingRect.height + 'px',
+          'pointer-events': 'none',
+          '-webkit-transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s',
+          'transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s'
+        });
+      },
+      content: function (element, settings) {
+        element.css({
+          'transition': 'opacity 0.3s 0.4s ease',
+          'height': '0',
+          'opacity': '0'
+        });
+
+        setTimeout( function () {
+          element.css({'visibility': 'hidden'});
+        }, 100);
+
+      },
+      morphable: function (element, settings) {
+        element.css({
+          'z-index': 900,
+          'opacity': 1,
+          '-webkit-transition': 'opacity 0.1s 0.4s',
+          'transition': 'opacity 0.1s 0.4s',
+        });
+      },
+    };
 
     return {
 
-      toggle: function (elements, settings, isMorphed) {
+      toggle: function (isMorphed) {
         if ( !isMorphed ) {
           elements.wrapper.css({
             transition: 'none', // remove any transitions to prevent the relocation from being delayed.
@@ -25,12 +95,12 @@ angular.module('morph.transitions')
 
           setTimeout( function () {
             angular.forEach(elements, function (element, elementName) {
-              ModalAssist.addClass[elementName](element, settings);
+              addClass[elementName](element, settings);
             });
           }, 25 );
         } else {
           angular.forEach(elements, function (element, elementName) {
-            ModalAssist.removeClass[elementName](element, settings);
+            removeClass[elementName](element, settings);
           });
         }
 
@@ -41,11 +111,11 @@ angular.module('morph.transitions')
 }]);
 
 angular.module('morph.transitions')
-.factory('ExpandTransition', [ function () {
+.factory('Expand', [ function () {
 }]);
-angular.module('morph.transitions')
-.factory('OverlayTransition', [ function () {
-}]);
+// angular.module('morph.transitions')
+// .factory('Overlay', [ function () {
+// }]);
 angular.module('morph.directives', ['morph']);
 angular.module('morph.directives')
 .directive('ngMorphModal', ['$http', '$templateCache', '$compile', 'Morph', function ($http, $templateCache, $compile, Morph) {
@@ -86,18 +156,19 @@ angular.module('morph.directives')
         scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
         
         // bootstrap the modal
-        var modal = Morph.modal(elements, scope.settings);
+        // var modal = Morph.modal(elements, scope.settings);
+        var modal = new Morph('Modal', elements, scope.settings);
         
         // attach event listeners
         element.bind('click', function () {
           scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-          isMorphed = modal.toggle(elements, scope.settings, isMorphed);
+          isMorphed = modal.toggle(isMorphed);
         });
 
         if ( closeEl ) {
           closeEl.bind('click', function (event) {
             scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-            isMorphed = modal.toggle(elements, scope.settings, isMorphed);
+            isMorphed = modal.toggle(isMorphed);
           });
         }
 
@@ -116,7 +187,7 @@ angular.module('morph.assist', [
   // assist.expand,
   // assist.overlay
   ])
-.factory('ModalAssist', [function () {
+.factory('Assist', [function () {
   var defaultStyles = {
     wrapper: {
       'position': 'fixed',
@@ -141,111 +212,54 @@ angular.module('morph.assist', [
     }
   };
 
-  var setBoundingRect = function (element, positioning, callback) {
-    element.css({
-      'top': positioning.top + 'px',
-      'left': positioning.left + 'px',
-      'width': positioning.width + 'px',
-      'height': positioning.height + 'px'
-    });
-
-    if ( typeof callback === 'function' )
-      callback(element);
-  };
-
   return { 
-    setBoundingRect: setBoundingRect,
+    setBoundingRect: function (element, positioning, callback) {
+      element.css({
+        'top': positioning.top + 'px',
+        'left': positioning.left + 'px',
+        'width': positioning.width + 'px',
+        'height': positioning.height + 'px'
+      });
+
+      if ( typeof callback === 'function' )
+        callback(element);
+    },
 
     applyDefaultStyles: function (element, elementName) {
       element.css(defaultStyles[elementName]);
-    },
-
-    addClass: {
-      wrapper: function (element, settings) {
-        var ContentBoundingRect = settings.ContentBoundingRect;
-        var MorphableBoundingRect = settings.MorphableBoundingRect;
-
-        element.css({
-          'z-index': 1900,
-          'opacity': 1,
-          visibility: 'visible',
-          'pointer-events': 'auto',
-          top: '50%',
-          left: '50%',
-          width: ContentBoundingRect.width + 'px',
-          height: ContentBoundingRect.height + 'px', 
-          margin: '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px',
-          '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
-          'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
-        });
-        
-      },
-      content: function (element, settings) {
-        element.css({
-          'transition': 'opacity 0.3s 0.4s ease',
-          'visibility': 'visible',
-          'opacity': '1'
-        });
-      },
-      morphable: function (element, settings) {
-        element.css({
-          'z-index': 2000,
-          'opacity': 0,
-          '-webkit-transition': 'opacity 0.1s',
-          'transition': 'opacity 0.1s',
-        });
-      },
-    },
-
-    removeClass: {
-      wrapper: function (element, settings) {
-        var MorphableBoundingRect = settings.MorphableBoundingRect;
-        
-        element.css({
-          'position': 'fixed',
-          'z-index': '900',
-          'opacity': '0',
-          margin: 0,
-          top: MorphableBoundingRect.top + 'px',
-          left: MorphableBoundingRect.left + 'px',
-          width: MorphableBoundingRect.width + 'px', 
-          height: MorphableBoundingRect.height + 'px',
-          'pointer-events': 'none',
-          '-webkit-transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s',
-          'transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s'
-        });
-      },
-      content: function (element, settings) {
-        element.css({
-          'transition': 'opacity 0.3s 0.4s ease',
-          'height': '0',
-          'opacity': '0'
-        });
-
-        setTimeout( function () {
-          element.css({'visibility': 'hidden'});
-        }, 100);
-
-      },
-      morphable: function (element, settings) {
-        element.css({
-          'z-index': 900,
-          'opacity': 1,
-          '-webkit-transition': 'opacity 0.1s 0.4s',
-          'transition': 'opacity 0.1s 0.4s',
-        });
-      },
     }
+
   };
 }]);
-angular.module('morph', ['morph.transitions'])
-.factory('Morph', ['ModalTransition', function (ModalTransition) {
-  return {
-    modal: ModalTransition,
-    // overlay: OverlayTransition,
-    // expand: ExpandTransition
+angular.module('morph', ['morph.transitions', 'morph.assist'])
+.factory('Morph', ['Transitions', 'Assist', function (Transitions, Assist) {
+
+  return function (type, elements, settings) {
+    var MorphableBoundingRect = settings.MorphableBoundingRect;
+
+    // set wrapper bounding rectangle
+    Assist.setBoundingRect(elements.wrapper, MorphableBoundingRect);
+    
+    // apply normal-state styles
+    angular.forEach(elements, function (element, elementName) {
+      Assist.applyDefaultStyles(element, elementName);
+    });
+
+    return Transitions[type](elements, settings);
   };
+  
 }]);
+
+
+//          expand -> init -> toggle
+//          
+// morph -> modal -> init -> toggle
+//          
+//          overlay -> init -> toggle
+
+
+// init = set bounding rect, apply normal styles
+  // morph return fn, return obj w. e, m, o
 angular.module('ngMorph', [
   'morph.transitions',
   'morph.directives',
