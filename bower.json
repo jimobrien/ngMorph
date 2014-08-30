@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "homepage": "https://github.com/jimobrien/2014-07-solo",
   "authors": [
-    "Jim OBrien <jimobrien930@gmail.com>"
+    "Jim OBrien <jimobrien930@gmail.com>",
+    "Github Contributors"
   ],
-  "description": "Easily morph an element into another",
-  "main": "index.html",
+  "description": "Morph DOM elements with ease",
+  "main": "dist/angular-morph.min.js",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -17,7 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.23",
-    "bootstrap": "~3.2.0"
+    "angular": "~1.2.23"
   }
 }
