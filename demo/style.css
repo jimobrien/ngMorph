@@ -13,12 +13,9 @@ button {
   border: none;
   margin: 100px 0;
 }
-.container {
-  width: 1000px;
-  margin: 0 auto;
+.main {
   text-align: center;
 }
-
 /* demo login form */
 .login {
   background: #e85657;
