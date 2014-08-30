@@ -26,9 +26,11 @@ angular.module('morph.directives')
           content: content
         };
 
-        // add to dom
         wrapper.append(content);
         element.after(wrapper);
+
+        // set the wrapper bg color
+        wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
 
         // get bounding rectangles
         scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();

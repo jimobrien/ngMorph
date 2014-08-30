@@ -9,7 +9,6 @@ angular.module('morph.assist', [
       'position': 'fixed',
       'z-index': '900',
       'opacity': '0',
-      'background': '#e85657',
       'margin': '0',
       'pointer-events': 'none',
       '-webkit-transition': 'opacity 0.3s 0.5s, width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
@@ -56,7 +55,6 @@ angular.module('morph.assist', [
         element.css({
           'z-index': 1900,
           'opacity': 1,
-          'background': '#e75854',
           visibility: 'visible',
           'pointer-events': 'auto',
           top: '50%',
