@@ -15,22 +15,23 @@ var paths = {
     'src/morph.js',
     'src/app.js'
   ],
+  source: ['src/**/*.js'],
   dist: './dist/'
 };
 
 
 gulp.task('concat', function(){
   return gulp.src(paths.scripts)
-    .pipe( concat('angular-morph.js'))
-    .pipe( gulp.dest(paths.dist));
+    .pipe(concat('angular-morph.js'))
+    .pipe(gulp.dest(paths.dist));
 });
 
-
 gulp.task('uglify',function(){
-  return gulp.src(paths.dist + 'angular-morph.min.js')
-   .pipe( uglify())
-   .pipe( gulp.dest(paths.dist))
-   .pipe( notify({message: 'Build Done'}));
+  return gulp.src('./dist/angular-morph.js')
+    .pipe(uglify())
+    .pipe(concat('angular-morph.min.js'))
+    .pipe(gulp.dest(paths.dist))
+    .pipe(notify({message: 'Build Done'}));
 });
 
 gulp.task('build', ['concat','uglify']);
