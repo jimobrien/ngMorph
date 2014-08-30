@@ -4,11 +4,7 @@ angular.module('morphDemo', ['ngMorph'])
     trigger: 'click',
     closeEl: '.close-x',
     modal: {
-      url: 'views/loginform.html',
-      position: {
-        top: 30,
-        left: 30
-      }
+      url: 'views/loginform.html'
     }
   };
 
