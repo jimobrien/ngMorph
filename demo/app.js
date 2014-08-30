@@ -3,8 +3,12 @@ angular.module('morphDemo', ['ngMorph'])
   $scope.example1 = {
     trigger: 'click',
     closeEl: '.close-x',
-    template: {
+    modal: {
       url: 'views/loginform.html',
+      position: {
+        top: 30,
+        left: 30
+      }
     }
   };
 

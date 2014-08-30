@@ -4,17 +4,40 @@ angular.module('morph.transitions')
     var enter = {
       wrapper: function (element, settings) {
         var ContentBoundingRect = settings.ContentBoundingRect;
+        var modalSettings = settings.modal;
+        var top = '50%';
+        var left = '50%';
+        var margin = 0;
+
+        if ( !modelSettings.position || modalSettings.position === 'center' ) {
+          margin = '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px';
+        }
+
+        if ( typeof modalSettings.position === 'object' ) {
+          top = modalSettings.position.top + '';
+          left = modalSettings.position.left + '';
+
+          // set default units if none provided
+          if ( top.indexOf('%') < 0 && top.indexOf('px') < 0 ) {
+            top += '%';
+          }
+
+          if ( left.indexOf('%') < 0 && left.indexOf('px') < 0 ) {
+            left += '%';
+          }
+        }
+
 
         element.css({
           'z-index': 1900,
           'opacity': 1,
           'visibility': 'visible',
           'pointer-events': 'auto',
-          'top': '50%',
-          'left': '50%',
+          'top': top,
+          'left': left,
           'width': ContentBoundingRect.width + 'px',
           'height': ContentBoundingRect.height + 'px', 
-          'margin': '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px',
+          'margin': margin,
           '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
           'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
         });
