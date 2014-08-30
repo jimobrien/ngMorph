@@ -1,1 +1,1 @@
-angular.module('morph.directives', ['morph'])
+angular.module('morph.directives', ['morph']);
