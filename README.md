@@ -1,7 +1,7 @@
 # ngMorph #
  
 ## Morphable Elements ##
-This directive is an attempt at packaging transitions/animations that enable the reuse of visual elements by creating a  morphing effect:
+This module is an attempt at packaging transitions/animations into directives that enable the reuse of visual elements by morphing them into other elements:
 
 ![ngMorph Demo](http://imgur.com/MT9CwbV.gif)
 
@@ -49,3 +49,4 @@ There is a lot of work to do before this is ready for an alpha release. Followin
   - [ ] Add support for nested morphables (morphables within view templates)
   - [ ] Add different transitions (modal, screen overlay, expand (left, right, down, up))
   - [ ] Write tests
+  - [ ] Write docs
