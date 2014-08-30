@@ -57,7 +57,7 @@ form label {
 form input[type="text"],
 form input[type="password"] {
   padding: 10px;
-  width: 93%;
+  width: 100%;
   border: 2px solid #ebd3bd;
   background: transparent;
   color: #fcfcfc;
