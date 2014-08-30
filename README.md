@@ -1,17 +1,23 @@
 # ngMorph #
  
 ## Morphable Elements ##
-This directive is an attempt at packaging necessary transitions and properties that enable the reuse of visual elements through morphing.
+This directive is an attempt at packaging transitions/animations that enable the reuse of visual elements by creating a  morphing effect:
 
+![ngMorph Demo](http://imgur.com/MT9CwbV.gif)
 
-## How to Get Started ##
+## Getting Started ##
+  1. Install with bower:
+ 
+    ```sh
+      bower install --save angular-morph
+    ```
 
-  1. Include the module in your project: 
+  2. Include the module in your project: 
   
-      ```
+      ```js
         angular.module('yourApp', ['ngMorph']);
       ```
-  2. Start morphin'
+  3. Start morphin!
   
 
       ```html
@@ -34,7 +40,7 @@ This directive is an attempt at packaging necessary transitions and properties t
         });
       ```
 
-## Roadmap ##
+## What's Next ##
 
 There is a lot of work to do before this is ready for an alpha release. Following is a list of todos to get this repo in shape:
 
@@ -42,3 +48,4 @@ There is a lot of work to do before this is ready for an alpha release. Followin
   - [X] ~~Refactor using ngAnimate and GSAP~~ (sticking with CSS transitions)
   - [ ] Add support for nested morphables (morphables within view templates)
   - [ ] Add different transitions (modal, screen overlay, expand (left, right, down, up))
+  - [ ] Write tests
