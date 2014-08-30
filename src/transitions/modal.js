@@ -1,20 +1,20 @@
 angular.module('morph.transitions')
 .factory('Modal', [ function () {
   return function (elements, settings) {
-    var addClass = {
+    var enter = {
       wrapper: function (element, settings) {
         var ContentBoundingRect = settings.ContentBoundingRect;
 
         element.css({
           'z-index': 1900,
           'opacity': 1,
-          visibility: 'visible',
+          'visibility': 'visible',
           'pointer-events': 'auto',
-          top: '50%',
-          left: '50%',
-          width: ContentBoundingRect.width + 'px',
-          height: ContentBoundingRect.height + 'px', 
-          margin: '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px',
+          'top': '50%',
+          'left': '50%',
+          'width': ContentBoundingRect.width + 'px',
+          'height': ContentBoundingRect.height + 'px', 
+          'margin': '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px',
           '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
           'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
         });
@@ -37,7 +37,7 @@ angular.module('morph.transitions')
       },
     };
 
-    var removeClass = {
+    var exit = {
       wrapper: function (element, settings) {
         var MorphableBoundingRect = settings.MorphableBoundingRect;
         
@@ -45,11 +45,11 @@ angular.module('morph.transitions')
           'position': 'fixed',
           'z-index': '900',
           'opacity': '0',
-          margin: 0,
-          top: MorphableBoundingRect.top + 'px',
-          left: MorphableBoundingRect.left + 'px',
-          width: MorphableBoundingRect.width + 'px', 
-          height: MorphableBoundingRect.height + 'px',
+          'margin': 0,
+          'top': MorphableBoundingRect.top + 'px',
+          'left': MorphableBoundingRect.left + 'px',
+          'width': MorphableBoundingRect.width + 'px', 
+          'height': MorphableBoundingRect.height + 'px',
           'pointer-events': 'none',
           '-webkit-transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s',
           'transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s'
@@ -87,14 +87,15 @@ angular.module('morph.transitions')
             left: settings.MorphableBoundingRect.left + 'px'
           });
 
+          // wrap in timeout to allow relocation to finish. transition styles are added too soon without this.
           setTimeout( function () {
             angular.forEach(elements, function (element, elementName) {
-              addClass[elementName](element, settings);
+              enter[elementName](element, settings);
             });
           }, 25 );
         } else {
           angular.forEach(elements, function (element, elementName) {
-            removeClass[elementName](element, settings);
+            exit[elementName](element, settings);
           });
         }
 
