@@ -9,7 +9,7 @@ angular.module('morph.transitions')
         var left = '50%';
         var margin = 0;
 
-        if ( !modelSettings.position || modalSettings.position === 'center' ) {
+        if ( !modalSettings.position || modalSettings.position === 'center' ) {
           margin = '-' + ( ContentBoundingRect.height / 2 ) + 'px 0 0 -' + ( ContentBoundingRect.width / 2 ) + 'px';
         }
 
