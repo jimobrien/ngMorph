@@ -16,6 +16,11 @@ This directive is an attempt at packaging necessary transitions and properties t
 
       ```html
         <button ng-morph-modal="settings"> Log In </button>
+        <!-- coming soon:
+         <div ng-morph-overlay> </div>
+         <div ng-morph-expand> </div> 
+         -->
+         
       ```
       
       ```js
