@@ -51,6 +51,7 @@ angular.module('morph.assist', [
     addClass: {
       wrapper: function (element, settings) {
         var ContentBoundingRect = settings.ContentBoundingRect;
+        var MorphableBoundingRect = settings.MorphableBoundingRect;
 
         element.css({
           'z-index': 1900,
