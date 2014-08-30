@@ -7,75 +7,19 @@ button {
   height: 50px;
   background: #e85657;
   color: #fcfcfc;
-  /*font-weight: bold;*/
   text-transform: uppercase;
   outline: none;
   cursor: pointer;
   border: none;
   margin: 100px 0;
 }
-
-form {
-  position: relative;
-  text-align: left;
-  padding: 10px 30px;
-
-}
-
-form h2 {
-  margin: 0;
-  text-align: center;
-  font-weight: 300;
-  font-size: 3.5em;
-}
-
-form p {
-  margin: 0 0 5px 0;
-  font-size: 0.7em;
-}
-
-form label {
-  display: block;
-  padding: 10px 0 0;
-  color: #d5bba4;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: bold;
-}
-
-form input[type="text"],
-form input[type="password"] {
-  padding: 10px;
-  width: 95%;
-  border: 2px solid #ebd3bd;
-  background: transparent;
-  color: #fcfcfc;
-  font-weight: 300;
-  font-size: 2.2em;
-}
-
-form input:focus {
-  outline: 0;
-}
-
-form button {
-  display: block;
-  margin-top: 2.5em;
-  padding: 1em;
-  width: 95%;
-  border: none;
-  background: #f9f6e5;
-  color: #e75854;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 800;
-  font-size: 1.25em;
-}
 .container {
   width: 1000px;
   margin: 0 auto;
   text-align: center;
 }
+
+/* demo login form */
 .login {
   background: #e85657;
   width: 400px;
@@ -89,27 +33,53 @@ form button {
   color: #fcfcfc;
   font-weight: bold;
 }
-.about {
-  width: 200px;
-  height: 25px;
-  margin: 0 auto;
-  background: #e85657;
-  color: #fcfcfc;
-  padding: 50px;
-}
-.about-container: {
-  width: 100%;
-  height: 800px;
-  background: #f9f6e5;
-}
-.person-container {
-  margin-top: 50px;
-}
-.person-container img {
-  width: 60%;
-  border-radius: 999px;
-}
-.person {
-  color: #fcfcfc;
+form {
+  position: relative;
   text-align: left;
+  padding: 10px 30px;
+
+}
+form h2 {
+  margin: 0;
+  text-align: center;
+  font-weight: 300;
+  font-size: 3.5em;
+}
+form p {
+  margin: 0 0 5px 0;
+  font-size: 0.7em;
+}
+form label {
+  display: block;
+  padding: 10px 0 0;
+  color: #d5bba4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+form input[type="text"],
+form input[type="password"] {
+  padding: 10px;
+  width: 93%;
+  border: 2px solid #ebd3bd;
+  background: transparent;
+  color: #fcfcfc;
+  font-weight: 300;
+  font-size: 2.2em;
+}
+form input:focus {
+  outline: 0;
+}
+form button {
+  display: block;
+  margin-top: 2.5em;
+  padding: 1em;
+  width: 100%;
+  border: none;
+  background: #f9f6e5;
+  color: #e75854;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+  font-size: 1.25em;
 }
