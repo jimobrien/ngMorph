@@ -3,7 +3,7 @@
 ## Morphable Elements ##
 This directive is an attempt at packaging transitions/animations that enable the reuse of visual elements by creating a  morphing effect:
 
-![ngMorph Demo](http://imgur.com/3y195lq.gif)
+![ngMorph Demo](http://imgur.com/hZuZCSZ.gif)
 
 ## Getting Started ##
   1. Install with bower:
