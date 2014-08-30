@@ -1,0 +1,29 @@
+{
+  "name": "angular-morph",
+  "version": "0.0.1",
+  "description": "This directive is an attempt at packaging necessary transitions and properties that enable the reuse of visual elements through morphing.",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jimobrien/ngMorph.git"
+  },
+  "keywords": [
+    "angular",
+    "transition",
+    "animation"
+  ],
+  "author": "Jim O'Brien",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jimobrien/ngMorph/issues"
+  },
+  "devDependencies": {
+    "gulp": "~3.8.7",
+    "gulp-concat": "~2.3.4",
+    "gulp-uglify": "~1.0.0",
+    "gulp-notify": "~1.5.0"
+  }
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html ng-app="morphDemo">
+  <head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="bootstrap-grid.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+    </style>
+  </head>
+  <body ng-controller="AppCtrl">
+
+    <div class="container main">
+      <div class="col-md-offset-4 col-md-4">
+        <button ng-morph-modal="example1" > login </button>    
+      </div>
+    </div>
+
+    <!-- <div class="container">
+      <button ng-morphable="example2" > btn </button>    
+    </div>
+
+    <div class="container">
+      <button ng-morphable="example3" > btn </button>    
+    </div>
+     -->
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../dist/angular-morph.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
