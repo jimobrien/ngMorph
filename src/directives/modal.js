@@ -8,7 +8,7 @@ angular.module('morph.directives')
       settings: '=ngMorphModal'
     },
     link: function (scope, element, attrs) {
-      var loadContent = $http.get(scope.settings.template.url, { cache: $templateCache });
+      var loadContent = $http.get(scope.settings.modal.url, { cache: $templateCache });
       var wrapper     = angular.element('<div></div>').css('visibility', 'hidden');
 
       var compile = function (results) {
