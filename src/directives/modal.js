@@ -17,30 +17,6 @@ angular.module('morph.directives')
         return $compile(scope.morphTemplate)(scope);    
       };
 
-      var toggle = function (modal, elements) {
-        scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-
-        if ( !isMorphed ) {
-          wrapper.css({
-            transition: 'none', // remove any transitions to prevent the relocation from being delayed.
-            top: scope.settings.MorphableBoundingRect.top + 'px',
-            left: scope.settings.MorphableBoundingRect.left + 'px'
-          });
-
-          setTimeout( function () {
-            angular.forEach(elements, function (element, elementName) {
-              modal.addClass(element, elementName, scope.settings);
-            });
-          }, 25 );
-        } else {
-          angular.forEach(elements, function (element, elementName) {
-            modal.removeClass(element, elementName, scope.settings);
-          });
-        }
-
-        isMorphed = !isMorphed;
-      };
-
       loadContent.then(compile)
       .then( function (content) {
         var closeEl  = angular.element(content[0].querySelector(scope.settings.closeEl));
@@ -63,14 +39,14 @@ angular.module('morph.directives')
         
         // attach event listeners
         element.bind('click', function () {
-          toggle(modal, elements);
-          // modal.toggle(modal, elements);
+          scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+          isMorphed = modal.toggle(elements, scope.settings, isMorphed);
         });
 
         if ( closeEl ) {
           closeEl.bind('click', function (event) {
-            toggle(modal, elements);
-            // modal.toggle(modal, elements);
+            scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+            isMorphed = modal.toggle(elements, scope.settings, isMorphed);
           });
         }
 

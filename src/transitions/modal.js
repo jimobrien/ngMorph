@@ -13,12 +13,27 @@ angular.module('morph.transitions')
     });
 
     return {
-      addClass: function (element, elementName, settings) {
-        ModalAssist.addClass[elementName](element, settings);
-      },
 
-      removeClass: function (element, elementName, settings) {
-        ModalAssist.removeClass[elementName](element, settings);
+      toggle: function (elements, settings, isMorphed) {
+        if ( !isMorphed ) {
+          elements.wrapper.css({
+            transition: 'none', // remove any transitions to prevent the relocation from being delayed.
+            top: settings.MorphableBoundingRect.top + 'px',
+            left: settings.MorphableBoundingRect.left + 'px'
+          });
+
+          setTimeout( function () {
+            angular.forEach(elements, function (element, elementName) {
+              ModalAssist.addClass[elementName](element, settings);
+            });
+          }, 25 );
+        } else {
+          angular.forEach(elements, function (element, elementName) {
+            ModalAssist.removeClass[elementName](element, settings);
+          });
+        }
+
+        return !isMorphed;
       }
     };
   };
