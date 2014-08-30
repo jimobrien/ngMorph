@@ -5,6 +5,9 @@ This module is an attempt at packaging transitions/animations into directives th
 
 ![ngMorph Demo](http://imgur.com/MT9CwbV.gif)
 
+## Demo ##
+Preview available [here](http://jimobrien.github.io/ngMorph/)
+
 ## Getting Started ##
   1. Install with bower:
  
