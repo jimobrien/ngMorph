@@ -157,7 +157,7 @@ angular.module('morph.directives')
       var compile = function (results) {
         var morphTemplate = results.data ? results.data : results;
 
-        return $compile(morphTemplate)(scope);    
+        return $compile(morphTemplate)(scope);
       };
 
       var initMorphable = function (content) {
