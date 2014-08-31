@@ -270,6 +270,7 @@ angular.module('morph.directives')
           content: content
         };
 
+        // add to dom
         wrapper.append(content);
         element.after(wrapper);
 
@@ -329,7 +330,6 @@ angular.module('morph.directives')
       settings: '=ngMorphOverlay'
     },
     link: function (scope, element, attrs) {
-      console.log(element)
       var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
       var overlaySettings = scope.settings.overlay;
 
@@ -339,6 +339,9 @@ angular.module('morph.directives')
         return $compile(morphTemplate)(scope);
       };
 
+      // content
+      // scope.settings
+      // isMorphed
       var initMorphable = function (content) {
         var closeEl  = angular.element(content[0].querySelector(scope.settings.closeEl));
         var elements = {
@@ -347,6 +350,7 @@ angular.module('morph.directives')
           content: content
         };
 
+        // add to dom
         wrapper.append(content);
         element.after(wrapper);
 

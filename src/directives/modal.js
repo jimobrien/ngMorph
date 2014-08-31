@@ -25,6 +25,7 @@ angular.module('morph.directives')
           content: content
         };
 
+        // add to dom
         wrapper.append(content);
         element.after(wrapper);
 
