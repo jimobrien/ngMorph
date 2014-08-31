@@ -246,7 +246,7 @@ angular.module('morph.transitions')
 }]);
 angular.module('morph.directives', ['morph']);
 angular.module('morph.directives')
-.directive('ngMorphModal', ['$http', '$templateCache', '$compile', 'Morph', function ($http, $templateCache, $compile, Morph) {
+.directive('ngMorphModal', ['TemplateHandler', '$compile', 'Morph', function (TemplateHandler, $compile, Morph) {
   var isMorphed = false;
 
   return {
@@ -310,7 +310,7 @@ angular.module('morph.directives')
         initMorphable(compile(modalSettings.template));
 
       } else if ( modalSettings.templateUrl ){
-        var loadContent = $http.get(modalSettings.templateUrl, { cache: $templateCache });
+        var loadContent = TemplateHandler.get(modalSettings.templateUrl);
 
         loadContent.then(compile)
         .then(initMorphable);
@@ -323,7 +323,7 @@ angular.module('morph.directives')
   };
 }]);
 angular.module('morph.directives')
-.directive('ngMorphOverlay', ['$http', '$templateCache', '$compile', 'Morph', function ($http, $templateCache, $compile, Morph) {
+.directive('ngMorphOverlay', ['$compile', 'TemplateHandler', 'Morph', function ($compile, TemplateHandler, Morph) {
   var isMorphed = false;
 
   return {
@@ -390,7 +390,7 @@ angular.module('morph.directives')
         initMorphable(compile(overlaySettings.template));
 
       } else if ( overlaySettings.templateUrl ){
-        var loadContent = $http.get(overlaySettings.templateUrl, { cache: $templateCache });
+        var loadContent = TemplateHandler.get(overlaySettings.templateUrl);
 
         loadContent.then(compile)
         .then(initMorphable);
@@ -466,6 +466,13 @@ angular.module('morph', ['morph.transitions', 'morph.assist'])
     });
 
     return Transitions[transition](elements, settings);
+  };
+}])
+.factory('TemplateHandler', ['$http', '$templateCache', function ($http, $templateCache) {
+  return {
+    get: function (path) {
+      return $http.get(path, { cache: $templateCache });
+    }
   };
 }]);
 angular.module('ngMorph', [
