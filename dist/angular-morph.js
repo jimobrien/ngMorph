@@ -160,7 +160,7 @@ angular.module('morph.transitions')
       },
       content: function (element, settings) {
         element.css({
-          'transition': 'opacity 0.3s 0.4s ease',
+          'transition': 'opacity 0.3s 0.5s ease',
           'visibility': 'visible',
           'opacity': '1'
         });
@@ -178,39 +178,41 @@ angular.module('morph.transitions')
     var exit = {
       wrapper: function (element, settings) {
         var MorphableBoundingRect = settings.MorphableBoundingRect;
-        
-        element.css({
-          'position': 'fixed',
-          'z-index': '900',
-          'opacity': '0',
-          'margin': 0,
-          'top': MorphableBoundingRect.top + 'px',
-          'left': MorphableBoundingRect.left + 'px',
-          'width': MorphableBoundingRect.width + 'px', 
-          'height': MorphableBoundingRect.height + 'px',
-          'pointer-events': 'none',
-          '-webkit-transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s',
-          'transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s'
-        });
+        setTimeout( function () {
+          element.css({
+            'position': 'fixed',
+            'z-index': '900',
+            'opacity': '0',
+            'margin': 0,
+            'top': MorphableBoundingRect.top + 'px',
+            'left': MorphableBoundingRect.left + 'px',
+            'width': MorphableBoundingRect.width + 'px', 
+            'height': MorphableBoundingRect.height + 'px',
+            'pointer-events': 'none',
+            '-webkit-transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s',
+            'transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s'
+          });
+        }, 300);
       },
       content: function (element, settings) {
         element.css({
-          'transition': 'opacity 0.3s 0.4s ease',
+          'transition': 'opacity 0.22s ease',
+          '-webkit-transition': 'opacity 0.22s ease',         
           'height': '0',
           'opacity': '0'
         });
 
         setTimeout( function () {
           element.css({'visibility': 'hidden'});
-        }, 100);
+        }, 70);
 
       },
       morphable: function (element, settings) {
         element.css({
           'z-index': 900,
           'opacity': 1,
-          '-webkit-transition': 'opacity 0.1s 0.4s',
-          'transition': 'opacity 0.1s 0.4s',
+          '-webkit-transition': 'opacity 0.1s 0.3s',
+          'transition': 'opacity 0.1s 0.3s',
         });
       },
     };
