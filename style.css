@@ -16,6 +16,14 @@ button {
 .main {
   text-align: center;
 }
+
+/* demo info page */
+.more-info {
+  color: #fcfcfc;
+  font-size: 17px;
+  text-align: left;
+  background: #e85657;
+}
 /* demo login form */
 .login {
   background: #e85657;
