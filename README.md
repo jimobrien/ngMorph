@@ -33,10 +33,10 @@ Preview available [here](http://jimobrien.github.io/ngMorph/)
  ```js
    app.controller('AppCtrl', function ($scope) {
      $scope.settings = {
-       closeEl: '.close',
+       closeEl: '.close', // selector that closes the modal
        modal: {
-         url: 'path/to/view.html', // path to the view html
-         position: { // optional positioning. default is centered.
+         url: 'path/to/view.html', // requried. path to the view html.
+         position: { // optional. default = centered.
           top: '30%',
           left: '20%'
          }
