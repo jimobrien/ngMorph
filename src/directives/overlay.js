@@ -1,15 +1,15 @@
 angular.module('morph.directives')
-.directive('ngMorphModal', ['$http', '$templateCache', '$compile', 'Morph', function ($http, $templateCache, $compile, Morph) {
+.directive('ngMorphOverlay', ['$http', '$templateCache', '$compile', 'Morph', function ($http, $templateCache, $compile, Morph) {
   var isMorphed = false;
 
   return {
     restrict: 'A',
     scope: {
-      settings: '=ngMorphModal'
+      settings: '=ngMorphOverlay'
     },
     link: function (scope, element, attrs) {
       var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
-      var modalSettings = scope.settings.modal;
+      var overlaySettings = scope.settings.overlay;
 
       var compile = function (results) {
         var morphTemplate = results.data ? results.data : results;
@@ -32,22 +32,22 @@ angular.module('morph.directives')
         wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
 
         // get bounding rectangles
-        scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+        scope.settings.MorphableBoundingRect =0 element[0].getBoundingClientRect();
         scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
         
-        // bootstrap the modal
-        var modal = new Morph('Modal', elements, scope.settings);
+        // bootstrap the overlay
+        var overlay = new Morph('Overlay', elements, scope.settings);
         
         // attach event listeners
         element.bind('click', function () {
           scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-          isMorphed = modal.toggle(isMorphed);
+          isMorphed = overlay.toggle(isMorphed);
         });
 
         if ( closeEl ) {
           closeEl.bind('click', function (event) {
             scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-            isMorphed = modal.toggle(isMorphed);
+            isMorphed = overlay.toggle(isMorphed);
           });
         }
 
@@ -58,11 +58,11 @@ angular.module('morph.directives')
         });
       };
 
-      if ( modalSettings.template ) {
-        initMorphable(compile(modalSettings.template));
+      if ( overlaySettings.template ) {
+        initMorphable(compile(overlaySettings.template));
 
-      } else if ( modalSettings.templateUrl ){
-        var loadContent = $http.get(modalSettings.templateUrl, { cache: $templateCache });
+      } else if ( overlaySettings.templateUrl ){
+        var loadContent = $http.get(overlaySettings.templateUrl, { cache: $templateCache });
 
         loadContent.then(compile)
         .then(initMorphable);

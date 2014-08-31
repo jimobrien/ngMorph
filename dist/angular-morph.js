@@ -139,6 +139,109 @@ angular.module('morph.transitions')
 }]);
 angular.module('morph.transitions')
 .factory('Overlay', [ function () {
+  return function (elements, settings) {
+    var enter = {
+      wrapper: function (element, settings) {
+        var ContentBoundingRect = settings.ContentBoundingRect;
+        var modalSettings = settings.modal;
+
+        element.css({
+          'z-index': 1900,
+          'opacity': 1,
+          'visibility': 'visible',
+          'pointer-events': 'auto',
+          'top': '0',
+          'left': '0',
+          'width': '100%',
+          'height': '100%',
+          '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
+          'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
+        });
+        
+      },
+      content: function (element, settings) {
+        element.css({
+          'transition': 'opacity 0.3s 0.4s ease',
+          'visibility': 'visible',
+          'opacity': '1'
+        });
+      },
+      morphable: function (element, settings) {
+        element.css({
+          'z-index': 2000,
+          'opacity': 0,
+          '-webkit-transition': 'opacity 0.1s',
+          'transition': 'opacity 0.1s',
+        });
+      },
+    };
+
+    var exit = {
+      wrapper: function (element, settings) {
+        var MorphableBoundingRect = settings.MorphableBoundingRect;
+        
+        element.css({
+          'position': 'fixed',
+          'z-index': '900',
+          'opacity': '0',
+          'margin': 0,
+          'top': MorphableBoundingRect.top + 'px',
+          'left': MorphableBoundingRect.left + 'px',
+          'width': MorphableBoundingRect.width + 'px', 
+          'height': MorphableBoundingRect.height + 'px',
+          'pointer-events': 'none',
+          '-webkit-transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s',
+          'transition': 'opacity 0.3s 0.5s, width 0.35s 0.1s, height 0.35s 0.1s, top 0.35s 0.1s, left 0.35s 0.1s, margin 0.35s 0.1s'
+        });
+      },
+      content: function (element, settings) {
+        element.css({
+          'transition': 'opacity 0.3s 0.4s ease',
+          'height': '0',
+          'opacity': '0'
+        });
+
+        setTimeout( function () {
+          element.css({'visibility': 'hidden'});
+        }, 100);
+
+      },
+      morphable: function (element, settings) {
+        element.css({
+          'z-index': 900,
+          'opacity': 1,
+          '-webkit-transition': 'opacity 0.1s 0.4s',
+          'transition': 'opacity 0.1s 0.4s',
+        });
+      },
+    };
+
+    return {
+
+      toggle: function (isMorphed) {
+        if ( !isMorphed ) {
+          elements.wrapper.css({
+            transition: 'none', // remove any transitions to prevent the relocation from being delayed.
+            top: settings.MorphableBoundingRect.top + 'px',
+            left: settings.MorphableBoundingRect.left + 'px'
+          });
+
+          // wrap in timeout to allow relocation to finish. transition styles are added too soon without this.
+          setTimeout( function () {
+            angular.forEach(elements, function (element, elementName) {
+              enter[elementName](element, settings);
+            });
+          }, 25 );
+        } else {
+          angular.forEach(elements, function (element, elementName) {
+            exit[elementName](element, settings);
+          });
+        }
+
+        return !isMorphed;
+      }
+    };
+  };
 }]);
 angular.module('morph.directives', ['morph']);
 angular.module('morph.directives')
@@ -179,7 +282,6 @@ angular.module('morph.directives')
         scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
         
         // bootstrap the modal
-        // var modal = Morph.modal(elements, scope.settings);
         var modal = new Morph('Modal', elements, scope.settings);
         
         // attach event listeners
@@ -270,7 +372,7 @@ angular.module('morph.assist', [
 angular.module('morph', ['morph.transitions', 'morph.assist'])
 .factory('Morph', ['Transitions', 'Assist', function (Transitions, Assist) {
 
-  return function (type, elements, settings) {
+  return function (transition, elements, settings) {
     var MorphableBoundingRect = settings.MorphableBoundingRect;
 
     // set wrapper bounding rectangle
@@ -281,7 +383,7 @@ angular.module('morph', ['morph.transitions', 'morph.assist'])
       Assist.applyDefaultStyles(element, elementName);
     });
 
-    return Transitions[type](elements, settings);
+    return Transitions[transition](elements, settings);
   };
 }]);
 angular.module('ngMorph', [

@@ -1,7 +1,7 @@
 angular.module('morph', ['morph.transitions', 'morph.assist'])
 .factory('Morph', ['Transitions', 'Assist', function (Transitions, Assist) {
 
-  return function (type, elements, settings) {
+  return function (transition, elements, settings) {
     var MorphableBoundingRect = settings.MorphableBoundingRect;
 
     // set wrapper bounding rectangle
@@ -12,6 +12,6 @@ angular.module('morph', ['morph.transitions', 'morph.assist'])
       Assist.applyDefaultStyles(element, elementName);
     });
 
-    return Transitions[type](elements, settings);
+    return Transitions[transition](elements, settings);
   };
 }]);
