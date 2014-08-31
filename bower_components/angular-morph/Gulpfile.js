@@ -11,6 +11,7 @@ var paths = {
     'src/transitions/overlay.js',
     'src/directives/directives.js',
     'src/directives/modal.js',
+    'src/directives/overlay.js',
     'src/morphAssist.js',
     'src/morph.js',
     'src/app.js'

@@ -1,5 +1,5 @@
 angular.module('morph.directives')
-.directive('ngMorphModal', ['$http', '$templateCache', '$compile', 'Morph', function ($http, $templateCache, $compile, Morph) {
+.directive('ngMorphModal', ['TemplateHandler', '$compile', 'Morph', function (TemplateHandler, $compile, Morph) {
   var isMorphed = false;
 
   return {
@@ -8,17 +8,16 @@ angular.module('morph.directives')
       settings: '=ngMorphModal'
     },
     link: function (scope, element, attrs) {
-      var loadContent = $http.get(scope.settings.modal.url, { cache: $templateCache });
-      var wrapper     = angular.element('<div></div>').css('visibility', 'hidden');
+      var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
+      var modalSettings = scope.settings.modal;
 
       var compile = function (results) {
-        if ( results ) scope.morphTemplate = results.data;
+        var morphTemplate = results.data ? results.data : results;
 
-        return $compile(scope.morphTemplate)(scope);    
+        return $compile(morphTemplate)(scope);
       };
 
-      loadContent.then(compile)
-      .then( function (content) {
+      var initMorphable = function (content) {
         var closeEl  = angular.element(content[0].querySelector(scope.settings.closeEl));
         var elements = {
           morphable: element,
@@ -26,6 +25,7 @@ angular.module('morph.directives')
           content: content
         };
 
+        // add to dom
         wrapper.append(content);
         element.after(wrapper);
 
@@ -37,7 +37,6 @@ angular.module('morph.directives')
         scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
         
         // bootstrap the modal
-        // var modal = Morph.modal(elements, scope.settings);
         var modal = new Morph('Modal', elements, scope.settings);
         
         // attach event listeners
@@ -58,7 +57,20 @@ angular.module('morph.directives')
           element.unbind('click');
           closeEl.unbind('click');
         });
-      });
+      };
+
+      if ( modalSettings.template ) {
+        initMorphable(compile(modalSettings.template));
+
+      } else if ( modalSettings.templateUrl ){
+        var loadContent = TemplateHandler.get(modalSettings.templateUrl);
+
+        loadContent.then(compile)
+        .then(initMorphable);
+
+      } else {
+        throw new Error('No template found.');
+      }
 
     }
   };

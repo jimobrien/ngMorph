@@ -1,6 +1,7 @@
 angular.module('morph.transitions', ['morph.assist'])
-.factory('Transitions', ['Modal', function (Modal) {
+.factory('Transitions', ['Modal', 'Overlay', function (Modal, Overlay) {
   return {
-    Modal: Modal 
+    Modal: Modal,
+    Overlay: Overlay
   };
 }]);
