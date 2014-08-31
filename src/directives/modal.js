@@ -1,5 +1,5 @@
 angular.module('morph.directives')
-.directive('ngMorphModal', ['$http', '$templateCache', '$compile', 'Morph', function ($http, $templateCache, $compile, Morph) {
+.directive('ngMorphModal', ['TemplateHandler', '$compile', 'Morph', function (TemplateHandler, $compile, Morph) {
   var isMorphed = false;
 
   return {
@@ -63,7 +63,7 @@ angular.module('morph.directives')
         initMorphable(compile(modalSettings.template));
 
       } else if ( modalSettings.templateUrl ){
-        var loadContent = $http.get(modalSettings.templateUrl, { cache: $templateCache });
+        var loadContent = TemplateHandler.get(modalSettings.templateUrl);
 
         loadContent.then(compile)
         .then(initMorphable);

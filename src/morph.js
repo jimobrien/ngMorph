@@ -14,4 +14,11 @@ angular.module('morph', ['morph.transitions', 'morph.assist'])
 
     return Transitions[transition](elements, settings);
   };
+}])
+.factory('TemplateHandler', ['$http', '$templateCache', function ($http, $templateCache) {
+  return {
+    get: function (path) {
+      return $http.get(path, { cache: $templateCache });
+    }
+  };
 }]);
