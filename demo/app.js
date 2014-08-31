@@ -13,4 +13,12 @@ angular.module('morphDemo', ['ngMorph'])
     }
   };
 
+  $scope.example2 = {
+    trigger: 'click',
+    closeEl: '.close-x',
+    modal: {
+      templateUrl: 'views/loginform.html'
+    }
+  };
+
 }]);

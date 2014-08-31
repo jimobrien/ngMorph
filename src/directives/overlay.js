@@ -32,7 +32,7 @@ angular.module('morph.directives')
         wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
 
         // get bounding rectangles
-        scope.settings.MorphableBoundingRect =0 element[0].getBoundingClientRect();
+        scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
         scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
         
         // bootstrap the overlay
