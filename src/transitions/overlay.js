@@ -3,8 +3,6 @@ angular.module('morph.transitions')
   return function (elements, settings) {
     var enter = {
       wrapper: function (element, settings) {
-        var ContentBoundingRect = settings.ContentBoundingRect;
-        var modalSettings = settings.modal;
 
         element.css({
           'z-index': 1900,

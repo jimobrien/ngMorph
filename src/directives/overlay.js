@@ -8,6 +8,7 @@ angular.module('morph.directives')
       settings: '=ngMorphOverlay'
     },
     link: function (scope, element, attrs) {
+      console.log(element)
       var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
       var overlaySettings = scope.settings.overlay;
 
