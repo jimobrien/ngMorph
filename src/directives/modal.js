@@ -8,17 +8,16 @@ angular.module('morph.directives')
       settings: '=ngMorphModal'
     },
     link: function (scope, element, attrs) {
-      var loadContent = $http.get(scope.settings.modal.url, { cache: $templateCache });
-      var wrapper     = angular.element('<div></div>').css('visibility', 'hidden');
+      var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
+      var modalSettings = scope.settings.modal;
 
       var compile = function (results) {
-        if ( results ) scope.morphTemplate = results.data;
+        var morphTemplate = results.data ? results.data : results;
 
-        return $compile(scope.morphTemplate)(scope);    
+        return $compile(morphTemplate)(scope);    
       };
 
-      loadContent.then(compile)
-      .then( function (content) {
+      var initMorphable = function (content) {
         var closeEl  = angular.element(content[0].querySelector(scope.settings.closeEl));
         var elements = {
           morphable: element,
@@ -58,7 +57,20 @@ angular.module('morph.directives')
           element.unbind('click');
           closeEl.unbind('click');
         });
-      });
+      };
+
+      if ( modalSettings.template ) {
+        initMorphable(compile(modalSettings.template));
+
+      } else if ( modalSettings.templateUrl ){
+        var loadContent = $http.get(modalSettings.templateUrl, { cache: $templateCache });
+
+        loadContent.then(compile)
+        .then(initMorphable);
+
+      } else {
+        throw new Error('No template found.');
+      }
 
     }
   };
