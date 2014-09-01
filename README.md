@@ -1,7 +1,7 @@
 # ngMorph #
  
 ## Morphable Elements ##
-This module is an attempt at packaging transitions/animations into directives that enable the reuse of visual elements by morphing them into other elements. Simply create an originating element and an end-state view, and ngMorph takes care of the rest! Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
+This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the ng-morph-<type> directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
 
 ![ngMorph Demo](http://imgur.com/ZeEaLFB.gif)
 
@@ -23,8 +23,10 @@ Available **[here](http://jimobrien.github.io/ngMorph/)**
 
 ## Usage ##
 
-### Settings ###
-Morphables require a settings object which you define in your controller. Settings for each morphable end-state can be found in their respective usage example below.
+Morphables require a settings object which you define in your controller. Settings for each morphable can be found in their respective usage example below.
+
+
+
 
 ###Modal###
 
@@ -96,7 +98,27 @@ __Modal Settings__
      }
    });
  ```
+ 
+###Views###
+In order for elements to morph into their end-state view properly, the contents that make up the view need to be wrapped in a **single containing element**. Here's an example of what a proper view looks like: 
 
+ ```html
+   <div class="col-md-12 login"> <!-- the containing element -->
+   
+     <!-- contents that make up the view start here -->
+     <div class="row">
+       <span class="glyphicon glyphicon-remove close-x pull-right"></span>
+     </div>
+     <div class="row">
+       <form>
+         <p><label>Email</label><input type="text" /></p>
+         <p><label>Password</label><input type="password" /></p>
+         <p><button>Login</button></p>
+       </form>
+     </div>
+     
+   </div> <!-- /end containing element -->
+ ```
 
 
 ## What's Next ##
