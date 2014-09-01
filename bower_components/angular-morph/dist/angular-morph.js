@@ -65,6 +65,12 @@ angular.module('morph.transitions')
           'transition': 'opacity 0.1s',
         });
       },
+      fade: function (element) {
+        element.css({
+          'visibility': 'visible',
+          'opacity': '1'
+        });
+      }
     };
 
     var exit = {
@@ -105,6 +111,11 @@ angular.module('morph.transitions')
           'transition': 'opacity 0.1s 0.4s',
         });
       },
+      fade: function (element) {
+        element.css({
+          'opacity': '0'
+        });
+      }
     };
 
     return {
@@ -143,7 +154,6 @@ angular.module('morph.transitions')
   return function (elements, settings) {
     var enter = {
       wrapper: function (element, settings) {
-
         element.css({
           'z-index': 1900,
           'opacity': 1,
@@ -225,7 +235,6 @@ angular.module('morph.transitions')
     };
 
     return {
-
       toggle: function (isMorphed) {
         if ( !isMorphed ) {
           elements.wrapper.css({
@@ -262,6 +271,7 @@ angular.module('morph.directives')
       settings: '=ngMorphModal'
     },
     link: function (scope, element, attrs) {
+      
       var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
       var modalSettings = scope.settings.modal;
 
@@ -279,9 +289,17 @@ angular.module('morph.directives')
           content: content
         };
 
+        // create element for modal fade
+        if ( scope.settings.modal.fade !== false ) {
+          var fade = angular.element('<div></div>');
+          elements.fade = fade;
+        }
+
         // add to dom
         wrapper.append(content);
         element.after(wrapper);
+        if ( fade ) wrapper.after(fade);
+        
 
         // set the wrapper bg color
         wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
@@ -436,7 +454,22 @@ angular.module('morph.assist', [
       'outline': 'none',
       '-webkit-transition': 'all 0.1s 0.5s',
       'transition': 'all 0.1s 0.5s'
+    },
+    fade: {
+      'visibility': 'hidden',
+      'opacity': '0',
+      'position': 'fixed',
+      'top': '0',
+      'left': '0',
+      'z-index': '800',
+      'width': '100%',
+      'height': '100%',
+      'background': 'rgba(0,0,0,0.5)',
+      '-webkit-transition': 'opacity 0.5s',
+      'transition': 'opacity 0.5s',
+      'pointer-events': 'none'
     }
+
   };
 
   return { 
@@ -453,7 +486,7 @@ angular.module('morph.assist', [
     },
 
     applyDefaultStyles: function (element, elementName) {
-      element.css(defaultStyles[elementName]);
+      if ( defaultStyles[elementName] ) element.css(defaultStyles[elementName]);
     }
 
   };

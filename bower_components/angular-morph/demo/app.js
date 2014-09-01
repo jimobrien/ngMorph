@@ -13,7 +13,7 @@ angular.module('morphDemo', ['ngMorph'])
     trigger: 'click',
     closeEl: '.close-x',
     overlay: {
-      templateUrl: 'views/info.html'
+      templateUrl: 'views/info.html',
     }
   };
 
