@@ -25,7 +25,22 @@ angular.module('morph.assist', [
       'outline': 'none',
       '-webkit-transition': 'all 0.1s 0.5s',
       'transition': 'all 0.1s 0.5s'
+    },
+    fade: {
+      'visibility': 'hidden',
+      'opacity': '0',
+      'position': 'fixed',
+      'top': '0',
+      'left': '0',
+      'z-index': '800',
+      'width': '100%',
+      'height': '100%',
+      'background': 'rgba(0,0,0,0.5)',
+      '-webkit-transition': 'opacity 0.5s',
+      'transition': 'opacity 0.5s',
+      'pointer-events': 'none'
     }
+
   };
 
   return { 
@@ -42,7 +57,7 @@ angular.module('morph.assist', [
     },
 
     applyDefaultStyles: function (element, elementName) {
-      element.css(defaultStyles[elementName]);
+      if ( defaultStyles[elementName] ) element.css(defaultStyles[elementName]);
     }
 
   };

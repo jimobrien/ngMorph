@@ -58,6 +58,12 @@ angular.module('morph.transitions')
           'transition': 'opacity 0.1s',
         });
       },
+      fade: function (element) {
+        element.css({
+          'visibility': 'visible',
+          'opacity': '1'
+        });
+      }
     };
 
     var exit = {
@@ -98,6 +104,11 @@ angular.module('morph.transitions')
           'transition': 'opacity 0.1s 0.4s',
         });
       },
+      fade: function (element) {
+        element.css({
+          'opacity': '0'
+        });
+      }
     };
 
     return {

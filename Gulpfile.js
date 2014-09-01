@@ -25,6 +25,7 @@ gulp.task('concat', function(){
   return gulp.src(paths.scripts)
     .pipe(concat('angular-morph.js'))
     .pipe(gulp.dest(paths.dist));
+    // .pipe(notify({message: 'Build Done'}));
 });
 
 gulp.task('uglify',function(){
@@ -35,7 +36,7 @@ gulp.task('uglify',function(){
     .pipe(notify({message: 'Build Done'}));
 });
 
-gulp.task('build', ['concat','uglify']);
+gulp.task('build', ['concat', 'uglify']);
 
 gulp.task('watch', function(){
   gulp.watch(paths.source, ['build']);

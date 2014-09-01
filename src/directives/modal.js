@@ -8,6 +8,7 @@ angular.module('morph.directives')
       settings: '=ngMorphModal'
     },
     link: function (scope, element, attrs) {
+      
       var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
       var modalSettings = scope.settings.modal;
 
@@ -25,9 +26,17 @@ angular.module('morph.directives')
           content: content
         };
 
+        // create element for modal fade
+        if ( scope.settings.modal.fade ) {
+          var fade = angular.element('<div></div>');
+          elements.fade = fade;
+        }
+
         // add to dom
         wrapper.append(content);
         element.after(wrapper);
+        if ( fade ) wrapper.after(fade);
+        
 
         // set the wrapper bg color
         wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
