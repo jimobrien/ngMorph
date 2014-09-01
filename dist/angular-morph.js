@@ -154,7 +154,6 @@ angular.module('morph.transitions')
   return function (elements, settings) {
     var enter = {
       wrapper: function (element, settings) {
-
         element.css({
           'z-index': 1900,
           'opacity': 1,
@@ -236,7 +235,6 @@ angular.module('morph.transitions')
     };
 
     return {
-
       toggle: function (isMorphed) {
         if ( !isMorphed ) {
           elements.wrapper.css({
