@@ -23,8 +23,12 @@ Preview available [here](http://jimobrien.github.io/ngMorph/)
 
 ## Usage ##
 
+### Settings ###
+Morphables require a settings object which you define in your controller. Settings for each morphable end-state can be found in their respective usage example below.
 
 ###Modal###
+
+_Example:_
 
  ```html
    <button ng-morph-modal="settings"> Log In </button>
@@ -35,8 +39,8 @@ Preview available [here](http://jimobrien.github.io/ngMorph/)
      $scope.settings = {
        closeEl: '.close',
        modal: {
-         url: 'path/to/view.html', // path to the view html
-         position: { // optional positioning. default is centered.
+         templateUrl: 'path/to/view.html',
+         position: {
           top: '30%',
           left: '20%'
          }
@@ -45,7 +49,12 @@ Preview available [here](http://jimobrien.github.io/ngMorph/)
    });
  ```
  
-
+__Modal Settings__
+ - `closeEl:` 
+ - `modal:` _Required._ The modal configuration object.
+ - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
+ - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
+ - `position:` _Optional._ The positioning of the end-state element. Can either be pixels or a percentage. If no unit is specified, the input will be treated as a percentage ("30" => "30%").
 
 ###Overlay (Coming Soon)###
 
@@ -58,12 +67,17 @@ Preview available [here](http://jimobrien.github.io/ngMorph/)
      $scope.settings = {
        closeEl: '.close',
        overlay: {
-         url: 'path/to/view.html'
+         templateUrl: 'path/to/view.html'
        }
      }
    });
  ```
  
+ __Overlay Settings__
+ - `closeEl:` 
+ - `overlay:` _Required._ The overlay configuration object.
+ - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
+ - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
  
  
 ###Expand (Coming Soon)###
@@ -77,7 +91,7 @@ Preview available [here](http://jimobrien.github.io/ngMorph/)
      $scope.settings = {
        closeEl: '.close',
        expand: {
-         url: 'path/to/view.html'
+         templateUrl: 'path/to/view.html'
        }
      }
    });
