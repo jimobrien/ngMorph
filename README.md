@@ -1,12 +1,12 @@
 # ngMorph #
  
 ## Morphable Elements ##
-This module is an attempt at packaging transitions/animations into directives that enable the reuse of visual elements by morphing them into other elements. Simply create an originating element and an end-state view, and ngMorph takes care of the rest!
+This module is an attempt at packaging transitions/animations into directives that enable the reuse of visual elements by morphing them into other elements. Simply create an originating element and an end-state view, and ngMorph takes care of the rest! Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
 
 ![ngMorph Demo](http://imgur.com/kcwbVoj.gif)
 
 ## Demo ##
-Preview available [here](http://jimobrien.github.io/ngMorph/)
+Available **[here](http://jimobrien.github.io/ngMorph/)**
 
 ## Getting Started ##
   1. Install with bower:
@@ -27,8 +27,6 @@ Preview available [here](http://jimobrien.github.io/ngMorph/)
 Morphables require a settings object which you define in your controller. Settings for each morphable end-state can be found in their respective usage example below.
 
 ###Modal###
-
-_Example:_
 
  ```html
    <button ng-morph-modal="settings"> Log In </button>
@@ -51,7 +49,7 @@ _Example:_
  ```
  
 __Modal Settings__
- - `closeEl:` 
+ - `closeEl:` A css class/id selector that will close the modal when clicked.
  - `modal:` _Required._ The modal configuration object.
  - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
  - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
@@ -76,7 +74,7 @@ __Modal Settings__
  ```
  
  __Overlay Settings__
- - `closeEl:` 
+ - `closeEl:` A css class/id selector that will close the overlay when clicked.
  - `overlay:` _Required._ The overlay configuration object.
  - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
  - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
