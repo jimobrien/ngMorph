@@ -156,6 +156,12 @@ angular.module('morph.transitions')
           '-webkit-transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s',
           'transition': 'width 0.4s 0.1s, height 0.4s 0.1s, top 0.4s 0.1s, left 0.4s 0.1s, margin 0.4s 0.1s'
         });
+
+        // add vertical scrollbar once full-screen.
+        // TODO: add before/after animation hooks.
+        setTimeout( function () {
+          element.css({'overflow-y': 'scroll'});
+        }, 500);
         
       },
       content: function (element, settings) {
@@ -180,6 +186,7 @@ angular.module('morph.transitions')
         var MorphableBoundingRect = settings.MorphableBoundingRect;
         setTimeout( function () {
           element.css({
+            'overflow': 'hidden',
             'position': 'fixed',
             'z-index': '900',
             'opacity': '0',

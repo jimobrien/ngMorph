@@ -5,11 +5,7 @@ angular.module('morphDemo', ['ngMorph'])
     trigger: 'click',
     closeEl: '.close-x',
     modal: {
-      templateUrl: 'views/loginform.html',
-      position: {
-        top: 30,
-        left: 30
-      }
+      templateUrl: 'views/loginform.html'
     }
   };
 
@@ -17,7 +13,7 @@ angular.module('morphDemo', ['ngMorph'])
     trigger: 'click',
     closeEl: '.close-x',
     overlay: {
-      templateUrl: 'views/loginform.html'
+      templateUrl: 'views/info.html'
     }
   };
 

@@ -107,6 +107,7 @@ There is a lot of work to do before this is ready for an alpha release.. Followi
   - [X] ~~Refactor using ngAnimate and GSAP~~ (sticking with CSS transitions)
   - [ ] Add support for nested morphables (morphables within view templates)
   - [ ] Add different transitions (modal, screen overlay, expand (left, right, down, up))
+  - [ ] Add before/after animation hooks.. (or broadcast events?)
   - [ ] Validate input settings
   - [ ] Add error handling
   - [ ] Write tests
