@@ -3,7 +3,7 @@
 ## Morphable Elements ##
 This module is an attempt at packaging transitions/animations into directives that enable the reuse of visual elements by morphing them into other elements. Simply create an originating element and an end-state view, and ngMorph takes care of the rest! Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
 
-![ngMorph Demo](http://imgur.com/kcwbVoj.gif)
+![ngMorph Demo](http://imgur.com/ZeEaLFB.gif)
 
 ## Demo ##
 Available **[here](http://jimobrien.github.io/ngMorph/)**
