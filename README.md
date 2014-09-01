@@ -3,7 +3,7 @@
 ## Morphable Elements ##
 This module is an attempt at packaging transitions/animations into directives that enable the reuse of visual elements by morphing them into other elements. Simply create an originating element and an end-state view, and ngMorph takes care of the rest!
 
-![ngMorph Demo](http://imgur.com/MT9CwbV.gif)
+![ngMorph Demo](http://imgur.com/kcwbVoj.gif)
 
 ## Demo ##
 Preview available [here](http://jimobrien.github.io/ngMorph/)
@@ -43,7 +43,8 @@ _Example:_
          position: {
           top: '30%',
           left: '20%'
-         }
+         },
+         fade: false
        }
      }
    });
@@ -54,9 +55,10 @@ __Modal Settings__
  - `modal:` _Required._ The modal configuration object.
  - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
  - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
- - `position:` _Optional._ The positioning of the end-state element. Can either be pixels or a percentage. If no unit is specified, the input will be treated as a percentage ("30" => "30%").
+ - `position:` _Optional._ The positioning of the end-state element. Can either be pixels or a percentage. If no unit is specified, the input will be treated as a percentage _("30" => "30%")_.
+ - `fade:` _Optional._ Fade the background content when the modal is open. Default is `true`.
 
-###Overlay (Coming Soon)###
+###Overlay###
 
  ```html
    <div ng-morph-overlay="settings"> ... </div>
