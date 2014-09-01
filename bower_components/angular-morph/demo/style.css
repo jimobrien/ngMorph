@@ -1,13 +1,12 @@
 body {
   font-family: 'Open Sans';
-  background: #fcfcfc;
+  background: #F0F1F0;
 }
 button {
   width: 250px;
   height: 50px;
-  background: #e85657;
-  color: #fcfcfc;
-  text-transform: uppercase;
+  background: #1BBA9A;
+  color: #F0F1F0;
   outline: none;
   cursor: pointer;
   border: none;
@@ -16,19 +15,33 @@ button {
 .main {
   text-align: center;
 }
+/* demo info page */
+.more-info {
+  color: #F0F1F0;
+  font-size: 20px;
+  text-align: left;
+  background: #1BBA9A;
+}
+.more-info h2 {
+  text-align: center;
+}
 /* demo login form */
 .login {
-  background: #e85657;
+  background: #1BBA9A;
   width: 400px;
   height: 400px;
-  color: #fcfcfc;
+  color: #F0F1F0;
   font-weight: bold;
 }
 .close-x {
+  margin: 10px;
+  z-index: 2000;
+  font-size: 25px;
   cursor: pointer;
-  margin-left:95%;
-  color: #fcfcfc;
-  font-weight: bold;
+  color: rgb(19, 146, 121);
+}
+.close-x:hover {
+  color: #F0F1F0;
 }
 form {
   position: relative;
@@ -48,19 +61,19 @@ form p {
 }
 form label {
   display: block;
+  font-size: 1.5em;
   padding: 10px 0 0;
-  color: #d5bba4;
-  text-transform: uppercase;
+  color: #FCFCFC;
   letter-spacing: 1px;
-  font-weight: bold;
+  font-weight: normal;
 }
 form input[type="text"],
 form input[type="password"] {
   padding: 10px;
-  width: 93%;
-  border: 2px solid #ebd3bd;
+  width: 100%;
+  border: 2px solid #F0F1F0;
   background: transparent;
-  color: #fcfcfc;
+  color: #F0F1F0;
   font-weight: 300;
   font-size: 2.2em;
 }
@@ -73,10 +86,9 @@ form button {
   padding: 1em;
   width: 100%;
   border: none;
-  background: #f9f6e5;
-  color: #e75854;
-  text-transform: uppercase;
+  background: #F0F1F0;
+  color: #1BBA9A;
   letter-spacing: 1px;
-  font-weight: 800;
-  font-size: 1.25em;
+  line-height: 0;
+  font-size: 1.5em;
 }

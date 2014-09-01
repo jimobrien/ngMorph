@@ -19,14 +19,13 @@
   "dependencies": {
     "angular": "~1.2.23"
   },
-  "_release": "393fd8f33b",
+  "_release": "3c2f001f51",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "393fd8f33b36d027b9fb3247e17144be10cc1f05"
+    "commit": "3c2f001f51aba17c5f6258b2e21dd77f210a8621"
   },
   "_source": "git://github.com/jimobrien/ngMorph.git",
   "_target": "*",
-  "_originalSource": "angular-morph",
-  "_direct": true
+  "_originalSource": "angular-morph"
 }
