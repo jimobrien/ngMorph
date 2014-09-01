@@ -5,8 +5,7 @@ angular.module('morphDemo', ['ngMorph'])
     trigger: 'click',
     closeEl: '.close-x',
     modal: {
-      templateUrl: 'views/loginform.html',
-      fade: true
+      templateUrl: 'views/loginform.html'
     }
   };
 
