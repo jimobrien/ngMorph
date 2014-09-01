@@ -27,7 +27,7 @@ angular.module('morph.directives')
         };
 
         // create element for modal fade
-        if ( scope.settings.modal.fade ) {
+        if ( scope.settings.modal.fade !== false ) {
           var fade = angular.element('<div></div>');
           elements.fade = fade;
         }
