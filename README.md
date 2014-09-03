@@ -1,7 +1,7 @@
 # ngMorph #
  
 ## Morphable Elements ##
-This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the ng-morph-<type> directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
+This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
 
 ![ngMorph Demo](http://imgur.com/ZeEaLFB.gif)
 
@@ -51,7 +51,7 @@ Morphables require a settings object which you define in your controller. Settin
  ```
  
 __Modal Settings__
- - `closeEl:` A css class/id selector that will close the modal when clicked.
+ - `closeEl:` A class/id selector that will close the modal when clicked.
  - `modal:` _Required._ The modal configuration object.
  - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
  - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
@@ -76,13 +76,13 @@ __Modal Settings__
  ```
  
  __Overlay Settings__
- - `closeEl:` A css class/id selector that will close the overlay when clicked.
+ - `closeEl:` A class/id selector that will close the overlay when clicked.
  - `overlay:` _Required._ The overlay configuration object.
  - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
  - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
  
  
-###Expand (Coming Soon)###
+###Expand (Coming Soon!)###
  
  ```html
    <div ng-morph-expand="settings"> ... </div>
@@ -134,4 +134,4 @@ There is a lot of work to do before this is ready for an alpha release.. Followi
   - [ ] Add error handling
   - [ ] Write tests
   - [ ] Write docs
-  - [ ] convert these items to GH issues
+  - [ ] convert these items into GH issues
