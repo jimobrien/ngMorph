@@ -4,7 +4,7 @@
   "description": "This directive is an attempt at packaging necessary transitions and properties that enable the reuse of visual elements through morphing.",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=PhantomJS"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,13 @@
     "gulp": "~3.8.7",
     "gulp-concat": "~2.3.4",
     "gulp-uglify": "~1.0.0",
-    "gulp-notify": "~1.5.0"
+    "gulp-notify": "~1.5.0",
+    "karma-jasmine": "~0.1.5",
+    "mocha": "~1.21.4",
+    "karma": "~0.12.23",
+    "karma-coverage": "~0.2.6",
+    "karma-chrome-launcher": "~0.1.4",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "expect.js": "~0.3.1"
   }
 }

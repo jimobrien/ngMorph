@@ -36,6 +36,10 @@ gulp.task('uglify',function(){
     .pipe(notify({message: 'Build Done'}));
 });
 
+gulp.task('test', function () {
+
+});
+
 gulp.task('build', ['concat', 'uglify']);
 
 gulp.task('watch', function(){
