@@ -1,12 +1,12 @@
 # ngMorph [![Build Status](https://travis-ci.org/jimobrien/ngMorph.svg?branch=master)](https://travis-ci.org/jimobrien/ngMorph) #
  
 ## Morphable Elements ##
-This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
+This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action!
 
 ![ngMorph Demo](http://imgur.com/ZeEaLFB.gif)
 
 ## Demo ##
-Available **[here](http://jimobrien.github.io/ngMorph/)**
+Available **[here](http://jimobrien.github.io/ngMorph/)**. Demo source available **[here](https://github.com/jimobrien/ngMorph/tree/master/demo)**.
 
 ## Getting Started ##
   1. Install with bower:
