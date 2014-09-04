@@ -1,7 +1,7 @@
 # ngMorph [![Build Status](https://travis-ci.org/jimobrien/ngMorph.svg?branch=master)](https://travis-ci.org/jimobrien/ngMorph) #
  
 ## Morphable Elements ##
-This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action!
+This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. The idea was inspired by Google's [Topeka](http://www.polymer-project.org/apps/topeka/) project and a great concept I saw on [Codrops](http://tympanus.net/Development/ButtonComponentMorph/index.html). Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action!
 
 ![ngMorph Demo](http://imgur.com/ZeEaLFB.gif)
 
