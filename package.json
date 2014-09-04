@@ -15,6 +15,9 @@
     "transition",
     "animation"
   ],
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Chrome"
+  },
   "author": "Jim O'Brien",
   "license": "MIT",
   "bugs": {

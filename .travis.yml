@@ -1,0 +1,8 @@
+language: node_js
+before_install:
+- npm install -g karma-cli
+- npm install -g mocha
+- npm install -g gulp
+before_script:
+  - npm install -g bower
+  - bower install
