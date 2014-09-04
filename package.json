@@ -4,7 +4,7 @@
   "description": "This directive is an attempt at packaging necessary transitions and properties that enable the reuse of visual elements through morphing.",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=PhantomJS"
   },
   "repository": {
     "type": "git",
@@ -15,9 +15,6 @@
     "transition",
     "animation"
   ],
-  "scripts": {
-    "test": "./node_modules/karma/bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Chrome"
-  },
   "author": "Jim O'Brien",
   "license": "MIT",
   "bugs": {
@@ -32,6 +29,7 @@
     "mocha": "~1.21.4",
     "karma": "~0.12.23",
     "karma-coverage": "~0.2.6",
-    "karma-chrome-launcher": "~0.1.4"
+    "karma-chrome-launcher": "~0.1.4",
+    "karma-phantomjs-launcher": "~0.1.4"
   }
 }
