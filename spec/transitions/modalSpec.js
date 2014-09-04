@@ -55,12 +55,4 @@ describe('Modal Transition', function(){
     });
   });
 
-  it('should be positioned based on modal settings', function(){
-
-  });
-
-  it('should be centered on the screen', function(){
-
-  });
-
 });
