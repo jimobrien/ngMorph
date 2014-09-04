@@ -1,4 +1,4 @@
-# ngMorph #
+# ngMorph [![Build Status](https://travis-ci.org/jimobrien/ngMorph.svg?branch=master)](https://travis-ci.org/jimobrien/ngMorph) #
  
 ## Morphable Elements ##
 This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action.
