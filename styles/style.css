@@ -1,0 +1,94 @@
+body {
+  font-family: 'Open Sans';
+  background: #F0F1F0;
+}
+button {
+  width: 250px;
+  height: 50px;
+  background: #1BBA9A;
+  color: #F0F1F0;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  margin: 100px 0;
+}
+.main {
+  text-align: center;
+}
+/* demo info page */
+.more-info {
+  color: #F0F1F0;
+  font-size: 20px;
+  text-align: left;
+  background: #1BBA9A;
+}
+.more-info h2 {
+  text-align: center;
+}
+/* demo login form */
+.login {
+  background: #1BBA9A;
+  width: 400px;
+  height: 400px;
+  color: #F0F1F0;
+  font-weight: bold;
+}
+.close-x {
+  margin: 10px;
+  z-index: 2000;
+  font-size: 25px;
+  cursor: pointer;
+  color: rgb(19, 146, 121);
+}
+.close-x:hover {
+  color: #F0F1F0;
+}
+form {
+  position: relative;
+  text-align: left;
+  padding: 10px 30px;
+
+}
+form h2 {
+  margin: 0;
+  text-align: center;
+  font-weight: 300;
+  font-size: 3.5em;
+}
+form p {
+  margin: 0 0 5px 0;
+  font-size: 0.7em;
+}
+form label {
+  display: block;
+  font-size: 1.5em;
+  padding: 10px 0 0;
+  color: #FCFCFC;
+  letter-spacing: 1px;
+  font-weight: normal;
+}
+form input[type="text"],
+form input[type="password"] {
+  padding: 10px;
+  width: 100%;
+  border: 2px solid #F0F1F0;
+  background: transparent;
+  color: #F0F1F0;
+  font-weight: 300;
+  font-size: 2.2em;
+}
+form input:focus {
+  outline: 0;
+}
+form button {
+  display: block;
+  margin-top: 2.5em;
+  padding: 1em;
+  width: 100%;
+  border: none;
+  background: #F0F1F0;
+  color: #1BBA9A;
+  letter-spacing: 1px;
+  line-height: 0;
+  font-size: 1.5em;
+}
