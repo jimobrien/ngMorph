@@ -17,6 +17,8 @@ module.exports = function(config) {
     files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
+      'node_modules/expect.js/index.js',
+      'specs/jasmine.conf.js',
 
       'src/transitions/transitions.js',
       'src/transitions/modal.js',
@@ -42,14 +44,19 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/*.js': ['coverage']
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
+    coverageReporter: {
+      type : 'html',
+      // where to store the report
+      dir : 'spec/coverage/'
+    },
 
     // web server port
     port: 9876,
@@ -65,7 +72,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers
