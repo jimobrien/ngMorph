@@ -491,7 +491,10 @@ angular.module('morph.assist', [
 
   };
 }]);
-angular.module('morph', ['morph.transitions', 'morph.assist'])
+angular.module('morph', [
+  'morph.transitions', 
+  'morph.assist'
+])
 .factory('Morph', ['Transitions', 'Assist', function (Transitions, Assist) {
 
   return function (transition, elements, settings) {
@@ -516,8 +519,6 @@ angular.module('morph', ['morph.transitions', 'morph.assist'])
   };
 }]);
 angular.module('ngMorph', [
-  'morph.transitions',
   'morph.directives',
-  'morph.assist',
   'morph'
   ]);
