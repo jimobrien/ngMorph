@@ -1,7 +1,7 @@
 <!doctype html>
 <html ng-app="morphDemo">
   <head>
-    <title>angular-morph demo</title>
+    <title>ngMorph demo</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="styles/style.css">
   </head>
   <body ng-controller="AppCtrl">
-
     <div class="container main">
       <div class="row">
         <div class="col-md-offset-4 col-md-4">
@@ -22,6 +21,11 @@
         <div class="col-md-offset-4 col-md-4">
           <button ng-morph-overlay="example2" > Overlay </button>    
         </div>
+      </div>
+      <div class="col-md-offset-4 col-md-4 info"> 
+        An angular module by <a href="http://jimobrien.me">Jim O'Brien</a>
+        <br>
+        Fork on <a href="http://github.com/jimobrien/ngMorph">GitHub</a>
       </div>
     </div>
 
@@ -36,7 +40,6 @@
 
       ga('create', 'UA-48433019-4', 'auto');
       ga('send', 'pageview');
-
     </script>
   </body>
 </html>
