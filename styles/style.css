@@ -1,40 +1,61 @@
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+* {
+  box-sizing: border-box;
+}
 body {
   font-family: 'Open Sans';
   background: #F0F1F0;
+  font-size: 1em;
+  text-align: center;
 }
 button {
   width: 250px;
   height: 50px;
   color: #F0F1F0;
+  font-size: 0.8em;
   background: #1BBA9A;
   outline: none;
   cursor: pointer;
   border: none;
-  margin: 100px 0;
-}
-.info {
-  color: #AFAFAF;
-  line-height: 1.8em;
-  letter-spacing: -.02em;
-}
-.info a {
-  color: #1BBA9A;
-  text-decoration: none;
-}
-.main {
-  text-align: center;
+  margin-top: 10em;
 }
 
+
+/* close icon */
+.glyphicon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-remove:before {
+  content: "\e014";
+}
+
+
 /* demo info page */
-.more-info {
+.overlay-container {
   color: #F0F1F0;
   font-size: 20px;
   text-align: left;
   background: #1BBA9A;
 }
-.more-info h2 {
+.content {
+  padding: 20px;
+}
+.content h2 {
   text-align: center;
 }
+
 
 /* demo login form */
 .login {
@@ -44,20 +65,21 @@ button {
   color: #F0F1F0;
   font-weight: bold;
 }
-.close-x {
+.close {
   margin: 10px;
   z-index: 2000;
   font-size: 25px;
+  float: right;
   cursor: pointer;
   color: rgb(19, 146, 121);
 }
-.close-x:hover {
+.close:hover {
   color: #F0F1F0;
 }
 form {
   position: relative;
   text-align: left;
-  padding: 10px 30px;
+  padding: 25px;
 }
 form h2 {
   margin: 0;
@@ -100,4 +122,18 @@ form button {
   letter-spacing: 1px;
   line-height: 0;
   font-size: 1.5em;
+}
+
+
+/* footer */
+.info {
+  margin-top: 10em;
+  color: #AFAFAF;
+  line-height: 1.8em;
+  font-size: 0.8em;
+  letter-spacing: -.02em;
+}
+.info a {
+  color: #1BBA9A;
+  text-decoration: none;
 }

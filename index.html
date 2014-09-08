@@ -5,30 +5,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="styles/bootstrap-grid.css">
-    <link rel="stylesheet" href="styles/bootstrap-glyph.css">
     <link rel="stylesheet" href="styles/style.css">
   </head>
   <body ng-controller="AppCtrl">
-    <div class="container main">
-      <div class="row">
-        <div class="col-md-offset-4 col-md-4">
-          <button ng-morph-modal="example1" > Modal </button>    
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col-md-offset-4 col-md-4">
-          <button ng-morph-overlay="example2" > Overlay </button>    
-        </div>
-      </div>
-      <div class="col-md-offset-4 col-md-4 info"> 
+    <div class="container">
+      <button ng-morph-modal="example1" > Modal </button>
+      <button ng-morph-overlay="example2" > Overlay </button>
+      <p class="info">
         An angular module by <a href="http://jimobrien.me">Jim O'Brien</a>
         <br>
         Fork on <a href="http://github.com/jimobrien/ngMorph">GitHub</a>
-      </div>
+      </p>
     </div>
-
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-morph/dist/angular-morph.min.js"></script>
     <script src="app.js"></script>
