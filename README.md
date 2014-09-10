@@ -69,7 +69,8 @@ __Modal Settings__
      $scope.settings = {
        closeEl: '.close',
        overlay: {
-         templateUrl: 'path/to/view.html'
+         templateUrl: 'path/to/view.html',
+         scroll: false
        }
      }
    });
@@ -78,7 +79,8 @@ __Modal Settings__
  __Overlay Settings__
  - `closeEl:` A class/id selector that will close the overlay when clicked.
  - `overlay:` _Required._ The overlay configuration object.
- - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
+ - `scroll:` _Optional._ Disable scrolling when overlay is active. Default is `true`.
+ - `templateUrl:` _Required if `template` is not defined_. The path to the view template.
  - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
  
  
