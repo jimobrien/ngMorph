@@ -184,9 +184,12 @@
 
           // add vertical scrollbar once full-screen.
           // TODO: add before/after animation hooks.
-          setTimeout( function () {
-            element.css({'overflow-y': 'scroll'});
-          }, 500);
+          console.log(settings.overlay.scroll, settings);
+          if ( settings.overlay.scroll !== false ) {
+            setTimeout( function () {
+              element.css({'overflow-y': 'scroll'});
+            }, 500);
+          }
           
         },
         content: function (element, settings) {
@@ -324,7 +327,6 @@
           element.after(wrapper);
           if ( fade ) wrapper.after(fade);
           
-
           // set the wrapper bg color
           wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
 
@@ -480,8 +482,6 @@
       morphable: {
         'z-index': '1000',
         'outline': 'none',
-        '-webkit-transition': 'all 0.1s 0.5s',
-        'transition': 'all 0.1s 0.5s'
       },
       fade: {
         'visibility': 'hidden',

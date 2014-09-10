@@ -22,11 +22,11 @@
   "devDependencies": {
     "angular-mocks": "~1.2.23"
   },
-  "_release": "86c494bcc2",
+  "_release": "511e38099e",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "86c494bcc29e9f5b4401edf521dd48d19c4909cd"
+    "commit": "511e38099eca1bbe22b773300dd81bded0034e2e"
   },
   "_source": "git://github.com/jimobrien/ngMorph.git",
   "_target": "*",

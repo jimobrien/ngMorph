@@ -1,12 +1,12 @@
 # ngMorph [![Build Status](https://travis-ci.org/jimobrien/ngMorph.svg?branch=master)](https://travis-ci.org/jimobrien/ngMorph) #
  
 ## Morphable Elements ##
-This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action!
+This module is an attempt at packaging transitions/animations into directives that enable the reuse of elements by morphing them into other elements. The idea was inspired by Google's [Topeka](http://www.polymer-project.org/apps/topeka/) project and a great concept I saw on [Codrops](http://tympanus.net/Development/ButtonComponentMorph/index.html). Simply create an originating element and apply the `ng-morph-<type>` directive to make it morphable. Check out the **[demo](http://jimobrien.github.io/ngMorph/)** page to see it in action!
 
 ![ngMorph Demo](http://imgur.com/ZeEaLFB.gif)
 
 ## Demo ##
-Available **[here](http://jimobrien.github.io/ngMorph/)**. Demo source available **[here](https://github.com/jimobrien/ngMorph/tree/master/demo)**.
+Available **[here](http://jimobrien.github.io/ngMorph/)**. Demo source available **[here](https://github.com/jimobrien/ngMorph/tree/gh-pages)**.
 
 ## Getting Started ##
   1. Install with bower:
@@ -69,7 +69,8 @@ __Modal Settings__
      $scope.settings = {
        closeEl: '.close',
        overlay: {
-         templateUrl: 'path/to/view.html'
+         templateUrl: 'path/to/view.html',
+         scroll: false
        }
      }
    });
@@ -78,7 +79,8 @@ __Modal Settings__
  __Overlay Settings__
  - `closeEl:` A class/id selector that will close the overlay when clicked.
  - `overlay:` _Required._ The overlay configuration object.
- - `templateUrl:` _Required if `template` is not defined_. The path to the view template. 
+ - `scroll:` _Optional._ Disable scrolling when overlay is active. Default is `true`.
+ - `templateUrl:` _Required if `template` is not defined_. The path to the view template.
  - `template:` _Required if `templateUrl` is not defined_. An HTML template string. If templateUrl is also defined, `template` will take priority.
  
  
