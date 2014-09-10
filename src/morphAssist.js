@@ -22,8 +22,6 @@
       morphable: {
         'z-index': '1000',
         'outline': 'none',
-        '-webkit-transition': 'all 0.1s 0.5s',
-        'transition': 'all 0.1s 0.5s'
       },
       fade: {
         'visibility': 'hidden',
