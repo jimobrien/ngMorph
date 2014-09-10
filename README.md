@@ -6,7 +6,7 @@ This module is an attempt at packaging transitions/animations into directives th
 ![ngMorph Demo](http://imgur.com/ZeEaLFB.gif)
 
 ## Demo ##
-Available **[here](http://jimobrien.github.io/ngMorph/)**. Demo source available **[here](https://github.com/jimobrien/ngMorph/tree/master/demo)**.
+Available **[here](http://jimobrien.github.io/ngMorph/)**. Demo source available **[here](https://github.com/jimobrien/ngMorph/tree/gh-pages)**.
 
 ## Getting Started ##
   1. Install with bower:
