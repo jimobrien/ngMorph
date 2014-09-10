@@ -21,9 +21,12 @@
 
           // add vertical scrollbar once full-screen.
           // TODO: add before/after animation hooks.
-          setTimeout( function () {
-            element.css({'overflow-y': 'scroll'});
-          }, 500);
+          console.log(settings.overlay.scroll, settings);
+          if ( settings.overlay.scroll !== false ) {
+            setTimeout( function () {
+              element.css({'overflow-y': 'scroll'});
+            }, 500);
+          }
           
         },
         content: function (element, settings) {
