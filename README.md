@@ -122,6 +122,7 @@ In order for elements to morph into their end-state view properly, the contents 
    </div> <!-- /end containing element -->
  ```
 
+## [Contributing](https://github.com/jimobrien/ngMorph/blob/master/CONTRIBUTING.md) ##
 
 ## What's Next ##
 
