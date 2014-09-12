@@ -19,6 +19,6 @@
 - Make a pull request with your changes directly to master. Include a
   description of your changes.
 - Wait for one of the reviewers to look at your code and either merge it or
-  give feedback which you should adapt to.
+  give feedback.
 
 ### Style Guide (Coming Soon)
