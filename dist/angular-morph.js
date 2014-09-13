@@ -74,9 +74,13 @@
         },
         fade: function (element) {
           element.css({
-            'visibility': 'visible',
-            'opacity': '1'
+            'display': 'block'
           });
+          setTimeout(function() {
+            element.css({
+              'opacity': '1'
+            });
+          }, 25);
         }
       };
 
@@ -122,6 +126,11 @@
           element.css({
             'opacity': '0'
           });
+          setTimeout(function() {
+            element.css({
+              'display': 'none'
+            });
+          }, 525);
         }
       };
 
@@ -484,7 +493,7 @@
         'outline': 'none',
       },
       fade: {
-        'visibility': 'hidden',
+        'display': 'none',
         'opacity': '0',
         'position': 'fixed',
         'top': '0',
@@ -494,8 +503,7 @@
         'height': '100%',
         'background': 'rgba(0,0,0,0.5)',
         '-webkit-transition': 'opacity 0.5s',
-        'transition': 'opacity 0.5s',
-        'pointer-events': 'none'
+        'transition': 'opacity 0.5s'
       }
 
     };
