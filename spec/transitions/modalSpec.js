@@ -91,7 +91,7 @@ describe('Modal Transition', function(){
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable.find("div")[0], null).visibility === "visible";
+        return getComputedStyle(morphable.find("div")[0], null).opacity === "1";
       }, "wrapper should be visible to user", 35);
 
       runs(function() {

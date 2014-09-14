@@ -24,7 +24,7 @@
         'outline': 'none',
       },
       fade: {
-        'visibility': 'hidden',
+        'display': 'none',
         'opacity': '0',
         'position': 'fixed',
         'top': '0',
@@ -34,8 +34,7 @@
         'height': '100%',
         'background': 'rgba(0,0,0,0.5)',
         '-webkit-transition': 'opacity 0.5s',
-        'transition': 'opacity 0.5s',
-        'pointer-events': 'none'
+        'transition': 'opacity 0.5s'
       }
 
     };
