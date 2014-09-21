@@ -193,7 +193,6 @@
 
           // add vertical scrollbar once full-screen.
           // TODO: add before/after animation hooks.
-          console.log(settings.overlay.scroll, settings);
           if ( settings.overlay.scroll !== false ) {
             setTimeout( function () {
               element.css({'overflow-y': 'scroll'});
@@ -299,26 +298,21 @@
 
   angular.module('morph.directives')
   .directive('ngMorphModal', ['TemplateHandler', '$compile', 'Morph', function (TemplateHandler, $compile, Morph) {
-    var isMorphed = false;
-
     return {
       restrict: 'A',
-      scope: {
-        settings: '=ngMorphModal'
-      },
+      scope: true,
       link: function (scope, element, attrs) {
-        
         var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
-        var modalSettings = scope.settings.modal;
+        var settings = scope[attrs.ngMorphModal];
+        var isMorphed = false;
 
         var compile = function (results) {
           var morphTemplate = results.data ? results.data : results;
-
           return $compile(morphTemplate)(scope);
         };
 
         var initMorphable = function (content) {
-          var closeEl  = angular.element(content[0].querySelector(scope.settings.closeEl));
+          var closeEl  = angular.element(content[0].querySelector(settings.closeEl));
           var elements = {
             morphable: element,
             wrapper: wrapper,
@@ -326,7 +320,7 @@
           };
 
           // create element for modal fade
-          if ( scope.settings.modal.fade !== false ) {
+          if (settings.modal.fade !== false) {
             var fade = angular.element('<div></div>');
             elements.fade = fade;
           }
@@ -334,27 +328,27 @@
           // add to dom
           wrapper.append(content);
           element.after(wrapper);
-          if ( fade ) wrapper.after(fade);
+          if (fade) wrapper.after(fade);
           
           // set the wrapper bg color
           wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
 
           // get bounding rectangles
-          scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-          scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
+          settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+          settings.ContentBoundingRect = content[0].getBoundingClientRect();
           
           // bootstrap the modal
-          var modal = new Morph('Modal', elements, scope.settings);
+          var modal = new Morph('Modal', elements, settings);
           
           // attach event listeners
           element.bind('click', function () {
-            scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+            settings.MorphableBoundingRect = element[0].getBoundingClientRect();
             isMorphed = modal.toggle(isMorphed);
           });
 
-          if ( closeEl ) {
+          if (closeEl) {
             closeEl.bind('click', function (event) {
-              scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+              settings.MorphableBoundingRect = element[0].getBoundingClientRect();
               isMorphed = modal.toggle(isMorphed);
             });
           }
@@ -366,15 +360,13 @@
           });
         };
 
-        if ( modalSettings.template ) {
-          initMorphable(compile(modalSettings.template));
-
-        } else if ( modalSettings.templateUrl ){
-          var loadContent = TemplateHandler.get(modalSettings.templateUrl);
-
-          loadContent.then(compile)
-          .then(initMorphable);
-
+        if (settings.modal.template) {
+          initMorphable(compile(settings.modal.template));
+        } else if (settings.modal.templateUrl) {
+          TemplateHandler
+            .get(settings.modal.templateUrl)
+            .then(compile)
+            .then(initMorphable);
         } else {
           throw new Error('No template found.');
         }
@@ -388,28 +380,22 @@
   
   angular.module('morph.directives')
   .directive('ngMorphOverlay', ['$compile', 'TemplateHandler', 'Morph', function ($compile, TemplateHandler, Morph) {
-    var isMorphed = false;
 
     return {
       restrict: 'A',
-      scope: {
-        settings: '=ngMorphOverlay'
-      },
+      scope: true,
       link: function (scope, element, attrs) {
         var wrapper = angular.element('<div></div>').css('visibility', 'hidden');
-        var overlaySettings = scope.settings.overlay;
+        var settings = scope[attrs.ngMorphOverlay];
+        var isMorphed = false;
 
         var compile = function (results) {
           var morphTemplate = results.data ? results.data : results;
-
           return $compile(morphTemplate)(scope);
         };
 
-        // content
-        // scope.settings
-        // isMorphed
         var initMorphable = function (content) {
-          var closeEl  = angular.element(content[0].querySelector(scope.settings.closeEl));
+          var closeEl  = angular.element(content[0].querySelector(settings.closeEl));
           var elements = {
             morphable: element,
             wrapper: wrapper,
@@ -424,21 +410,21 @@
           wrapper.css('background', getComputedStyle(content[0]).backgroundColor);
 
           // get bounding rectangles
-          scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
-          scope.settings.ContentBoundingRect = content[0].getBoundingClientRect();
+          settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+          settings.ContentBoundingRect = content[0].getBoundingClientRect();
           
           // bootstrap the overlay
-          var overlay = new Morph('Overlay', elements, scope.settings);
+          var overlay = new Morph('Overlay', elements, settings);
           
           // attach event listeners
           element.bind('click', function () {
-            scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+            settings.MorphableBoundingRect = element[0].getBoundingClientRect();
             isMorphed = overlay.toggle(isMorphed);
           });
 
-          if ( closeEl ) {
+          if (closeEl) {
             closeEl.bind('click', function (event) {
-              scope.settings.MorphableBoundingRect = element[0].getBoundingClientRect();
+              settings.MorphableBoundingRect = element[0].getBoundingClientRect();
               isMorphed = overlay.toggle(isMorphed);
             });
           }
@@ -450,15 +436,13 @@
           });
         };
 
-        if ( overlaySettings.template ) {
-          initMorphable(compile(overlaySettings.template));
-
-        } else if ( overlaySettings.templateUrl ){
-          var loadContent = TemplateHandler.get(overlaySettings.templateUrl);
-
-          loadContent.then(compile)
-          .then(initMorphable);
-
+        if (settings.overlay.template) {
+          initMorphable(compile(settings.overlay.template));
+        } else if (settings.overlay.templateUrl) {
+          TemplateHandler
+            .get(settings.overlay.templateUrl)
+            .then(compile)
+            .then(initMorphable);
         } else {
           throw new Error('No template found.');
         }
