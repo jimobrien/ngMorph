@@ -63,9 +63,13 @@
         },
         fade: function (element) {
           element.css({
-            'visibility': 'visible',
-            'opacity': '1'
+            'display': 'block'
           });
+          setTimeout(function() {
+            element.css({
+              'opacity': '1'
+            });
+          }, 25);
         }
       };
 
@@ -111,6 +115,11 @@
           element.css({
             'opacity': '0'
           });
+          setTimeout(function() {
+            element.css({
+              'display': 'none'
+            });
+          }, 525);
         }
       };
 
