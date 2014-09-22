@@ -1,6 +1,6 @@
 describe('Overlay', function(){
 
-  var tpl = '<div width="width:400px; height: 400px; background:black;display:block;"> <h1> Test Content </h1> </div>';
+  var tpl = '<div > <h1> Test Content </h1> </div>';
 
   beforeEach(module('morph'));
   beforeEach(module('morph.directives'));
@@ -76,7 +76,7 @@ describe('Overlay', function(){
 
       waitsFor(function() {
         return getComputedStyle(morphable.find("div")[0]).opacity === '0' ;
-      }, "wrapper should be hidden to user", 850);
+      }, "wrapper should be hidden to user", 1000);
     });
   });
 
@@ -117,8 +117,8 @@ describe('Overlay', function(){
 
   it('should open an overlay when a nested directive element is clicked', function () {
     inject(function ($compile, $document, $rootScope, $rootElement) {
-      var tplContainingMorphable = '<div id="tpl-containing-morphable" width="width:400px; height: 400px; background:black;display:block;"> <button ng-morph-overlay="nestedOverlaySettings"> Nested Morphable </button></div>';
-      var nestedOverlayTpl = '<div id="nested-overlay" width="width:400px; height: 400px; background:black;display:block;"> <span class="close-x">x</span></div>';
+      var tplContainingMorphable = '<div id="tpl-containing-morphable"> <button ng-morph-overlay="nestedOverlaySettings"> Nested Morphable </button></div>';
+      var nestedOverlayTpl = '<div id="nested-overlay"> <span class="close-x">x</span></div>';
       
       $rootScope.overlaySettings = {
         closeEl: ".close-x",
@@ -152,12 +152,13 @@ describe('Overlay', function(){
 
       // open nested overlay
       runs(function() {
-        var tpl = angular.element(morphable[0].querySelector("#tpl-containing-morphable"));
+        var tpl = angular.element(morphable.find("div")[0]);
         tpl.find("button")[0].click();
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable[0].querySelector("#nested-overlay")).visibility === "visible";
+        var nestedOverlay = morphable.find("div")[0].querySelectorAll("#nested-overlay")[0];
+        return getComputedStyle(nestedOverlay).visibility === "visible";
       }, "nested overlay should be visible to user", 35);
 
     });

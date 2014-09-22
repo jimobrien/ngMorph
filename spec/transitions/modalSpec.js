@@ -110,7 +110,7 @@ describe('Modal', function(){
   it('should compile a template containing a nested modal morphable', function () {
     inject(function ($compile, $document, $rootScope, $rootElement) {
       var tplContainingMorphable = '<div style="width:400px; height: 400px; background:black;display:block;"> <button ng-morph-modal="nestedModalSettings"> Nested Morphable </button></div>';
-      var nestedModaltpl = '<div id="nested-modal" width="width:400px; height: 400px; background:black;display:block;"> <span class="close-x">x</span></div>';
+      var nestedModaltpl = '<div id="nested-modal" style="width:400px; height: 400px; background:black;display:block;"> <span class="close-x">x</span></div>';
       
       $rootScope.modalSettings = {
         closeEl: ".close-x",
@@ -144,7 +144,7 @@ describe('Modal', function(){
   it('should open a modal when a nested directive element is clicked', function () {
     inject(function ($compile, $document, $rootScope, $rootElement) {
       var tplContainingMorphable = '<div id="tpl-containing-morphable" style="width:400px; height: 400px; background:black;display:block;"> <button ng-morph-modal="nestedModalSettings"> Nested Morphable </button></div>';
-      var nestedModaltpl = '<div id="nested-modal" width="width:400px; height: 400px; background:black;display:block;"> <span class="close-x">x</span></div>';
+      var nestedModaltpl = '<div id="nested-modal" style="width:400px; height: 400px; background:black;display:block;"> <span class="close-x">x</span></div>';
       
       $rootScope.modalSettings = {
         closeEl: ".close-x",
@@ -166,7 +166,6 @@ describe('Modal', function(){
 
       $rootElement.append(morphable);
       angular.element($document[0].body).append($rootElement);
-
       // open first modal
       runs(function() {
         morphable.find("button")[0].click();
@@ -178,12 +177,13 @@ describe('Modal', function(){
 
       // open nested modal
       runs(function() {
-        var tpl = angular.element(morphable[0].querySelector("#tpl-containing-morphable"));
+        var tpl = angular.element(morphable.find("div")[0]);
         tpl.find("button")[0].click();
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable[0].querySelector("#nested-modal")).visibility === "visible";
+        var nestedModal = morphable.find("div")[0].querySelectorAll("#nested-modal")[0];
+        return getComputedStyle(nestedModal).visibility === "visible";
       }, "nested modal should be visible to user", 35);
 
     });
