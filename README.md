@@ -130,7 +130,7 @@ There is a lot of work to do before this is ready for an alpha release.. Followi
 
   - [X] Abstract functionality from the post-linking function of the `morphable` directive.
   - [X] ~~Refactor using ngAnimate and GSAP~~ (sticking with CSS transitions)
-  - [ ] Add support for nested morphables (morphables within view templates)
+  - [X] Add support for nested morphables (morphables within view templates)
   - [ ] Add different transitions (modal, screen overlay, expand (left, right, down, up))
   - [ ] Add before/after animation hooks.. (or broadcast events?)
   - [ ] Validate input settings
