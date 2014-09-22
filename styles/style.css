@@ -24,7 +24,6 @@ button {
   margin-top: 10em;
 }
 
-
 /* close icon */
 .glyphicon {
   position: relative;
@@ -43,7 +42,7 @@ button {
 
 
 /* demo info page */
-.overlay-container {
+.info-overlay {
   color: #F0F1F0;
   font-size: 20px;
   text-align: left;
@@ -55,6 +54,37 @@ button {
 .content h2 {
   text-align: center;
 }
+.info-overlay > button {
+  color: #1BBA9A;
+  display: block;
+  background: #fcfcfc;
+  /* center the button: */
+  left: -125px;
+  margin: 20px 50%;
+  position: relative;
+}
+
+/* signup form */
+.sign-up {
+  background: #fcfcfc;
+  width: 400px;
+  height: 500px;
+  color: #F0F1F0;
+  font-weight: bold;
+}
+.sign-up button {
+  background: #1BBA9A;
+  color: #fcfcfc;
+}
+.sign-up form label {
+  color: #1BBA9A;
+}
+.sign-up form input[type="text"],
+.sign-up form input[type="password"] {
+  border: 2px solid #1BBA9A;
+  color: #1BBA9A;
+}
+
 
 
 /* demo login form */
@@ -81,19 +111,12 @@ form {
   text-align: left;
   padding: 25px;
 }
-form h2 {
-  margin: 0;
-  text-align: center;
-  font-weight: 300;
-  font-size: 3.5em;
-}
 form p {
-  margin: 0 0 5px 0;
-  font-size: 0.7em;
+  margin-bottom: 5px;
 }
 form label {
   display: block;
-  font-size: 1.5em;
+  font-size: 16px;
   padding: 10px 0 0;
   color: #FCFCFC;
   letter-spacing: 1px;
@@ -106,14 +129,14 @@ form input {
   background: transparent;
   color: #F0F1F0;
   font-weight: 300;
-  font-size: 2.2em;
+  font-size: 24px;
 }
 form input:focus {
   outline: 0;
 }
 form button {
   display: block;
-  margin-top: 2.5em;
+  margin-top: 30px;
   padding: 1em;
   width: 100%;
   border: none;
@@ -121,7 +144,7 @@ form button {
   color: #1BBA9A;
   letter-spacing: 1px;
   line-height: 0;
-  font-size: 1.5em;
+  font-size: 17px;
 }
 
 

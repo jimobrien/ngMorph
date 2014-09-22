@@ -14,11 +14,12 @@ angular.module('morphDemo', ['ngMorph'])
     }
   };
 
-  $scope.example3 = {
+  $scope.example2Nesting = {
     closeEl: '.close',
-    expand: {
-      templateUrl: 'views/loginform.html'
+    modal: {
+      templateUrl: 'views/signup.html'
     }
   };
+
 
 }]);
