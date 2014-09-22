@@ -1,4 +1,4 @@
-describe('Overlay Transition', function(){
+describe('Overlay', function(){
 
   var tpl = '<div width="width:400px; height: 400px; background:black;display:block;"> <h1> Test Content </h1> </div>';
 
@@ -41,7 +41,7 @@ describe('Overlay Transition', function(){
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable.find("div")[0], null).opacity === "1";
+        return getComputedStyle(morphable.find("div")[0]).opacity === "1";
       }, "wrapper should be visible to user", 35);
     });
   });
@@ -67,7 +67,7 @@ describe('Overlay Transition', function(){
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable.find("div")[0], null).opacity === "1";
+        return getComputedStyle(morphable.find("div")[0]).opacity === "1";
       }, "wrapper should be visible to user", 35);
 
       runs(function() {
@@ -75,7 +75,7 @@ describe('Overlay Transition', function(){
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable.find("div")[0], null).opacity === '0' ;
+        return getComputedStyle(morphable.find("div")[0]).opacity === '0' ;
       }, "wrapper should be hidden to user", 850);
     });
   });
@@ -147,7 +147,7 @@ describe('Overlay Transition', function(){
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable.find("div")[0], null).opacity === "1";
+        return getComputedStyle(morphable.find("div")[0]).opacity === "1";
       }, "wrapper should be visible to user", 35);
 
       // open nested overlay
@@ -157,7 +157,7 @@ describe('Overlay Transition', function(){
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable[0].querySelector("#nested-overlay"), null).visibility === "visible";
+        return getComputedStyle(morphable[0].querySelector("#nested-overlay")).visibility === "visible";
       }, "nested overlay should be visible to user", 35);
 
     });

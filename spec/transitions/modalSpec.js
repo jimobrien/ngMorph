@@ -183,7 +183,7 @@ describe('Modal', function(){
       });
 
       waitsFor(function() {
-        return getComputedStyle(morphable[0].querySelector("#nested-modal"), null).visibility === "visible";
+        return getComputedStyle(morphable[0].querySelector("#nested-modal")).visibility === "visible";
       }, "nested modal should be visible to user", 35);
 
     });
