@@ -1,6 +1,6 @@
 {
   "name": "angular-morph",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "This directive is an attempt at packaging necessary transitions and properties that enable the reuse of visual elements through morphing.",
   "main": "src/app.js",
   "scripts": {
